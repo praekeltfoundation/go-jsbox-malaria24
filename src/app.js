@@ -10,7 +10,7 @@ go.app = function() {
 
         self.states.add('states:start', function(name) {
             return new ChoiceState(name, {
-                question: 'Hi there! What do you want to do?',
+                question: 'Welcome! To report a malaria case, please enter your facility code. For example, 543456',
 
                 choices: [
                     new Choice('states:start', 'Show this menu again'),
@@ -21,6 +21,23 @@ go.app = function() {
                 }
             });
         });
+
+        self.states.add('welcome', function(name) {};
+        self.states.add('validate_facility_code', function(name) {};
+        self.states.add('invalid_facility_code', function(name) {};
+        self.states.add('patient_mssisdn', function(name) {};
+        self.states.add('patient_firstname', function(name) {};
+        self.states.add('patient_suranme', function(name) {};
+        self.states.add('patient_travel_abroad', function(name) {};
+        self.states.add('patient_locality', function(name) {};
+        self.states.add('patient_rsaid', function(name) {};
+        self.states.add('patient_noid', function(name) {};
+        self.states.add('patient_dob', function(name) {};
+        self.states.add('patient_sex', function(name) {};
+        self.states.add('submit_case', function(name) {};
+
+
+
 
         self.states.add('states:end', function(name) {
             return new EndState(name, {
