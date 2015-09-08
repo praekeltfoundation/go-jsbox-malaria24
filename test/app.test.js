@@ -23,32 +23,43 @@ describe("app", function() {
         });
 
         describe("when the user starts a session", function() {
-            it("should ask them what they want to do", function() {
+            it("shows the welcome screen", function() {
                 return tester
                     .start()
                     .check.interaction({
-                        state: 'states:start',
+                        state: 'state_welcome',
                         reply: [
-                            'Hi there! What do you want to do?',
-                            '1. Show this menu again',
-                            '2. Exit'
+                            'Welcome! To report a malaria case, please enter your facility code. For example, 543456'
                         ].join('\n')
                     })
                     .run();
             });
         });
 
-        describe("when the user asks to see the menu again", function() {
-            it("should show the menu again", function() {
+        describe("from welcome screen, fill in facility code", function() {
+            it("should validate the facility", function() {
                 return tester
-                    .setup.user.state('states:start')
-                    .input('1')
+                    .setup.user.state('state_welcome')
+                    .input('1234567')
                     .check.interaction({
-                        state: 'states:start',
+                        state: 'state_validate_facility_code',
                         reply: [
-                            'Hi there! What do you want to do?',
-                            '1. Show this menu again',
-                            '2. Exit'
+                            'FacilityCode validated!'
+                        ].join('\n')
+                    })
+                    .run();
+            });
+        });
+
+        describe("from welcome screen, fill in INVALID facility code", function() {
+            it("should invalidate the facility", function() {
+                return tester
+                    .setup.user.state('state_validate_facility_code')
+                    .input('')
+                    .check.interaction({
+                        state: 'state_validate_facility_code',
+                        reply: [
+                            'FacilityCode invalid'
                         ].join('\n')
                     })
                     .run();
@@ -58,7 +69,7 @@ describe("app", function() {
         describe("when the user asks to exit", function() {
             it("should say thank you and end the session", function() {
                 return tester
-                    .setup.user.state('states:start')
+                    .setup.user.state('state_welcome')
                     .input('2')
                     .check.interaction({
                         state: 'states:end',
