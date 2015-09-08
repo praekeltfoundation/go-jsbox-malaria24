@@ -66,39 +66,51 @@ describe("app", function() {
         //     });
         // });
 
-        describe("state_patient_id_type: when the case is submitted", function() {
+        describe("state_patient_id_type: rsaid supplied", function() {
             it("should say thank you and end the session", function() {
                 return tester
                     .setup.user.state('state_patient_id_type')
                     .input('1')
                     .check.interaction({
-                        state: 'state_submit_case',
-                        reply: 'Thank you! Your report has been submitted.'
+                        state: 'state_patient_rsaid',
+                        reply: 'Please enter the patient’s ID number.'
                     })
-                    .check.reply.ends_session()
                     .run();
             });
         });
 
-        describe("state_patient_id_type: when the case is submitted", function() {
-            it("should say thank you and end the session", function() {
+        describe("state_patient_id_type: none", function() {
+            it("should ask the patient's age", function() {
                 return tester
                     .setup.user.state('state_patient_id_type')
-                    .input('1')
+                    .input('2')
                     .check.interaction({
-                        state: 'state_submit_case',
-                        reply: 'Thank you! Your report has been submitted.'
+                        state: 'state_patient_dob',
+                        reply: 'Please enter the year the patient was born. For example, 1986.'
                     })
-                    .check.reply.ends_session()
                     .run();
             });
         });
 
-        describe("when the case is submitted", function() {
+        describe("state_patient_sex: male choice", function() {
             it("should say thank you and end the session", function() {
                 return tester
                     .setup.user.state('state_patient_sex')
                     .input('1')
+                    .check.interaction({
+                        state: 'state_submit_case',
+                        reply: 'Thank you! Your report has been submitted.'
+                    })
+                    .check.reply.ends_session()
+                    .run();
+            });
+        });
+
+        describe("state_patient_sex: female choice", function() {
+            it("should say thank you and end the session", function() {
+                return tester
+                    .setup.user.state('state_patient_sex')
+                    .input('2')
                     .check.interaction({
                         state: 'state_submit_case',
                         reply: 'Thank you! Your report has been submitted.'

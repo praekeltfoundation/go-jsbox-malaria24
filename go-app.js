@@ -371,7 +371,7 @@ go.app = function() {
                 question: question,
                 choices: [
                     new Choice('state_patient_rsaid', $("South African ID")),
-                    new Choice('state_patient_noid', $("None"))
+                    new Choice('state_patient_dob', $("None"))
                 ],
 
                 next: function(choice) {
@@ -391,9 +391,13 @@ go.app = function() {
 
         });
 
-        self.states.add('state_patient_noid', function(name) {});
         self.states.add('state_patient_dob', function(name) {
+          var question = $("Please enter the year the patient was born. For example, 1986.");
 
+          return new FreeText(name, {
+                question: question,
+                next: 'state_patient_sex'
+          });
         });
         self.states.add('state_patient_sex', function(name) {
           return new ChoiceState(name, {
