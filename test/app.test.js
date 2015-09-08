@@ -22,7 +22,7 @@ describe("app", function() {
                 });
         });
 
-        describe("when the user starts a session", function() {
+        describe("state_welcome: start a session", function() {
             it("shows the welcome screen", function() {
                 return tester
                     .start()
@@ -36,7 +36,7 @@ describe("app", function() {
             });
         });
 
-        describe("from welcome screen, fill in facility code", function() {
+        describe("state_welcome: fill in facility code", function() {
             it("should validate the facility", function() {
                 return tester
                     .setup.user.state('state_welcome')
@@ -66,6 +66,34 @@ describe("app", function() {
         //     });
         // });
 
+        describe("state_patient_id_type: when the case is submitted", function() {
+            it("should say thank you and end the session", function() {
+                return tester
+                    .setup.user.state('state_patient_id_type')
+                    .input('1')
+                    .check.interaction({
+                        state: 'state_submit_case',
+                        reply: 'Thank you! Your report has been submitted.'
+                    })
+                    .check.reply.ends_session()
+                    .run();
+            });
+        });
+
+        describe("state_patient_id_type: when the case is submitted", function() {
+            it("should say thank you and end the session", function() {
+                return tester
+                    .setup.user.state('state_patient_id_type')
+                    .input('1')
+                    .check.interaction({
+                        state: 'state_submit_case',
+                        reply: 'Thank you! Your report has been submitted.'
+                    })
+                    .check.reply.ends_session()
+                    .run();
+            });
+        });
+
         describe("when the case is submitted", function() {
             it("should say thank you and end the session", function() {
                 return tester
@@ -79,5 +107,20 @@ describe("app", function() {
                     .run();
             });
         });
+
+        describe("state_submit_case: when the case is submitted", function() {
+            it("should say thank you and end the session", function() {
+                return tester
+                    .setup.user.state('state_patient_sex')
+                    .input('1')
+                    .check.interaction({
+                        state: 'state_submit_case',
+                        reply: 'Thank you! Your report has been submitted.'
+                    })
+                    .check.reply.ends_session()
+                    .run();
+            });
+        });
+
     });
 });

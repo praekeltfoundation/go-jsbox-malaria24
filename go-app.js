@@ -318,13 +318,83 @@ go.app = function() {
                 next: 'state_validate_facility_code'
           });
         });
-        self.states.add('state_patient_firstname', function(name) {});
-        self.states.add('state_patient_surname', function(name) {});
-        self.states.add('state_patient_travel_abroad', function(name) {});
-        self.states.add('state_patient_locality', function(name) {});
-        self.states.add('state_patient_rsaid', function(name) {});
+        self.states.add('state_patient_firstname', function(name) {
+          var question = $("Please enter the patient’s first name; eg: Mbe");
+
+          return new FreeText(name, {
+                question: question,
+                next: 'state_patient_surname'
+          });
+        });
+
+        self.states.add('state_patient_surname', function(name) {
+          var question = $("Please enter the patient’s surname; eg: Ndu");
+
+          return new FreeText(name, {
+                question: question,
+                next: 'state_patient_travel_abroad'
+          });
+        });
+
+        self.states.add('state_patient_travel_abroad', function(name) {
+          var question = $("Please select the patient's locality:");
+
+          return new ChoiceState(name, {
+                question: question,
+                choices: [
+                    new Choice('1', $("Male")),
+                    new Choice('2', $("Female"))
+                ],
+
+                next: 'state_patient_id_type'
+          });
+        });
+
+        self.states.add('state_patient_locality', function(name) {
+          var question = $("Please select the patient's locality:");
+
+          return new ChoiceState(name, {
+                question: question,
+                choices: [
+                    new Choice('1', $("Male")),
+                    new Choice('2', $("Female"))
+                ],
+
+                next: 'state_patient_id_type'
+          });
+        });
+
+        self.states.add('state_patient_id_type', function(name) {
+          var question = $("What kind of identification does the patient have?");
+
+          return new ChoiceState(name, {
+                question: question,
+                choices: [
+                    new Choice('state_patient_rsaid', $("South African ID")),
+                    new Choice('state_patient_noid', $("None"))
+                ],
+
+                next: function(choice) {
+                    return choice.value;
+                }
+
+          });
+        });
+
+        self.states.add('state_patient_rsaid', function(name) {
+          var question = $("Please enter the patient’s ID number.");
+
+          return new FreeText(name, {
+                question: question,
+                next: 'state_submit_case'
+          });
+
+        });
+
         self.states.add('state_patient_noid', function(name) {});
-        self.states.add('state_patient_dob', function(name) {});
+        self.states.add('state_patient_dob', function(name) {
+
+        });
         self.states.add('state_patient_sex', function(name) {
           return new ChoiceState(name, {
                 question: $("Please select the patient’s gender:"),
