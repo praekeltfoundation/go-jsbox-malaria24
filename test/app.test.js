@@ -44,36 +44,36 @@ describe("app", function() {
                     .check.interaction({
                         state: 'state_validate_facility_code',
                         reply: [
-                            'FacilityCode validated!'
+                            "Please enter the patient's cellphone number, eg: 01234567890"
                         ].join('\n')
                     })
                     .run();
             });
         });
 
-        describe("from welcome screen, fill in INVALID facility code", function() {
-            it("should invalidate the facility", function() {
-                return tester
-                    .setup.user.state('state_validate_facility_code')
-                    .input('')
-                    .check.interaction({
-                        state: 'state_validate_facility_code',
-                        reply: [
-                            'FacilityCode invalid'
-                        ].join('\n')
-                    })
-                    .run();
-            });
-        });
+        // describe("from welcome screen, fill in INVALID facility code", function() {
+        //     it("should invalidate the facility", function() {
+        //         return tester
+        //             .setup.user.state('state_validate_facility_code')
+        //             .input('')
+        //             .check.interaction({
+        //                 state: 'state_validate_facility_code',
+        //                 reply: [
+        //                     'FacilityCode invalid'
+        //                 ].join('\n')
+        //             })
+        //             .run();
+        //     });
+        // });
 
-        describe("when the user asks to exit", function() {
+        describe("when the case is submitted", function() {
             it("should say thank you and end the session", function() {
                 return tester
-                    .setup.user.state('state_welcome')
-                    .input('2')
+                    .setup.user.state('state_patient_sex')
+                    .input('1')
                     .check.interaction({
-                        state: 'states:end',
-                        reply: 'Thanks, cheers!'
+                        state: 'state_submit_case',
+                        reply: 'Thank you! Your report has been submitted.'
                     })
                     .check.reply.ends_session()
                     .run();

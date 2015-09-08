@@ -1,8 +1,8 @@
 go.app = function() {
     var vumigo = require('vumigo_v02');
     var App = vumigo.App;
-    // var Choice = vumigo.states.Choice;
-    // var ChoiceState = vumigo.states.ChoiceState;
+    var Choice = vumigo.states.Choice;
+    var ChoiceState = vumigo.states.ChoiceState;
     var FreeText = vumigo.states.FreeText;
     var EndState = vumigo.states.EndState;
 
@@ -48,7 +48,7 @@ go.app = function() {
 
 
         self.states.add('state_validate_facility_code', function(name) {
-          var question = $("FacilityCode validated!");
+          var question = $("Please enter the patient's cellphone number, eg: 01234567890");
           var error = $("FacilityCode invalid");
           return new FreeText(name, {
                 question: question,
@@ -66,7 +66,22 @@ go.app = function() {
 
         });
         self.states.add('state_invalid_facility_code', function(name) {});
-        self.states.add('state_patient_mssisdn', function(name) {});
+
+        self.states.add('state_patient_mssisdn', function(name) {
+          var question = $("FacilityCode validated!");
+          var error = $("FacilityCode invalid");
+          return new FreeText(name, {
+                question: question,
+                check: function(content) {
+                    if (go.utils.is_valid_name(content) || true) {
+                        return null;  // vumi expects null or undefined if check passes
+                    } else {
+                        return error;
+                    }
+                },
+                next: 'state_validate_facility_code'
+          });
+        });
         self.states.add('state_patient_firstname', function(name) {});
         self.states.add('state_patient_surname', function(name) {});
         self.states.add('state_patient_travel_abroad', function(name) {});
@@ -74,16 +89,23 @@ go.app = function() {
         self.states.add('state_patient_rsaid', function(name) {});
         self.states.add('state_patient_noid', function(name) {});
         self.states.add('state_patient_dob', function(name) {});
-        self.states.add('state_patient_sex', function(name) {});
-        self.states.add('state_submit_case', function(name) {});
+        self.states.add('state_patient_sex', function(name) {
+          return new ChoiceState(name, {
+                question: $("Please select the patient’s gender:"),
+                choices: [
+                    new Choice('1', $("Male")),
+                    new Choice('2', $("Female"))
+                ],
+
+                next: 'state_submit_case'
+            });
+        });
 
 
-
-
-        self.states.add('states:end', function(name) {
+        self.states.add('state_submit_case', function(name) {
             return new EndState(name, {
-                text: 'Thanks, cheers!',
-                next: 'states_welcome'
+                text: 'Thank you! Your report has been submitted.',
+                next: 'state_welcome'
             });
         });
     });
