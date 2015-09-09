@@ -19,16 +19,18 @@ InvalidFacilityCodeEntry --> FacilityCodeEntry : 1
 ValidateFacilityCode --> MSSISDNEntry : facility code valid
 MSSISDNEntry : Please enter the cell phone number of patient or next of kin.
 
+MSSISDNEntry --> ValidateMSSISDN : validate MSSISDN
+ValidateMSSISDN --> FirstNameEntry : valid MSSISDN
+ValidateMSSISDN --> InvalidMSSISDNEntry : invalid MSSISDN
 
-
-MSSISDNEntry --> InvalidMSSISDNEntry : MSSISDN invalid
 InvalidMSSISDNEntry : Sorry, that number is invalid:
 InvalidMSSISDNEntry: 1. try again
 InvalidMSSISDNEntry: 2. exit
 
+InvalidMSSISDNEntry --> MSSISDNEntry : 1
 InvalidMSSISDNEntry --> [*] : 2
 
-MSSISDNEntry --> FirstNameEntry : MSSISDN valid
+
 FirstNameEntry : Please enter the first name of the patient. For example Mbe
 FirstNameEntry --> LastNameEntry
 LastNameEntry : Please enter the surname of the patient
@@ -59,24 +61,28 @@ InvalidNoSAIDYearEntry --> NoSAIDYearEntry : 1
 NoSAIDYearEntry --> NoSAIDMonthEntry : Valid year
 NoSAIDMonthEntry : Please select the patient’s month of birth
 NoSAIDMonthEntry --> NoSAIDDayEntry
+
 NoSAIDDayEntry : Please enter the day the patient was born. For example
 NoSAIDDayEntry --> NoSAAIDGenderEntry
+
 NoSAAIDGenderEntry : Please select the patient’s gender
 NoSAAIDGenderEntry : 1. Male
 NoSAAIDGenderEntry : 2. Female
-
 NoSAAIDGenderEntry --> SubmitCase : 1|2
+
 SAIDEntry : Please enter the patient’s ID number
-SAIDEntry --> InvalidSAIDEntry : invalid SA ID
+SAIDEntry --> ValidateSAID
+
+ValidateSAID --> ExtractSAIDInfo : valid SAID
+ValidateSAID --> InvalidSAIDEntry : invalid SAID
+
 
 InvalidSAIDEntry : Sorry, SA ID is not valid
 InvalidSAIDEntry : 1. try again
 InvalidSAIDEntry : 2. exit
-
 InvalidSAIDEntry --> SAIDEntry : 1
 InvalidSAIDEntry --> [*] : 2
 
-SAIDEntry --> ExtractSAIDInfo
 ExtractSAIDInfo --> SubmitCase
 ExtractSAIDInfo : Date of birth
 ExtractSAIDInfo : Age
