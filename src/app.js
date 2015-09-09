@@ -19,6 +19,7 @@ go.app = function() {
             console.log("app.js");
             console.log(provinces);
             console.log("/app.js");
+            
             province_array = [];
             _.each(provinces, function(val) {
                 province_array.push(val.Province);
