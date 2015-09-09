@@ -23,10 +23,7 @@ go.app = function() {
         self.states.add('states:lookup', function(name) {
             var provinces = self.im.sandbox_config.get("locations.json", {json: true});
             provinces = JSON.parse(fs.readFileSync("src/lookups/provinces.json", "utf8"));
-            console.log("app.js");
-            console.log(provinces);
-            console.log("/app.js");
-
+            
             var choices = _.map(provinces, function(obj) {
                 return new Choice(obj.Province, obj.Province);
             });
