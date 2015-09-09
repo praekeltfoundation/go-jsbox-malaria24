@@ -21,7 +21,7 @@ go.app = function() {
             console.log("/app.js");
 
             var choices = _.map(provinces, function(obj) {
-                return new Choice(obj.Province, obj.Provice);
+                return new Choice(obj.Province, obj.Province);
             });
 
             return new PaginatedChoiceState(name, {
