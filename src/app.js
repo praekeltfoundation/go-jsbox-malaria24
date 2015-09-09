@@ -11,7 +11,7 @@ go.app = function() {
 
     var GoApp = App.extend(function(self) {
         App.call(self, 'states:start');
-        var $ = self.$;
+        // var $ = self.$;
 
         self.states.add('states:lookup', function(name) {
             var provinces = self.im.sandbox_config.get("locations.json", {json: true});

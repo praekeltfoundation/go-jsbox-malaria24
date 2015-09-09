@@ -18,7 +18,7 @@ go.app = function() {
 
     var GoApp = App.extend(function(self) {
         App.call(self, 'states:start');
-        var $ = self.$;
+        // var $ = self.$;
 
         self.states.add('states:lookup', function(name) {
             var provinces = self.im.sandbox_config.get("locations.json", {json: true});
@@ -34,11 +34,7 @@ go.app = function() {
             return new PaginatedChoiceState(name, {
                 question: 'What province do you belong to?' + provinces,
                 choices: province_array,
-                characters_per_page: 182,
-                options_per_page: null,
-                more: $('More'),
-                back: $('Back'),
-                 next: function(choice) {
+                next: function(choice) {
                     return choice.value;
                 }
             });
