@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/praekelt/go-jsbox-skeleton",
   "dependencies": {
+    "go-jsbox-ona": "~0.0.2",
     "vumigo_v02": "~0.2",
     "q": "~0.9",
     "lodash": "~2.4.1",
