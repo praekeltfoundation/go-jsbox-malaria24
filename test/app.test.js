@@ -38,6 +38,26 @@ describe("app", function() {
             });
         });
 
+        describe("provinces", function() {
+            it("read a list of provinces", function() {
+                // var provinces = im.sandbox_config.get("locations.json", {json: true});
+                var provinces = [];
+                console.log(provinces);
+                console.log("HERE!");
+                return tester
+                    .setup.user.state('states:lookup')
+                    .check.interaction({
+                        state: 'states:lookup',
+                        reply: [
+                            'Hi there! What do you want to do?',
+                            '1. Show this menu again',
+                            '2. Exit'
+                        ].join('\n')
+                    })
+                    .run();
+            });
+        });
+
         describe("when the user asks to see the menu again", function() {
             it("should show the menu again", function() {
                 return tester
