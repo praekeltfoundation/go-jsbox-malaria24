@@ -44,6 +44,7 @@ Patient_Abroad_Entry --> Locality_Entry
 Locality_Entry : lookups from supplied
 Locality_Entry --> ID_Type_Entry
 ID_Type_Entry --> SA_ID_Entry : 1
+ID_Type_Entry : What kind of identification does the patient have?
 ID_Type_Entry : 1. South African ID
 ID_Type_Entry : 2. None
 
