@@ -28,14 +28,12 @@ go.app = function() {
             console.log("/app.js");
 
             var choices = _.map(provinces, function(obj) {
-                return new Choice(obj.Province, obj.Provice);
+                return new Choice(obj.Province, obj.Province);
             });
 
             return new PaginatedChoiceState(name, {
-                question: 'What province do you belong to?' + provinces,
+                question: 'What province do you belong to?',
                 choices: choices,
-                options_per_page: null,
-                characters_per_page: 160,
                 next: function(choice) {
                     return choice.value;
                 }
