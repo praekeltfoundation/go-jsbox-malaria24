@@ -25,7 +25,7 @@ go.app = function() {
             });
 
             return new PaginatedChoiceState(name, {
-                question: 'What province do you belong to?' + provinces,
+                question: 'What province do you belong to?',
                 choices: choices,
                 options_per_page: null,
                 characters_per_page: 160,
