@@ -9,15 +9,17 @@ scale 900 width
 [*] --> FacilityCodeEntry : Nurse dial's USSD number
 FacilityCodeEntry : Welcome! To report a malaria case, please enter your facility code. For example, 543456
 
-FacilityCodeEntry --> ValidateNurseEntry : validate facility code
-ValidateNurseEntry --> InvalidFacilityCodeEntry : facility code invalid
+FacilityCodeEntry --> ValidateFacilityCode : validate facility code
+ValidateFacilityCode --> InvalidFacilityCodeEntry : facility code invalid
 InvalidFacilityCodeEntry: Sorry, that code is not recognised.
 InvalidFacilityCodeEntry: 1. try again
 InvalidFacilityCodeEntry: 2. exit
 InvalidFacilityCodeEntry --> [*] : 2
 InvalidFacilityCodeEntry --> FacilityCodeEntry : 1
-ValidateNurseEntry --> MSSISDNEntry : facility code valid
+ValidateFacilityCode --> MSSISDNEntry : facility code valid
 MSSISDNEntry : Please enter the cell phone number of patient or next of kin.
+
+
 
 MSSISDNEntry --> InvalidMSSISDNEntry : MSSISDN invalid
 InvalidMSSISDNEntry : Sorry, that number is invalid:
