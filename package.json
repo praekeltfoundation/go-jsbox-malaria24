@@ -1,14 +1,14 @@
 {
-  "name": "go-jsbox-skeleton",
+  "name": "go-jsbox-malaria24",
   "version": "0.2.0",
-  "description": "Skeleton for a vumi javascript sandbox app",
+  "description": "Malaria24 for a vumi javascript sandbox app",
   "main": "lib/app.js",
   "scripts": {
     "test": "grunt test"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/praekelt/go-jsbox-skeleton.git"
+    "url": "git://github.com/praekelt/go-jsbox-malaria24.git"
   },
   "keywords": [
     "vumi",
@@ -28,6 +28,7 @@
     "moment": "~2.5.1"
   },
   "devDependencies": {
+    "istanbul": "~0.3.19",
     "mocha": "~1.18",
     "jshint": "~2.4.4",
     "grunt-contrib-concat": "~0.3.0",
