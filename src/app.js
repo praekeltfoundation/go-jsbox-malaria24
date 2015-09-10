@@ -128,30 +128,26 @@ go.app = function() {
 
     self.states.add('No_SA_ID_Month_Entry', function(name) {
       var question = $("Please enter the month the patient was born. For example: 12");
-      var error = $('');
+      var error = $('Sorry, that month is invalid.');
       return new FreeText(name, {
         question: question,
         check: function(content) {
-          if (true) {
-            return null; // vumi expects null or undefined if check passes
-          } else {
+          if (isNaN(content) || (parseInt(content, 10) > 12 || parseInt(content, 10) < 1)) {
             return error;
           }
         },
-        next: 'No_SA_ID_Gender_Entry'
+        next: 'No_SA_ID_Day_Entry'
       });
     });
 
     self.states.add('No_SA_ID_Day_Entry', function(name) {
       var question = $("Please enter the day the patient was born. For example: 12");
-      var error = $('');
+      var error = $('Sorry, that day is invalid.');
       return new FreeText(name, {
         question: question,
         check: function(content) {
-          if (true) {
-            return null; // vumi expects null or undefined if check passes
-          } else {
-            return error;
+          if(isNaN(content) || (parseInt(content, 10) > 31 || parseInt(content, 10) < 1)) {
+              return error;
           }
         },
         next: 'No_SA_ID_Gender_Entry'
@@ -160,7 +156,7 @@ go.app = function() {
     });
     self.states.add('No_SA_ID_Gender_Entry', function(name) {
       return new ChoiceState(name, {
-        question: $("Please select the patient’s gender:"),
+        question: $("Please select the patient's gender:"),
         choices: [
           new Choice('1', $("Male")),
           new Choice('2', $("Female"))
