@@ -39,7 +39,7 @@ go.app = function() {
       return new FreeText(name, {
         question: question,
         check: function(content) {
-          if (true) {
+          if (!go.utils.is_valid_msisdn(content)) {
             return null; // vumi expects null or undefined if check passes
           } else {
             return error;

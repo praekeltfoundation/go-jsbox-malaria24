@@ -39,7 +39,7 @@ go.utils = {
         sum = 10 - ('' + sum).charAt(1);
         return ('' + sum).slice(-1) == check;
     },
-    
+
     // Handy to leave at the bottom to ensure trailing commas in objects
     // don't become syntax errors.
     "commas": "commas"
@@ -86,7 +86,7 @@ go.app = function() {
       return new FreeText(name, {
         question: question,
         check: function(content) {
-          if (true) {
+          if (!go.utils.is_valid_msisdn(content)) {
             return null; // vumi expects null or undefined if check passes
           } else {
             return error;
