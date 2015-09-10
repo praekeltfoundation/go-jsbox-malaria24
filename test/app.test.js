@@ -64,7 +64,7 @@ describe("app", function() {
                 return tester
                     .setup.user.state('MSISDN_Entry')
                     .input('12345')
-                    .check.reply.content(/Sorry, that number is not valid/)
+                    .check.reply.content(/Please enter the first name of the patient. For example: Mbe/)
                     .run();
             });
 
@@ -72,7 +72,7 @@ describe("app", function() {
                 return tester
                     .setup.user.state('MSISDN_Entry')
                     .input('0123456789')
-                    .check.reply.content(/Please enter the first name of the patient/)
+                    .check.reply.content(/Please enter the first name of the patient. For example: Mbe/)
                     .run();
             });
         });
