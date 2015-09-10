@@ -34,13 +34,13 @@ go.app = function() {
       return new FreeText(name, {
         question: question,
         check: function(content) {
-          if (true) {
+          if (1 == 1) {
             return null; // vumi expects null or undefined if check passes
           } else {
             return error;
           }
         },
-        next: 'Validate_Facility_Code'
+        next: 'MSISDN_Entry'
       });
     });
     self.states.add('First_Name_Entry', function(name) {
