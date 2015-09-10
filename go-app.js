@@ -23,6 +23,7 @@ go.app = function() {
   var ChoiceState = vumigo.states.ChoiceState;
   var FreeText = vumigo.states.FreeText;
   var EndState = vumigo.states.EndState;
+  // var _ = require('lodash');
 
   var GoApp = App.extend(function(self) {
     App.call(self, 'Facility_Code_Entry');
@@ -33,21 +34,38 @@ go.app = function() {
     self.states.add('Extract_SA_ID_Info', function(name) {
 
     });
+
     self.states.add('Facility_Code_Entry', function(name) {
-      var question = $("Welcome! To report a malaria case, please enter your facility code. For example, 543456");
+      var question = $("Welcome! To report a malaria case, please enter your " +
+                       "facility code. For example, 543456");
       var error = $("The facility code is invalid. Please enter again.");
       return new FreeText(name, {
         question: question,
         check: function(content) {
-          if (1 == 1) {
-            return null; // vumi expects null or undefined if check passes
-          } else {
+          if (isNaN(content)) {
             return error;
           }
         },
         next: 'MSISDN_Entry'
       });
     });
+
+    self.states.add('MSISDN_Entry', function(name) {
+      var question = $("Please enter the cell phone number of patient or next of kin.");
+      var error = $('Sorry, that number is not valid');
+      return new FreeText(name, {
+        question: question,
+        check: function(content) {
+          if (true) {
+            return null; // vumi expects null or undefined if check passes
+          } else {
+            return error;
+          }
+        },
+        next: 'First_Name_Entry'
+      });
+    });
+
     self.states.add('First_Name_Entry', function(name) {
       var question = $("Please enter the first name of the patient. For example: Mbe");
       var error = $('');
@@ -109,21 +127,6 @@ go.app = function() {
         next: 'ID_Type_Entry'
       });
 
-    });
-    self.states.add('MSISDN_Entry', function(name) {
-      var question = $("Please enter the cell phone number of patient or next of kin.");
-      var error = $('Sorry, that number is not valid');
-      return new FreeText(name, {
-        question: question,
-        check: function(content) {
-          if (true) {
-            return null; // vumi expects null or undefined if check passes
-          } else {
-            return error;
-          }
-        },
-        next: 'First_Name_Entry'
-      });
     });
     self.states.add('No_SA_ID_Day_Entry', function(name) {
       var question = $("Please enter the day the patient was born. For example: 12");
