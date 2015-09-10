@@ -40,9 +40,7 @@ go.app = function() {
         question: question,
         check: function(content) {
           if (!go.utils.is_valid_msisdn(content)) {
-            return null; // vumi expects null or undefined if check passes
-          } else {
-            return error;
+            return error; // vumi expects null or undefined if check passes
           }
         },
         next: 'First_Name_Entry'

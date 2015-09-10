@@ -64,7 +64,7 @@ describe("app", function() {
                 return tester
                     .setup.user.state('MSISDN_Entry')
                     .input('12345')
-                    .check.reply.content(/Please enter the first name of the patient. For example: Mbe/)
+                    .check.reply.content(/Sorry, that number is not valid/)
                     .run();
             });
 
