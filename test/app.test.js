@@ -95,7 +95,22 @@ describe("app", function() {
             });
         });
 
+        describe('Last_Name_Entry', function () {
+            it('should accept any string input', function () {
+                return tester
+                    .setup.user.state('Last_Name_Entry')
+                    .input('Ngu')
+                    .check.reply.content(/Has the patient travelled outside of the country/)
+                    .run();
+            });
 
-
+            it('should block on null input', function () {
+                return tester
+                    .setup.user.state('Last_Name_Entry')
+                    .input(null)
+                    .check.reply.content(/Please enter the last name of the patient/)
+                    .run();
+            });
+        });
     });
 });
