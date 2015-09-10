@@ -104,7 +104,7 @@ describe("app", function() {
                     .run();
             });
 
-            it('shold block on null input', function () {
+            it('should block on null input', function () {
                 return tester
                     .setup.user.state('Last_Name_Entry')
                     .input(null)
