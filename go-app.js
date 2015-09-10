@@ -165,13 +165,27 @@ go.app = function() {
       return new FreeText(name, {
         question: question,
         check: function(content) {
+          if (content.length != 4 || isNaN(content)) {
+            return error;
+          }
+        },
+        next: 'No_SA_ID_Month_Entry'
+      });
+    });
+
+    self.states.add('No_SA_ID_Month_Entry', function(name) {
+      var question = $("Please enter the month the patient was born. For example: 12");
+      var error = $('');
+      return new FreeText(name, {
+        question: question,
+        check: function(content) {
           if (true) {
             return null; // vumi expects null or undefined if check passes
           } else {
             return error;
           }
         },
-        next: 'No_SA_ID_Month_Entry'
+        next: 'No_SA_ID_Gender_Entry'
       });
     });
 
@@ -200,22 +214,6 @@ go.app = function() {
         ],
 
         next: 'state_submit_case'
-      });
-
-    });
-    self.states.add('No_SA_ID_Month_Entry', function(name) {
-      var question = $("Please enter the month the patient was born. For example: 12");
-      var error = $('');
-      return new FreeText(name, {
-        question: question,
-        check: function(content) {
-          if (true) {
-            return null; // vumi expects null or undefined if check passes
-          } else {
-            return error;
-          }
-        },
-        next: 'No_SA_ID_Gender_Entry'
       });
 
     });

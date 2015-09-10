@@ -176,5 +176,23 @@ describe("app", function() {
                     .run();
             });
         });
+
+        describe('No_SA_ID_Year_Entry', function () {
+            it('should not accept an invalid year', function () {
+                return tester
+                    .setup.user.state('No_SA_ID_Year_Entry')
+                    .input('pooh')
+                    .check.reply.content(/Sorry, that year is invalid/)
+                    .run();
+            });
+
+            it('should accept a valid year', function () {
+                return tester
+                    .setup.user.state('No_SA_ID_Year_Entry')
+                    .input('2000')
+                    .check.reply.content(/Please enter the month the patient was born/)
+                    .run();
+            });
+        });
     });
 });
