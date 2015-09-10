@@ -4,6 +4,7 @@ go.app = function() {
   var Choice = vumigo.states.Choice;
   var ChoiceState = vumigo.states.ChoiceState;
   var FreeText = vumigo.states.FreeText;
+  var Q = require('q');
   var EndState = vumigo.states.EndState;
   // var Ona = require('go-jsbox-ona').Ona;
 
@@ -134,7 +135,7 @@ go.app = function() {
           new Choice('2', $("Female"))
         ],
 
-        next: 'state_submit_case'
+        next: 'Submit_Case'
       });
 
     });
