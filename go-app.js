@@ -10,12 +10,36 @@ go;
 // Shared utils lib
 go.utils = {
 
-    "is_valid_msisdn": function (content) {
+    is_valid_msisdn: function (content) {
         return !isNaN(content) &&
             parseInt(content[0], 10) === 0 &&
             content.length == 10;
     },
 
+    validate_id_sa: function(id) {
+        var i, c,
+            even = '',
+            sum = 0,
+            check = id.slice(-1);
+
+        if (id.length != 13 || id.match(/\D/)) {
+            return false;
+        }
+        id = id.substr(0, id.length - 1);
+        for (i = 0; id.charAt(i); i += 2) {
+            c = id.charAt(i);
+            sum += +c;
+            even += id.charAt(i + 1);
+        }
+        even = '' + even * 2;
+        for (i = 0; even.charAt(i); i++) {
+            c = even.charAt(i);
+            sum += +c;
+        }
+        sum = 10 - ('' + sum).charAt(1);
+        return ('' + sum).slice(-1) == check;
+    },
+    
     // Handy to leave at the bottom to ensure trailing commas in objects
     // don't become syntax errors.
     "commas": "commas"
@@ -74,19 +98,40 @@ go.app = function() {
 
     self.states.add('First_Name_Entry', function(name) {
       var question = $("Please enter the first name of the patient. For example: Mbe");
-      var error = $('');
       return new FreeText(name, {
         question: question,
-        check: function(content) {
-          if (true) {
-            return null; // vumi expects null or undefined if check passes
-          } else {
-            return error;
-          }
-        },
         next: 'Last_Name_Entry'
       });
     });
+
+    self.states.add('Last_Name_Entry', function(name) {
+      var question = $("Please enter the last name of the patient. For example: Ngu");
+      return new FreeText(name, {
+        question: question,
+        next: 'Patient_Abroad_Entry'
+      });
+    });
+
+    self.states.add('Patient_Abroad_Entry', function(name) {
+      return new ChoiceState(name, {
+        question: $("Has the patient travelled outside of the country in the past 2 weeks:"),
+        choices: [
+          new Choice('1', $("Yes")),
+          new Choice('2', $("No")),
+          new Choice('2', $("Unknown"))
+        ],
+        next: 'Locality_Entry'
+      });
+    });
+
+    self.states.add('Locality_Entry', function(name) {
+      var question = $("Please select the locality where the patient is currently staying:");
+      return new FreeText(name, {
+        question: question,
+        next: 'ID_Type_Entry'
+      });
+    });
+
     self.states.add('ID_Type_Entry', function(name) {
       var question = $("What kind of identification does the patient have?");
       return new ChoiceState(name, {
@@ -102,48 +147,57 @@ go.app = function() {
 
       });
     });
-    self.states.add('Last_Name_Entry', function(name) {
-      var question = $("Please enter the last name of the patient. For example: Ngu");
-      var error = $('');
+
+    self.states.add('SA_ID_Entry', function(name) {
+      var question = $("Please enter the patient's ID number");
+      var error = $('Sorry, that SA ID is not valid');
       return new FreeText(name, {
         question: question,
         check: function(content) {
-          if (true) {
-            return null; // vumi expects null or undefined if check passes
-          } else {
+          if (!go.utils.validate_id_sa(content)) {
             return error;
           }
         },
-        next: 'Patient_Abroad_Entry'
+        next: 'Submit_Case'
       });
 
     });
-    self.states.add('Locality_Entry', function(name) {
-      var question = $("Please select the locality where the patient is currently staying:");
-      var error = $('');
+
+    self.states.add('No_SA_ID_Year_Entry', function(name) {
+      var question = $("Please enter the year the patient was born. For example: 1982");
+      var error = $('Sorry, that year is invalid');
       return new FreeText(name, {
         question: question,
         check: function(content) {
-          if (true) {
-            return null; // vumi expects null or undefined if check passes
-          } else {
+          if (content.length != 4 || isNaN(content)) {
             return error;
           }
         },
-        next: 'ID_Type_Entry'
+        next: 'No_SA_ID_Month_Entry'
       });
-
     });
+    self.states.add('No_SA_ID_Month_Entry', function(name) {
+      var question = $("Please enter the month the patient was born. For example: 12");
+      var error = $('Sorry, that month is invalid.');
+      return new FreeText(name, {
+        question: question,
+        check: function(content) {
+          if (isNaN(content) || (parseInt(content, 10) > 12 || parseInt(content, 10) < 1)) {
+            return error;
+          }
+        },
+        next: 'No_SA_ID_Day_Entry'
+      });
+    });
+
     self.states.add('No_SA_ID_Day_Entry', function(name) {
       var question = $("Please enter the day the patient was born. For example: 12");
-      var error = $('');
+      var error = $('Sorry, that day is invalid.');
       return new FreeText(name, {
         question: question,
         check: function(content) {
-          if (true) {
-            return null; // vumi expects null or undefined if check passes
-          } else {
-            return error;
+          if(isNaN(content) || (parseInt(content, 10) > 31 || parseInt(content, 10) < 1)) {
+              return error;
           }
         },
         next: 'No_SA_ID_Gender_Entry'
@@ -152,7 +206,7 @@ go.app = function() {
     });
     self.states.add('No_SA_ID_Gender_Entry', function(name) {
       return new ChoiceState(name, {
-        question: $("Please select the patient’s gender:"),
+        question: $("Please select the patient's gender:"),
         choices: [
           new Choice('1', $("Male")),
           new Choice('2', $("Female"))
@@ -162,66 +216,7 @@ go.app = function() {
       });
 
     });
-    self.states.add('No_SA_ID_Month_Entry', function(name) {
-      var question = $("Please enter the month the patient was born. For example: 12");
-      var error = $('');
-      return new FreeText(name, {
-        question: question,
-        check: function(content) {
-          if (true) {
-            return null; // vumi expects null or undefined if check passes
-          } else {
-            return error;
-          }
-        },
-        next: 'No_SA_ID_Gender_Entry'
-      });
 
-    });
-    self.states.add('No_SA_ID_Year_Entry', function(name) {
-      var question = $("Please enter the year the patient was born. For example: 1982");
-      var error = $('Sorry, that year is invalid');
-      return new FreeText(name, {
-        question: question,
-        check: function(content) {
-          if (true) {
-            return null; // vumi expects null or undefined if check passes
-          } else {
-            return error;
-          }
-        },
-        next: 'No_SA_ID_Month_Entry'
-      });
-    });
-    self.states.add('Patient_Abroad_Entry', function(name) {
-      return new ChoiceState(name, {
-        question: $("Has the patient travelled outside of the country in the past 2 weeks:"),
-        choices: [
-          new Choice('1', $("Yes")),
-          new Choice('2', $("No")),
-          new Choice('2', $("Unknown"))
-        ],
-
-        next: 'Locality_Entry'
-      });
-
-    });
-    self.states.add('SA_ID_Entry', function(name) {
-      var question = $("Please enter the patient's ID number");
-      var error = $('Sorry, that SA ID is not valid');
-      return new FreeText(name, {
-        question: question,
-        check: function(content) {
-          if (true) {
-            return null; // vumi expects null or undefined if check passes
-          } else {
-            return error;
-          }
-        },
-        next: 'Submit_Case'
-      });
-
-    });
     self.states.add('Submit_Case', function(name) {
       return Q()
         .then(function() {
