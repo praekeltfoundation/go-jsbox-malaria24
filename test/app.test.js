@@ -176,5 +176,59 @@ describe("app", function() {
                     .run();
             });
         });
+
+        describe('No_SA_ID_Year_Entry', function () {
+            it('should not accept an invalid year', function () {
+                return tester
+                    .setup.user.state('No_SA_ID_Year_Entry')
+                    .input('pooh')
+                    .check.reply.content(/Sorry, that year is invalid/)
+                    .run();
+            });
+
+            it('should accept a valid year', function () {
+                return tester
+                    .setup.user.state('No_SA_ID_Year_Entry')
+                    .input('2000')
+                    .check.reply.content(/Please enter the month the patient was born/)
+                    .run();
+            });
+        });
+
+        describe('No_SA_ID_Month_Entry', function () {
+            it('should not accept an invalid month', function () {
+                return tester
+                    .setup.user.state('No_SA_ID_Month_Entry')
+                    .input('13')
+                    .check.reply.content(/Sorry, that month is invalid/)
+                    .run();
+            });
+
+            it('should accept a valid month', function () {
+                return tester
+                    .setup.user.state('No_SA_ID_Month_Entry')
+                    .input('12')
+                    .check.reply.content(/Please enter the day the patient was born./)
+                    .run();
+            });
+        });
+
+        describe('No_SA_ID_Day_Entry', function () {
+            it('should not accept an invalid day', function () {
+                return tester
+                    .setup.user.state('No_SA_ID_Day_Entry')
+                    .input('32')
+                    .check.reply.content(/Sorry, that day is invalid./)
+                    .run();
+            });
+
+            it('should accept a valid day', function () {
+                return tester
+                    .setup.user.state('No_SA_ID_Day_Entry')
+                    .input('12')
+                    .check.reply.content(/Please select the patient's gender/)
+                    .run();
+            });
+        });
     });
 });
