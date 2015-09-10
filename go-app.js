@@ -8,8 +8,13 @@ go;
 /*jshint -W083 */
 
 // Shared utils lib
-// Nothing here yet.
 go.utils = {
+
+    "is_valid_msisdn": function (content) {
+        return !isNaN(content) &&
+            content[0] === 0 &&
+            content.length == 10;
+    },
 
     // Handy to leave at the bottom to ensure trailing commas in objects
     // don't become syntax errors.
@@ -23,7 +28,7 @@ go.app = function() {
   var ChoiceState = vumigo.states.ChoiceState;
   var FreeText = vumigo.states.FreeText;
   var EndState = vumigo.states.EndState;
-  
+
   var GoApp = App.extend(function(self) {
     App.call(self, 'Facility_Code_Entry');
     var $ = self.$;
@@ -55,9 +60,7 @@ go.app = function() {
       return new FreeText(name, {
         question: question,
         check: function(content) {
-          if (true) {
-            return null; // vumi expects null or undefined if check passes
-          } else {
+          if (!go.utils.is_valid_msisdn(content)) {
             return error;
           }
         },

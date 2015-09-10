@@ -1,8 +1,13 @@
 /*jshint -W083 */
 
 // Shared utils lib
-// Nothing here yet.
 go.utils = {
+
+    "is_valid_msisdn": function (content) {
+        return !isNaN(content) &&
+            content[0] === 0 &&
+            content.length == 10;
+    },
 
     // Handy to leave at the bottom to ensure trailing commas in objects
     // don't become syntax errors.

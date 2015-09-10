@@ -64,7 +64,7 @@ describe("app", function() {
                 return tester
                     .setup.user.state('MSISDN_Entry')
                     .input('abc')
-                    .check.reply.content('/Sorr, that number is not valid')
+                    .check.reply.content(/Sorry, that number is not valid/)
                     .run();
             });
         });
