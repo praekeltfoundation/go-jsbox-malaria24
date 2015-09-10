@@ -6,7 +6,7 @@ go.app = function() {
   var FreeText = vumigo.states.FreeText;
   var Q = require('q');
   var EndState = vumigo.states.EndState;
-  // var Ona = require('go-jsbox-ona').Ona;
+  var Ona = require('go-jsbox-ona').Ona;
 
   var GoApp = App.extend(function(self) {
     App.call(self, 'Facility_Code_Entry');
