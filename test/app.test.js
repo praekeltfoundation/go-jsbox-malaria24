@@ -77,6 +77,24 @@ describe("app", function() {
             });
         });
 
+        describe('First_Name_Entry', function () {
+            it('should accept any string input', function () {
+                return tester
+                    .setup.user.state('First_Name_Entry')
+                    .input('Mbe')
+                    .check.reply.content(/Please enter the last name of the patient./)
+                    .run();
+            });
+
+            it('should block on null input', function () {
+                return tester
+                    .setup.user.state('First_Name_Entry')
+                    .input(null)
+                    .check.reply.content(/Please enter the first name of the patient/)
+                    .run();
+            });
+        });
+
 
 
     });

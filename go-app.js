@@ -70,34 +70,12 @@ go.app = function() {
 
     self.states.add('First_Name_Entry', function(name) {
       var question = $("Please enter the first name of the patient. For example: Mbe");
-      var error = $('');
       return new FreeText(name, {
         question: question,
-        check: function(content) {
-          if (true) {
-            return null; // vumi expects null or undefined if check passes
-          } else {
-            return error;
-          }
-        },
         next: 'Last_Name_Entry'
       });
     });
-    self.states.add('ID_Type_Entry', function(name) {
-      var question = $("What kind of identification does the patient have?");
-      return new ChoiceState(name, {
-        question: question,
-        choices: [
-          new Choice('SA_ID_Entry', $("South African ID")),
-          new Choice('No_SA_ID_Year_Entry', $("None"))
-        ],
 
-        next: function(choice) {
-          return choice.value;
-        }
-
-      });
-    });
     self.states.add('Last_Name_Entry', function(name) {
       var question = $("Please enter the last name of the patient. For example: Ngu");
       var error = $('');
@@ -114,6 +92,23 @@ go.app = function() {
       });
 
     });
+    
+    self.states.add('ID_Type_Entry', function(name) {
+      var question = $("What kind of identification does the patient have?");
+      return new ChoiceState(name, {
+        question: question,
+        choices: [
+          new Choice('SA_ID_Entry', $("South African ID")),
+          new Choice('No_SA_ID_Year_Entry', $("None"))
+        ],
+
+        next: function(choice) {
+          return choice.value;
+        }
+
+      });
+    });
+
     self.states.add('Locality_Entry', function(name) {
       var question = $("Please select the locality where the patient is currently staying:");
       var error = $('');
