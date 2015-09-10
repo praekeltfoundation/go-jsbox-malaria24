@@ -209,7 +209,7 @@ go.app = function() {
           new Choice('2', $("Female"))
         ],
 
-        next: 'state_submit_case'
+        next: 'Submit_Case'
       });
 
     });

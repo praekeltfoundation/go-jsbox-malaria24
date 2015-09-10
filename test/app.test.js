@@ -230,5 +230,23 @@ describe("app", function() {
                     .run();
             });
         });
+
+        describe('No_SA_ID_Gender_Entry', function () {
+            it('should not accept invalid options', function () {
+                return tester
+                    .setup.user.state('No_SA_ID_Gender_Entry')
+                    .input('3')
+                    .check.reply.content(/Please select the patient's gender/)
+                    .run();
+            });
+
+            it('should accept valid options', function () {
+                return tester
+                    .setup.user.state('No_SA_ID_Gender_Entry')
+                    .input('1')
+                    .check.reply.content(/Thank you! Your report has been submitted/)
+                    .run();
+            });
+        });
     });
 });
