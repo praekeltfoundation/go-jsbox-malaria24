@@ -112,5 +112,69 @@ describe("app", function() {
                     .run();
             });
         });
+
+        describe('Patient_Abroad_Entry', function () {
+            it('should not accept invalid inputs', function () {
+                return tester
+                    .setup.user.state('Patient_Abroad_Entry')
+                    .input('-1')
+                    .check.reply.content(/Has the patient travelled outside of the country/)
+                    .run();
+            });
+
+            it('should accept one of the valid inputs', function () {
+                return tester
+                    .setup.user.state('Patient_Abroad_Entry')
+                    .input('1')
+                    .check.reply.content(/Please select the locality/)
+                    .run();
+            });
+        });
+
+        describe('Locality_Entry', function () {
+            it('should accept anything currently it seems', function () {
+                return tester
+                    .setup.user.state('Locality_Entry')
+                    .input('fooo')
+                    .check.reply.content(/What kind of identification/)
+                    .run();
+            });
+        });
+
+        describe('ID_Type_Entry', function () {
+            it('should go to the patient ID number', function () {
+                return tester
+                    .setup.user.state('ID_Type_Entry')
+                    .input('1')
+                    .check.reply.content(/Please enter the patient's ID number/)
+                    .run();
+            });
+
+            it('should go to the patient\'s year of birth', function () {
+                return tester
+                    .setup.user.state('ID_Type_Entry')
+                    .input('2')
+                    .check.reply.content(/Please enter the year the patient was born/)
+                    .run();
+            });
+        });
+
+        describe('SA_ID_Entry', function () {
+            it('should not accept invalid SA ID numbers', function () {
+                return tester
+                    .setup.user.state('SA_ID_Entry')
+                    .input('foo')
+                    .check.reply.content(/Sorry, that SA ID is not valid/)
+                    .run();
+            });
+
+            it('should not accept invalid SA ID numbers', function () {
+                return tester
+                    .setup.user.state('SA_ID_Entry')
+                    .input('8905100273087')
+                    .check.reply.content(/Thank you! Your report has been submitted./)
+                    .run();
+            });
+        });
     });
 });
