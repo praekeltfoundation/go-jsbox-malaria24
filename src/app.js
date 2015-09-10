@@ -73,6 +73,14 @@ go.app = function() {
       });
     });
 
+    self.states.add('Locality_Entry', function(name) {
+      var question = $("Please select the locality where the patient is currently staying:");
+      return new FreeText(name, {
+        question: question,
+        next: 'ID_Type_Entry'
+      });
+    });
+
     self.states.add('ID_Type_Entry', function(name) {
       var question = $("What kind of identification does the patient have?");
       return new ChoiceState(name, {
@@ -89,9 +97,9 @@ go.app = function() {
       });
     });
 
-    self.states.add('Locality_Entry', function(name) {
-      var question = $("Please select the locality where the patient is currently staying:");
-      var error = $('');
+    self.states.add('SA_ID_Entry', function(name) {
+      var question = $("Please enter the patient's ID number");
+      var error = $('Sorry, that SA ID is not valid');
       return new FreeText(name, {
         question: question,
         check: function(content) {
@@ -101,10 +109,27 @@ go.app = function() {
             return error;
           }
         },
-        next: 'ID_Type_Entry'
+        next: 'Submit_Case'
       });
 
     });
+
+    self.states.add('No_SA_ID_Year_Entry', function(name) {
+      var question = $("Please enter the year the patient was born. For example: 1982");
+      var error = $('Sorry, that year is invalid');
+      return new FreeText(name, {
+        question: question,
+        check: function(content) {
+          if (true) {
+            return null; // vumi expects null or undefined if check passes
+          } else {
+            return error;
+          }
+        },
+        next: 'No_SA_ID_Month_Entry'
+      });
+    });
+
     self.states.add('No_SA_ID_Day_Entry', function(name) {
       var question = $("Please enter the day the patient was born. For example: 12");
       var error = $('');
@@ -149,37 +174,7 @@ go.app = function() {
       });
 
     });
-    self.states.add('No_SA_ID_Year_Entry', function(name) {
-      var question = $("Please enter the year the patient was born. For example: 1982");
-      var error = $('Sorry, that year is invalid');
-      return new FreeText(name, {
-        question: question,
-        check: function(content) {
-          if (true) {
-            return null; // vumi expects null or undefined if check passes
-          } else {
-            return error;
-          }
-        },
-        next: 'No_SA_ID_Month_Entry'
-      });
-    });
-    self.states.add('SA_ID_Entry', function(name) {
-      var question = $("Please enter the patient's ID number");
-      var error = $('Sorry, that SA ID is not valid');
-      return new FreeText(name, {
-        question: question,
-        check: function(content) {
-          if (true) {
-            return null; // vumi expects null or undefined if check passes
-          } else {
-            return error;
-          }
-        },
-        next: 'Submit_Case'
-      });
 
-    });
     self.states.add('Submit_Case', function(name) {
       return new EndState(name, {
         text: "Thank you! Your report has been submitted.",
