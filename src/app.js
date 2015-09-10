@@ -61,7 +61,7 @@ go.app = function() {
       });
     });
     self.states.add('Last_Name_Entry', function(name) {
-      var question = $("Please enter the first name of the patient. For example: Mbe");
+      var question = $("Please enter the last name of the patient. For example: Ngu");
       var error = $('');
       return new FreeText(name, {
         question: question,
