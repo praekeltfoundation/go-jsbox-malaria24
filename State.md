@@ -80,7 +80,7 @@ Extract_SA_ID_Info : Gender
 Submit_Case --> [*]
 
 Submit_Case: Thank you! Your report has been submitted.
-Submit_Case --> GenerateCase
+Submit_Case --> Generate_Case
 
 @enduml
 ```
