@@ -55,21 +55,24 @@ go.app = function() {
 
     self.states.add('Last_Name_Entry', function(name) {
       var question = $("Please enter the last name of the patient. For example: Ngu");
-      var error = $('');
       return new FreeText(name, {
         question: question,
-        check: function(content) {
-          if (true) {
-            return null; // vumi expects null or undefined if check passes
-          } else {
-            return error;
-          }
-        },
         next: 'Patient_Abroad_Entry'
       });
-
     });
-    
+
+    self.states.add('Patient_Abroad_Entry', function(name) {
+      return new ChoiceState(name, {
+        question: $("Has the patient travelled outside of the country in the past 2 weeks:"),
+        choices: [
+          new Choice('1', $("Yes")),
+          new Choice('2', $("No")),
+          new Choice('2', $("Unknown"))
+        ],
+        next: 'Locality_Entry'
+      });
+    });
+
     self.states.add('ID_Type_Entry', function(name) {
       var question = $("What kind of identification does the patient have?");
       return new ChoiceState(name, {
@@ -160,19 +163,6 @@ go.app = function() {
         },
         next: 'No_SA_ID_Month_Entry'
       });
-    });
-    self.states.add('Patient_Abroad_Entry', function(name) {
-      return new ChoiceState(name, {
-        question: $("Has the patient travelled outside of the country in the past 2 weeks:"),
-        choices: [
-          new Choice('1', $("Yes")),
-          new Choice('2', $("No")),
-          new Choice('2', $("Unknown"))
-        ],
-
-        next: 'Locality_Entry'
-      });
-
     });
     self.states.add('SA_ID_Entry', function(name) {
       var question = $("Please enter the patient's ID number");
