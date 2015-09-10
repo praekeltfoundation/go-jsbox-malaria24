@@ -22,51 +22,28 @@ describe("app", function() {
                 });
         });
 
-        describe("when the user starts a session", function() {
-            it("should ask them what they want to do", function() {
-                return tester
-                    .start()
-                    .check.interaction({
-                        state: 'states:start',
-                        reply: [
-                            'Hi there! What do you want to do?',
-                            '1. Show this menu again',
-                            '2. Exit'
-                        ].join('\n')
-                    })
-                    .run();
+        describe("Extract_SA_ID_Info: extract the SA ID out of the SA ID", function() {
+            it("this still needs to be fleshed out", function() {
+                true;
             });
         });
 
-        describe("when the user asks to see the menu again", function() {
-            it("should show the menu again", function() {
-                return tester
-                    .setup.user.state('states:start')
-                    .input('1')
-                    .check.interaction({
-                        state: 'states:start',
-                        reply: [
-                            'Hi there! What do you want to do?',
-                            '1. Show this menu again',
-                            '2. Exit'
-                        ].join('\n')
-                    })
-                    .run();
-            });
+        describe("Facility_Code_Entry:", function() {
+          it("should show the welcome screen", function() {
+              return tester
+                  .start()
+                  .check.interaction({
+                      state: 'Facility_Code_Entry',
+                      reply: [
+                          'Welcome! To report a malaria case, please enter your facility code. For example, 543456'
+                      ].join('\n')
+                  })
+                  .run();
+          });
+          
         });
 
-        describe("when the user asks to exit", function() {
-            it("should say thank you and end the session", function() {
-                return tester
-                    .setup.user.state('states:start')
-                    .input('2')
-                    .check.interaction({
-                        state: 'states:end',
-                        reply: 'Thanks, cheers!'
-                    })
-                    .check.reply.ends_session()
-                    .run();
-            });
-        });
+
+
     });
 });
