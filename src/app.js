@@ -103,9 +103,7 @@ go.app = function() {
       return new FreeText(name, {
         question: question,
         check: function(content) {
-          if (true) {
-            return null; // vumi expects null or undefined if check passes
-          } else {
+          if (!go.utils.validate_id_sa(content)) {
             return error;
           }
         },

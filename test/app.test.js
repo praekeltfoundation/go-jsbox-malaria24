@@ -160,11 +160,19 @@ describe("app", function() {
         });
 
         describe('SA_ID_Entry', function () {
-            it('should validate the SA ID number', function () {
+            it('should not accept invalid SA ID numbers', function () {
                 return tester
                     .setup.user.state('SA_ID_Entry')
                     .input('foo')
                     .check.reply.content(/Sorry, that SA ID is not valid/)
+                    .run();
+            });
+
+            it('should not accept invalid SA ID numbers', function () {
+                return tester
+                    .setup.user.state('SA_ID_Entry')
+                    .input('8905100273087')
+                    .check.reply.content(/Thank you! Your report has been submitted./)
                     .run();
             });
         });
