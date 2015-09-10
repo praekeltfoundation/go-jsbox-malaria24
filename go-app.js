@@ -12,7 +12,7 @@ go.utils = {
 
     "is_valid_msisdn": function (content) {
         return !isNaN(content) &&
-            content[0] === 0 &&
+            parseInt(content[0], 10) === 0 &&
             content.length == 10;
     },
 

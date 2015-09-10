@@ -60,11 +60,19 @@ describe("app", function() {
         });
 
         describe('MSISDN_Entry', function() {
-            it('should validate the phone number', function () {
+            it('should block bad phone numbers', function () {
                 return tester
                     .setup.user.state('MSISDN_Entry')
-                    .input('abc')
+                    .input('12345')
                     .check.reply.content(/Sorry, that number is not valid/)
+                    .run();
+            });
+
+            it('should accept reasonable phone numbers', function () {
+                return tester
+                    .setup.user.state('MSISDN_Entry')
+                    .input('0123456789')
+                    .check.reply.content(/Please enter the first name of the patient/)
                     .run();
             });
         });
