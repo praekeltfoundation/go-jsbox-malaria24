@@ -11,7 +11,6 @@ go.app = function() {
     var $ = self.$;
     // var interrupt = true;
 
-
     // NEW STEPS
     self.states.add('Extract_SA_ID_Info', function(name) {
 
@@ -109,6 +108,19 @@ go.app = function() {
       });
     });
     self.states.add('No_SA_ID_Day_Entry', function(name) {
+      var question = $("Please enter the day the patient was born. For example: 12");
+      var error = $('');
+      return new FreeText(name, {
+        question: question,
+        check: function(content) {
+          if (true) {
+            return null; // vumi expects null or undefined if check passes
+          } else {
+            return error;
+          }
+        },
+        next: 'No_SA_ID_Gender_Entry'
+      });
 
     });
     self.states.add('No_SA_ID_Gender_Entry', function(name) {
@@ -124,6 +136,19 @@ go.app = function() {
 
     });
     self.states.add('No_SA_ID_Month_Entry', function(name) {
+      var question = $("Please enter the month the patient was born. For example: 12");
+      var error = $('');
+      return new FreeText(name, {
+        question: question,
+        check: function(content) {
+          if (true) {
+            return null; // vumi expects null or undefined if check passes
+          } else {
+            return error;
+          }
+        },
+        next: 'No_SA_ID_Gender_Entry'
+      });
 
     });
     self.states.add('No_SA_ID_Year_Entry', function(name) {
@@ -178,79 +203,6 @@ go.app = function() {
 
     });
     // END NEW STEPS
-
-
-
-
-
-
-
-
-
-    self.states.add('Locality_Entry', function(name) {
-
-    });
-    self.states.add('MSISDN_Entry', function(name) {
-
-    });
-    self.states.add('No_SA_ID_Day_Entry', function(name) {
-      var question = $("Please enter the day the patient was born. For example: 12");
-      var error = $('');
-      return new FreeText(name, {
-        question: question,
-        check: function(content) {
-          if (true) {
-            return null; // vumi expects null or undefined if check passes
-          } else {
-            return error;
-          }
-        },
-        next: 'No_SA_ID_Gender_Entry'
-      });
-    });
-    self.states.add('No_SA_ID_Month_Entry', function(name) {
-      var question = $("Please enter the month the patient was born. For example: 12");
-      var error = $('');
-      return new FreeText(name, {
-        question: question,
-        check: function(content) {
-          if (true) {
-            return null; // vumi expects null or undefined if check passes
-          } else {
-            return error;
-          }
-        },
-        next: 'No_SA_ID_Day_Entry'
-      });
-    });
-    self.states.add('No_SA_ID_Year_Entry', function(name) {
-      var question = $("Please enter the day the patient was born. For example: 12");
-      var error = $('');
-      return new FreeText(name, {
-        question: question,
-        check: function(content) {
-          if (true) {
-            return null; // vumi expects null or undefined if check passes
-          } else {
-            return error;
-          }
-        },
-        next: 'Invalid_No_SA_ID_Year_Entry'
-      });
-    });
-    self.states.add('Submit_Case', function(name) {
-      return new EndState(name, {
-        text: "Thank you! Your report has been submitted.",
-        next_state: 'Facility_Code_Entry'
-      });
-    });
-    self.states.add('Validate_Facility_Code', function(name) {});
-    self.states.add('Validate_MSISDN', function(name) {});
-    self.states.add('Validate_SA_ID', function(name) {});
-
-
-
-
 
   });
 
