@@ -59,6 +59,16 @@ describe("app", function() {
 
         });
 
+        describe('MSISDN_Entry', function() {
+            it('should validate the phone number', function () {
+                return tester
+                    .setup.user.state('MSISDN_Entry')
+                    .input('abc')
+                    .check.reply.content('/Sorr, that number is not valid')
+                    .run();
+            });
+        });
+
 
 
     });
