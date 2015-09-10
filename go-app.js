@@ -23,8 +23,7 @@ go.app = function() {
   var ChoiceState = vumigo.states.ChoiceState;
   var FreeText = vumigo.states.FreeText;
   var EndState = vumigo.states.EndState;
-  // var _ = require('lodash');
-
+  
   var GoApp = App.extend(function(self) {
     App.call(self, 'Facility_Code_Entry');
     var $ = self.$;
