@@ -12,6 +12,7 @@ module.exports = function (grunt) {
                 ],
                 prd: [
                     'src/index.js',
+                    'src/utils.js',
                     '<%= paths.src.app %>',
                     'src/init.js'
                 ],
@@ -24,6 +25,7 @@ module.exports = function (grunt) {
             },
             test: [
                 'test/setup.js',
+                'src/utils.js',
                 '<%= paths.src.app %>',
                 'test/**/*.test.js'
             ]
