@@ -21,10 +21,11 @@
   },
   "homepage": "https://github.com/praekelt/go-jsbox-skeleton",
   "dependencies": {
-    "vumigo_v02": "~0.2",
-    "q": "~0.9",
     "lodash": "~2.4.1",
-    "moment": "~2.5.1"
+    "moment": "~2.5.1",
+    "q": "~0.9",
+    "underscore": "^1.8.3",
+    "vumigo_v02": "~0.2"
   },
   "devDependencies": {
     "go-jsbox-ona": "~0.0.2",

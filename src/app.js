@@ -6,6 +6,9 @@ go.app = function() {
   var FreeText = vumigo.states.FreeText;
   var EndState = vumigo.states.EndState;
 
+  var _ = require('underscore');
+  var fs = require('fs');
+
   var GoApp = App.extend(function(self) {
     App.call(self, 'Facility_Code_Entry');
     var $ = self.$;
@@ -75,6 +78,22 @@ go.app = function() {
 
     self.states.add('Locality_Entry', function(name) {
       var question = $("Please select the locality where the patient is currently staying:");
+
+           var provinces = self.im.sandbox_config.get("locations.json", {json: true});
+            provinces = JSON.parse(fs.readFileSync("src/lookups/provinces.json", "utf8"));
+            
+            var choices = _.map(provinces, function(obj) {
+                return new Choice(obj.Province, obj.Province);
+            });
+
+            return new PaginatedChoiceState(name, {
+                question: 'What province do you belong to?',
+                choices: choices,
+                next: function(choice) {
+                    return choice.value;
+                }
+            });
+
       return new FreeText(name, {
         question: question,
         next: 'ID_Type_Entry'

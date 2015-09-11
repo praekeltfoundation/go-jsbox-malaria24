@@ -136,6 +136,30 @@ describe("app", function() {
         });
 
         describe('Locality_Entry', function () {
+
+            it("read a list of provinces", function() {
+                return tester
+                    .setup.user.state('states:lookup')
+                    .check.interaction({
+                        state: 'states:lookup',
+                        reply: [
+                          'What province do you belong to?',
+                          '1. Northern Cape',
+                          '2. Eastern Cape',
+                          '3. Free State',
+                          '4. Western Cape',
+                          '5. Limpopo',
+                          '6. North West',
+                          '7. KwaZulu-Natal',
+                          '8. Mpumalanga',
+                          '9. More',
+
+                        ].join('\n')
+                    })
+                    .run();
+            });
+
+
             it('should accept anything currently it seems', function () {
                 return tester
                     .setup.user.state('Locality_Entry')
