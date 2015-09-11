@@ -27,6 +27,7 @@
     "moment": "~2.5.1"
   },
   "devDependencies": {
+    "go-jsbox-ona": "~0.0.2",
     "istanbul": "~0.3.19",
     "mocha": "~1.18",
     "jshint": "~2.4.4",
