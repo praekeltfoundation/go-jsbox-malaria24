@@ -19,7 +19,11 @@ describe("app", function() {
                     name: 'test_app',
                     facility_codes: JSON.parse(
                         fs.readFileSync(
-                            "src/lookups/facility_codes.json", "utf8"))
+                            "src/lookups/facility_codes.json", "utf8")),
+                    localities: JSON.parse(
+                        fs.readFileSync(
+                            "src/lookups/localities.json", "utf8"))
+
                 })
                 .setup(function(api) {
                     fixtures().forEach(api.http.fixtures.add);
@@ -56,7 +60,7 @@ describe("app", function() {
           it('should continue with valid input', function () {
               return tester
                   .setup.user.state('Facility_Code_Entry')
-                  .input('15000')
+                  .input('154342')
                   .check.reply.content(/Please enter the cell phone number/)
                   .run();
           });
@@ -136,10 +140,19 @@ describe("app", function() {
         });
 
         describe('Locality_Entry', function () {
-            it('should accept anything currently it seems', function () {
+
+            it('should not accept everything', function () {
                 return tester
                     .setup.user.state('Locality_Entry')
                     .input('fooo')
+                    .check.reply.content(/Please select the locality/)
+                    .run();
+            });
+
+            it('should accept something valid', function () {
+                return tester
+                    .setup.user.state('Locality_Entry')
+                    .input('1')
                     .check.reply.content(/What kind of identification/)
                     .run();
             });

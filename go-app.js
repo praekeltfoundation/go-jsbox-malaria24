@@ -122,8 +122,11 @@ go.app = function() {
 
     self.states.add('Locality_Entry', function(name) {
       var question = $("Please select the locality where the patient is currently staying:");
-      return new FreeText(name, {
+      return new ChoiceState(name, {
         question: question,
+        choices: self.im.config.localities.map(function (locality) {
+          return new Choice(locality, locality);
+        }),
         next: 'ID_Type_Entry'
       });
     });
