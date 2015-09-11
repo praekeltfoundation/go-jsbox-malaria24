@@ -9,7 +9,6 @@ go.app = function() {
   var GoApp = App.extend(function(self) {
     App.call(self, 'Facility_Code_Entry');
     var $ = self.$;
-    // var interrupt = true;
 
     // NEW STEPS
     self.states.add('Extract_SA_ID_Info', function(name) {
@@ -23,7 +22,8 @@ go.app = function() {
       return new FreeText(name, {
         question: question,
         check: function(content) {
-          if (isNaN(content)) {
+          var facility_codes = self.im.config.facility_codes;
+          if (facility_codes.indexOf(parseInt(content, 10)) < 0) {
             return error;
           }
         },

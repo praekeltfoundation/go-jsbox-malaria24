@@ -1,6 +1,7 @@
 var vumigo = require('vumigo_v02');
 var fixtures = require('./fixtures');
 var AppTester = vumigo.AppTester;
+var fs = require('fs');
 
 
 describe("app", function() {
@@ -15,7 +16,10 @@ describe("app", function() {
 
             tester
                 .setup.config.app({
-                    name: 'test_app'
+                    name: 'test_app',
+                    facility_codes: JSON.parse(
+                        fs.readFileSync(
+                            "src/lookups/facility_codes.json", "utf8"))
                 })
                 .setup(function(api) {
                     fixtures().forEach(api.http.fixtures.add);
@@ -44,7 +48,7 @@ describe("app", function() {
           it('should validate the input', function () {
               return tester
                   .setup.user.state('Facility_Code_Entry')
-                  .input('a')
+                  .input('123')
                   .check.reply.content(/The facility code is invalid/)
                   .run();
           });
@@ -52,7 +56,7 @@ describe("app", function() {
           it('should continue with valid input', function () {
               return tester
                   .setup.user.state('Facility_Code_Entry')
-                  .input('123456')
+                  .input('15000')
                   .check.reply.content(/Please enter the cell phone number/)
                   .run();
           });
