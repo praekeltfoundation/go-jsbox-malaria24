@@ -20,7 +20,7 @@ go.app = function() {
 
     self.states.add('Facility_Code_Entry', function(name) {
       var question = $("Welcome! To report a malaria case, please enter your " +
-        "facility code. For example, 543456");
+        "facility code. Demo facility, 154342");
       var error = $("The facility code is invalid. Please enter again.");
       return new FreeText(name, {
         question: question,
@@ -147,8 +147,8 @@ go.app = function() {
       return new FreeText(name, {
         question: question,
         check: function(content) {
-          if(isNaN(content) || (parseInt(content, 10) > 31 || parseInt(content, 10) < 1)) {
-              return error;
+          if (isNaN(content) || (parseInt(content, 10) > 31 || parseInt(content, 10) < 1)) {
+            return error;
           }
         },
         next: 'No_SA_ID_Gender_Entry'
@@ -186,14 +186,12 @@ go.app = function() {
             },
             url: ona_conf.url
           });
+          var data = self.im.user.answers;
+          data.create_date_time = new Date();
+          data.created_by = self.im.user.addr;
+
           var submission = self.create_ona_submission(data);
-          self.im.log("This is ONA!!!");
-          self.im.log(ona);
-          self.im,log(self.im.config);
-          self.im.log("ONA out!!");
-          self.im.log("Submission start");
-          self.im.log(submission);
-          self.imlog("Submission end");
+
           return ona.submit({
             id: self.im.config.ona.id,
             submission: submission,
@@ -207,11 +205,9 @@ go.app = function() {
           ].join(' '));
         })
         .then(function() {
-          self.im.log("I'm in here... and it has been logged.");
           return new EndState(name, {
             text: "Thank you! Your report has been submitted.",
-            next_state: 'Facility_Code_Entry',
-            continue_session: false
+            next: 'Facility_Code_Entry'
           });
         });
 
@@ -221,14 +217,14 @@ go.app = function() {
     self.create_ona_submission = function(data) {
       var submission = {
         facility_code: data.Facility_Code_Entry,
-        reported_by: self.im.user.addr,
+        reported_by: data.created_by,
         first_name: data.First_Name_Entry,
         id_type: data.ID_Type_Entry,
         last_name: data.Last_Name_Entry,
         locality: data.Locality_Entry,
         msisdn: data.MSISDN_Entry,
-        date_of_birth: data.dob,
-        create_date_time: self.now(),
+        date_of_birth: String(data.No_SA_ID_Year_Entry) + String(data.No_SA_ID_Month_Entry) + String(data.No_SA_ID_Day_Entry),
+        create_date_time: data.create_date_time,
         abroad: data.Patient_Abroad_Entry,
         sa_id_number: data.SA_ID_Entry,
         gender: data.No_SA_ID_Gender_Entry,
@@ -244,14 +240,14 @@ go.app = function() {
       //         data.toilet.lon + offsets.lon,
       //     ].join(' ');
       // }
-      submission = _.defaults(submission, {
-        toilet_code: data.query,
-        toilet_section: "None",
-        toilet_cluster: "None",
-        issue: data.issue,
-        // toilet_location is omitted if there is no valid
-        // value.
-      });
+      // submission = _.defaults(submission, {
+      //   toilet_code: data.query,
+      //   toilet_section: "None",
+      //   toilet_cluster: "None",
+      //   issue: data.issue,
+      //   // toilet_location is omitted if there is no valid
+      //   // value.
+      // });
       return submission;
     };
 

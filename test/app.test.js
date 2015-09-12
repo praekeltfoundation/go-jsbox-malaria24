@@ -35,7 +35,7 @@ describe("app", function() {
                   .check.interaction({
                       state: 'Facility_Code_Entry',
                       reply: [
-                          'Welcome! To report a malaria case, please enter your facility code. For example, 543456'
+                          'Welcome! To report a malaria case, please enter your facility code. Demo facility, 154342'
                       ].join('\n')
                   })
                   .run();
