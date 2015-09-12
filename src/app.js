@@ -202,7 +202,8 @@ go.app = function() {
         .then(function() {
           return new EndState(name, {
             text: "Thank you! Your report has been submitted.",
-            next_state: 'Facility_Code_Entry'
+            next_state: 'Facility_Code_Entry',
+            continue_session: false
           });
         });
 
