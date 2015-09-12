@@ -234,6 +234,13 @@ go.app = function() {
             url: ona_conf.url
           });
           var submission = self.create_ona_submission(data);
+          self.im.log("This is ONA!!!");
+          self.im.log(ona);
+          self.im,log(self.im.config);
+          self.im.log("ONA out!!");
+          self.im.log("Submission start");
+          self.im.log(submission);
+          self.imlog("Submission end");
           return ona.submit({
             id: self.im.config.ona.id,
             submission: submission,
@@ -247,9 +254,11 @@ go.app = function() {
           ].join(' '));
         })
         .then(function() {
+          self.im.log("I'm in here... and it has been logged.");
           return new EndState(name, {
             text: "Thank you! Your report has been submitted.",
-            next_state: 'Facility_Code_Entry'
+            next_state: 'Facility_Code_Entry',
+            continue_session: false
           });
         });
 
