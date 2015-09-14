@@ -87,7 +87,7 @@ go.app = function() {
     });
 
     self.states.add('MSISDN_Entry', function(name) {
-      var question = $("Please enter the cell phone number of patient or next of kin. 'none' for no number.");
+      var question = $("Please enter the cell phone number of patient or next of kin. Enter 'none' for no number.");
       var error = $('Sorry, that number is not valid');
       return new FreeText(name, {
         question: question,
