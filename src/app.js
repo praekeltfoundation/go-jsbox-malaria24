@@ -86,15 +86,8 @@ go.app = function() {
 
     self.states.add('Landmark_Entry', function(name) {
       var question = $("What is the closest landmark for the patient?");
-      var error = $("Please enter a landmark");
       return new FreeText(name, {
         question: question,
-        check: function(content) {
-          if (content.length === 0) {
-            return error;
-          }
-        },
-
         next: 'ID_Type_Entry'
       });
     });
