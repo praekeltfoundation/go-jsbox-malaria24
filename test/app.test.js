@@ -76,6 +76,14 @@ describe("app", function() {
                     .run();
             });
 
+            it('should accept none', function () {
+                return tester
+                    .setup.user.state('MSISDN_Entry')
+                    .input('none')
+                    .check.reply.content(/Please enter the first name of the patient/)
+                    .run();
+            });
+
             it('should accept reasonable phone numbers', function () {
                 return tester
                     .setup.user.state('MSISDN_Entry')
@@ -153,7 +161,25 @@ describe("app", function() {
                 return tester
                     .setup.user.state('Locality_Entry')
                     .input('1')
-                    .check.reply.content(/What kind of identification/)
+                    .check.reply.content(/What is the closest landmark for the patient/)
+                    .run();
+            });
+        });
+
+        describe('Landmark_Entry', function () {
+            it('should not accept blanks', function () {
+                return tester
+                    .setup.user.state('Landmark_Entry')
+                    .input('')
+                    .check.reply.content(/What is the closest landmark for the patient?/)
+                    .run();
+            });
+
+            it('should accept something valid', function () {
+                return tester
+                    .setup.user.state('Landmark_Entry')
+                    .input('aaaa')
+                    .check.reply.content(/What kind of identification does the patient have?/)
                     .run();
             });
         });

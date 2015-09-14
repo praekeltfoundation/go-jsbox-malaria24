@@ -38,7 +38,11 @@ Patient_Abroad_Entry --> Locality_Entry
 
 Locality_Entry : lookups from supplied
 Locality_Entry : Type: json lookup from config
-Locality_Entry --> ID_Type_Entry
+Locality_Entry --> Landmark_Entry
+
+
+Landmark_Entry: Message: Where is the closest landmark for the patient?
+Landmark_Entry --> ID_Type_Entry
 
 ID_Type_Entry : Message: What kind of identification does the patient have?
 ID_Type_Entry : Type: choice
