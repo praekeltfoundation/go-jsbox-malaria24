@@ -304,23 +304,6 @@ go.app = function() {
 
       };
 
-      // if ((typeof data.toilet.code === 'string') &&
-      //     (typeof data.toilet.lat === 'number') &&
-      //     (typeof data.toilet.lon === 'number')) {
-      //     var offsets = self.calculate_gps_offsets(data.toilet.code);
-      //     submission.toilet_location = [
-      //         data.toilet.lat + offsets.lat,
-      //         data.toilet.lon + offsets.lon,
-      //     ].join(' ');
-      // }
-      // submission = _.defaults(submission, {
-      //   toilet_code: data.query,
-      //   toilet_section: "None",
-      //   toilet_cluster: "None",
-      //   issue: data.issue,
-      //   // toilet_location is omitted if there is no valid
-      //   // value.
-      // });
       return submission;
     };
 
