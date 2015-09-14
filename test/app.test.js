@@ -153,7 +153,25 @@ describe("app", function() {
                 return tester
                     .setup.user.state('Locality_Entry')
                     .input('1')
-                    .check.reply.content(/What kind of identification/)
+                    .check.reply.content(/What is the closest landmark for the patient/)
+                    .run();
+            });
+        });
+
+        describe('Landmark_Entry', function () {
+            it('should not accept blanks', function () {
+                return tester
+                    .setup.user.state('Landmark_Entry')
+                    .input('')
+                    .check.reply.content(/What is the closest landmark for the patient?/)
+                    .run();
+            });
+
+            it('should accept something valid', function () {
+                return tester
+                    .setup.user.state('Landmark_Entry')
+                    .input('aaaa')
+                    .check.reply.content(/What kind of identification does the patient have?/)
                     .run();
             });
         });
