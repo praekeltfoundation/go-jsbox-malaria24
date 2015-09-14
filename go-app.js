@@ -10,6 +10,12 @@ go;
 // Shared utils lib
 go.utils = {
 
+    is_none_msisdn: function (content) {
+      if (content == 'none') {
+        return true;
+      }
+    },
+
     is_valid_msisdn: function (content) {
         return !isNaN(content) &&
             parseInt(content[0], 10) === 0 &&
@@ -39,7 +45,7 @@ go.utils = {
         sum = 10 - ('' + sum).charAt(1);
         return ('' + sum).slice(-1) == check;
     },
-    
+
     // Handy to leave at the bottom to ensure trailing commas in objects
     // don't become syntax errors.
     "commas": "commas"
@@ -79,12 +85,12 @@ go.app = function() {
     });
 
     self.states.add('MSISDN_Entry', function(name) {
-      var question = $("Please enter the cell phone number of patient or next of kin.");
+      var question = $("Please enter the cell phone number of patient or next of kin. 'none' for no number.");
       var error = $('Sorry, that number is not valid');
       return new FreeText(name, {
         question: question,
         check: function(content) {
-          if (!go.utils.is_valid_msisdn(content)) {
+          if (!go.utils.is_none_msisdn(content) && !go.utils.is_valid_msisdn(content)) {
             return error;
           }
         },
@@ -228,7 +234,7 @@ go.app = function() {
     self.states.add('Submit_Case', function(name) {
       return new EndState(name, {
         text: "Thank you! Your report has been submitted.",
-        next_state: 'Facility_Code_Entry'
+        next: 'Facility_Code_Entry'
       });
 
     });
