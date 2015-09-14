@@ -173,7 +173,7 @@ go.app = function() {
     self.states.add('Submit_Case', function(name) {
       return new EndState(name, {
         text: "Thank you! Your report has been submitted.",
-        next_state: 'Facility_Code_Entry'
+        next: 'Facility_Code_Entry'
       });
 
     });
