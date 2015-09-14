@@ -76,6 +76,14 @@ describe("app", function() {
                     .run();
             });
 
+            it('should accept none', function () {
+                return tester
+                    .setup.user.state('MSISDN_Entry')
+                    .input('none')
+                    .check.reply.content(/Please enter the first name of the patient/)
+                    .run();
+            });
+
             it('should accept reasonable phone numbers', function () {
                 return tester
                     .setup.user.state('MSISDN_Entry')

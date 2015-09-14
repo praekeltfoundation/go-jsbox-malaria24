@@ -3,6 +3,12 @@
 // Shared utils lib
 go.utils = {
 
+    is_none_msisdn: function (content) {
+      if (content == 'none') {
+        return true;
+      }
+    },
+
     is_valid_msisdn: function (content) {
         return !isNaN(content) &&
             parseInt(content[0], 10) === 0 &&
@@ -32,7 +38,7 @@ go.utils = {
         sum = 10 - ('' + sum).charAt(1);
         return ('' + sum).slice(-1) == check;
     },
-    
+
     // Handy to leave at the bottom to ensure trailing commas in objects
     // don't become syntax errors.
     "commas": "commas"
