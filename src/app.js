@@ -69,7 +69,7 @@ go.app = function() {
         choices: [
           new Choice('1', $("Yes")),
           new Choice('2', $("No")),
-          new Choice('2', $("Unknown"))
+          new Choice('3', $("Unknown"))
         ],
         next: 'Locality_Entry'
       });
