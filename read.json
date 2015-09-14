@@ -1,0 +1,34 @@
+{
+  "id": "79133",
+  "submission": [
+    {
+      "_notes": [],
+      "last_name": "LastName",
+      "_bamboo_dataset_id": "",
+      "_tags": [],
+      "_xform_id_string": "reported_case",
+      "_geolocation": [
+        null,
+        null
+      ],
+      "_duration": "",
+      "first_name": "FirstName",
+      "meta/instanceID": "uuid:82ee7fa1-432e-477f-9ed1-4138dd3a8bc9",
+      "locality": "Locality",
+      "date_of_birth": "2015-09-11",
+      "create_date_time": "DateAndTimeCaseReported",
+      "sa_id_number": "SAIDNumber",
+      "_status": "submitted_via_web",
+      "msisdn": "MSISDN",
+      "_submitted_by": null,
+      "id_type": "said",
+      "abroad": "yes",
+      "reported_by": "PhoneUsedToReportCase",
+      "gender": "male",
+      "_version": "201509101001",
+      "_attachments": [],
+      "facility_code": "Facilitycode"
+
+    }
+  ]
+}

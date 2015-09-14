@@ -1,0 +1,17 @@
+{
+  "id": 79133,
+  "submission": {
+    "last_name": "LastName",
+    "first_name": "FirstName",
+    "locality": "Locality",
+    "date_of_birth": "2015-09-11",
+    "create_date_time": "DateAndTimeCaseReported",
+    "sa_id_number": "SAIDNumber",
+    "msisdn": "MSISDN",
+    "_submitted_by": null,
+    "id_type": "said",
+    "abroad": "yes",
+    "reported_by": "PhoneUsedToReportCase",
+    "gender": "male"
+  }
+}
