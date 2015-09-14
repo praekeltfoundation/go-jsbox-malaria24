@@ -1,5 +1,7 @@
 go.app = function() {
   var vumigo = require('vumigo_v02');
+  var Q = require('q');
+  var Ona = require('go-jsbox-ona').Ona;
   var App = vumigo.App;
   var Choice = vumigo.states.Choice;
   var ChoiceState = vumigo.states.ChoiceState;
@@ -179,13 +181,78 @@ go.app = function() {
     });
 
     self.states.add('Submit_Case', function(name) {
-      return new EndState(name, {
-        text: "Thank you! Your report has been submitted.",
-        next: 'Facility_Code_Entry'
-      });
+      return Q()
+        .then(function() {
+          // Send response to Ona
+          var ona_conf = self.im.config.ona;
+          if (typeof ona_conf == 'undefined') {
+            return self.im.log.info([
+              "No Ona API configured.",
+              "Not submitting data to Ona."
+            ].join(" "));
+          }
+          var ona = new Ona(self.im, {
+            auth: {
+              username: ona_conf.username,
+              password: ona_conf.password
+            },
+            url: ona_conf.url
+          });
+          var data = self.im.user.answers;
+          data.create_date_time = new Date();
+          data.reported_by = self.im.user.addr;
+          data.gender = (self.im.user.answers.No_SA_ID_Gender_Entry == 1) ? "male" : "female";
+          said = data.SA_ID_Entry;
+          if (data.SA_ID_Entry) {
+            data.No_SA_ID_Year_Entry = said.substring(0, 2);
+            data.No_SA_ID_Month_Entry = said.substring(2, 4);
+            data.No_SA_ID_Day_Entry = said.substring(4, 6);
+          }
+
+          var submission = self.create_ona_submission(data);
+
+          return ona.submit({
+            id: self.im.config.ona.id,
+            submission: submission,
+          });
+        })
+        .fail(function(err) {
+          // Check for Ona response error
+          return self.im.log.error([
+            'Error when sending data to Ona:',
+            JSON.stringify(err.response)
+          ].join(' '));
+        })
+        .then(function() {
+          return new EndState(name, {
+            text: "Thank you! Your report has been submitted.",
+            next: 'Facility_Code_Entry'
+          });
+        });
 
     });
     // END NEW STEPS
+
+    self.create_ona_submission = function(data) {
+      var submission = {
+        facility_code: data.Facility_Code_Entry,
+        reported_by: data.reported_by,
+        first_name: data.First_Name_Entry,
+        id_type: data.ID_Type_Entry,
+        last_name: data.Last_Name_Entry,
+        locality: data.Locality_Entry,
+        msisdn: data.MSISDN_Entry,
+        date_of_birth: String(data.No_SA_ID_Year_Entry) + String(data.No_SA_ID_Month_Entry) + String(data.No_SA_ID_Day_Entry),
+        create_date_time: data.create_date_time,
+        abroad: data.Patient_Abroad_Entry,
+        sa_id_number: data.SA_ID_Entry,
+        gender: data.gender,
+        landmark: data.Landmark_Entry,
+
+      };
+
+      return submission;
+    };
 
   });
 
