@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<survey>
+    <abroad>yes</abroad>
+    <create_date_time>2015-09-13 00:00:00</create_date_time>
+    <date_of_birth>19770911</date_of_birth>
+    <facility_code>123456</facility_code>
+    <first_name>br</first_name>
+    <gender>male</gender>
+    <id_type>said</id_type>
+    <last_name>mci</last_name>
+    <locality>blah</locality>
+    <msisdn>0832650918</msisdn>
+    <reported_by>0832650918</reported_by>
+    <sa_id_number>7709115063082</sa_id_number>
+</survey>

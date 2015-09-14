@@ -3,6 +3,7 @@ go.app = function() {
   var App = vumigo.App;
   var Choice = vumigo.states.Choice;
   var ChoiceState = vumigo.states.ChoiceState;
+  // var PaginatedChoiceState = vumigo.states.PaginatedChoiceState;
   var FreeText = vumigo.states.FreeText;
   var Q = require('q');
   var EndState = vumigo.states.EndState;
@@ -69,7 +70,7 @@ go.app = function() {
         choices: [
           new Choice('1', $("Yes")),
           new Choice('2', $("No")),
-          new Choice('2', $("Unknown"))
+          new Choice('3', $("Unknown"))
         ],
         next: 'Locality_Entry'
       });
@@ -188,7 +189,14 @@ go.app = function() {
           });
           var data = self.im.user.answers;
           data.create_date_time = new Date();
-          data.created_by = self.im.user.addr;
+          data.reported_by = self.im.user.addr;
+          data.gender = (self.im.user.answers.No_SA_ID_Gender_Entry == 1) ? "male" : "female";
+          said = data.SA_ID_Entry;
+          if (data.SA_ID_Entry) {
+            data.No_SA_ID_Year_Entry = said.substring(0, 2);
+            data.No_SA_ID_Month_Entry = said.substring(2, 4);
+            data.No_SA_ID_Day_Entry = said.substring(4, 6);
+          }
 
           var submission = self.create_ona_submission(data);
 
@@ -217,7 +225,7 @@ go.app = function() {
     self.create_ona_submission = function(data) {
       var submission = {
         facility_code: data.Facility_Code_Entry,
-        reported_by: data.created_by,
+        reported_by: data.reported_by,
         first_name: data.First_Name_Entry,
         id_type: data.ID_Type_Entry,
         last_name: data.Last_Name_Entry,
@@ -227,7 +235,7 @@ go.app = function() {
         create_date_time: data.create_date_time,
         abroad: data.Patient_Abroad_Entry,
         sa_id_number: data.SA_ID_Entry,
-        gender: data.No_SA_ID_Gender_Entry,
+        gender: data.gender
 
       };
 
