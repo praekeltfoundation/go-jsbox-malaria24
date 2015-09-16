@@ -11,7 +11,7 @@ go;
 go.utils = {
 
     is_none_msisdn: function (content) {
-      if (content == 'none') {
+      if (content.toLowerCase() == 'none') {
         return true;
       }
     },
