@@ -36,17 +36,22 @@ go.app = function() {
     });
 
     self.states.add('Facility_Code_Confirm', function(name) {
-      var question = $("Please confirm that you are reporting from [" + self.im.user.answers.Facility_Code_Entry + "]");
-      return new ChoiceState(name, {
-        question: question,
-        choices: [
-          new Choice('MSISDN_Entry', "Confirm"),
-          new Choice('Facility_Code_Entry', "Not my facility")
-        ],
-        next: function(choice) {
-          return choice.value;
-        }
-      });
+      return Q()
+        .then(function () {
+          var facName = _.result(_.find(self.im.config.facilities, 'FacCode', self.im.user.answers.Facility_Code_Entry), 'Facility');
+          var question = $("Please confirm that you are reporting from [" + facName + "]");
+          return new ChoiceState(name, {
+            question: question,
+            choices: [
+              new Choice('MSISDN_Entry', "Confirm"),
+              new Choice('Facility_Code_Entry', "Not my facility")
+            ],
+            next: function(choice) {
+              return choice.value;
+            }
+          });
+        });
+
     });
 
     self.states.add('MSISDN_Entry', function(name) {
