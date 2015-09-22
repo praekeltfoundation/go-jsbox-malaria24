@@ -6,6 +6,7 @@ go.app = function() {
   var App = vumigo.App;
   var Choice = vumigo.states.Choice;
   var ChoiceState = vumigo.states.ChoiceState;
+  // var PaginatedChoiceState = vumigo.states.PaginatedChoiceState;
   var FreeText = vumigo.states.FreeText;
   var EndState = vumigo.states.EndState;
 
@@ -78,16 +79,26 @@ go.app = function() {
 
     self.states.add('Locality_Entry', function(name) {
       var question = $("Please select the locality where the patient is currently staying:");
-      return Q().then(function () {
-        return new ChoiceState(name, {
-          question: question,
-          choices: [
-            new Choice('blarg', 'Blargh')
-          ],
-          next: 'Landmark_Entry'
+      return Q()
+        .then(function () {
+          // Resolve a code to a district
+          var district = _.result(_.find(self.im.config.facilities, 'FacCode', self.im.user.answers.Facility_Code_Entry), 'District');
+          var localities = _.unique(_.pluck(_.filter(self.im.config.facilities, {'District': district}), 'Sub-District (Locality)'));
+
+          return localities;
+
+        })
+        .then(function (localities) {
+          self.im.log("Localities in here: " + localities);
+          return new ChoiceState(name, {
+            question: question,
+            choices: localities.map(function (locality) {
+              return new Choice(locality, locality);
+            }),
+            next: 'Landmark_Entry'
+          });
         });
 
-      });
     });
 
     self.states.add('Landmark_Entry', function(name) {
