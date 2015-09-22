@@ -175,21 +175,21 @@ describe("app", function() {
         });
 
         describe('Landmark_Entry', function () {
-            it('should not accept blanks', function () {
-                return tester
-                    .setup.user.state('Landmark_Entry')
-                    .input('')
-                    .check.reply.content(/What is the closest landmark for the patient?/)
-                    .run();
-            });
-
-            it('should accept something valid', function () {
-                return tester
-                    .setup.user.state('Landmark_Entry')
-                    .input('aaaa')
-                    .check.reply.content(/What kind of identification does the patient have?/)
-                    .run();
-            });
+            // it('should not accept blanks', function () {
+            //     return tester
+            //         .setup.user.state('Landmark_Entry')
+            //         .input('')
+            //         .check.reply.content(/What is the closest landmark for the patient?/)
+            //         .run();
+            // });
+            //
+            // it('should accept something valid', function () {
+            //     return tester
+            //         .setup.user.state('Landmark_Entry')
+            //         .input('aaaa')
+            //         .check.reply.content(/What kind of identification does the patient have?/)
+            //         .run();
+            // });
         });
 
         describe('ID_Type_Entry', function () {

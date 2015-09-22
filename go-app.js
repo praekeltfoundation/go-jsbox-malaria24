@@ -142,7 +142,6 @@ go.app = function() {
 
         })
         .then(function (localities) {
-          self.im.log("Localities in here: " + localities);
           return new ChoiceState(name, {
             question: question,
             choices: localities.map(function (locality) {
@@ -156,8 +155,11 @@ go.app = function() {
 
     self.states.add('Landmark_Entry', function(name) {
       var question = $("What is the closest landmark for the patient?");
-      return new FreeText(name, {
+      return new ChoiceState(name, {
         question: question,
+        choices: self.im.config.landmarks.map(function (landmarks) {
+          return new Choice(landmarks, landmarks);
+        }),
         next: 'ID_Type_Entry'
       });
     });
