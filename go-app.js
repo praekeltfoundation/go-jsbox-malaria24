@@ -54,6 +54,7 @@ go.utils = {
 go.app = function() {
   var vumigo = require('vumigo_v02');
   var Q = require('q');
+  var _ = require('lodash');
   var Ona = require('go-jsbox-ona').Ona;
   var App = vumigo.App;
   var Choice = vumigo.states.Choice;
@@ -77,8 +78,8 @@ go.app = function() {
       return new FreeText(name, {
         question: question,
         check: function(content) {
-          var facility_codes = self.im.config.facility_codes;
-          if (facility_codes.indexOf(parseInt(content, 10)) < 0) {
+          var facility = _.result(_.find(self.im.config.facilities, 'FacCode', "154342"), 'Facility');
+          if (!facility) {
             return error;
           }
         },
