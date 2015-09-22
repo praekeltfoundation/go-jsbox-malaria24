@@ -104,8 +104,8 @@ go.app = function() {
       var question = $("What is the closest landmark for the patient?");
       return new ChoiceState(name, {
         question: question,
-        choices: self.im.config.landmarks.map(function (landmarks) {
-          return new Choice(landmarks, landmarks);
+        choices: self.im.config.landmarks.map(function (landmark) {
+          return new Choice(landmark, landmark);
         }),
         next: 'ID_Type_Entry'
       });
