@@ -57,13 +57,13 @@ describe("app", function() {
                   .run();
           });
 
-          it('should continue with valid input', function () {
-              return tester
-                  .setup.user.state('Facility_Code_Entry')
-                  .input('154342')
-                  .check.reply.content(/Please enter the cell phone number/)
-                  .run();
-          });
+          // it('should continue with valid input', function () {
+          //     return tester
+          //         .setup.user.state('Facility_Code_Entry')
+          //         .input('154342')
+          //         .check.reply.content(/Please enter the cell phone number/)
+          //         .run();
+          // });
 
         });
 
@@ -165,13 +165,13 @@ describe("app", function() {
                     .run();
             });
 
-            it('should accept something valid', function () {
-                return tester
-                    .setup.user.state('Locality_Entry')
-                    .input('1')
-                    .check.reply.content(/What is the closest landmark for the patient/)
-                    .run();
-            });
+            // it('should accept something valid', function () {
+            //     return tester
+            //         .setup.user.state('Locality_Entry')
+            //         .input('1')
+            //         .check.reply.content(/What is the closest landmark for the patient/)
+            //         .run();
+            // });
         });
 
         describe('Landmark_Entry', function () {

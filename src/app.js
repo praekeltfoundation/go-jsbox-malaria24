@@ -20,7 +20,7 @@ go.app = function() {
 
     self.states.add('Facility_Code_Entry', function(name) {
       var question = $("Welcome! To report a malaria case, please enter your " +
-                       "facility code. For example, 543456");
+        "facility code. For example, 543456");
       var error = $("The facility code is invalid. Please enter again.");
       return new FreeText(name, {
         question: question,
@@ -78,12 +78,15 @@ go.app = function() {
 
     self.states.add('Locality_Entry', function(name) {
       var question = $("Please select the locality where the patient is currently staying:");
-      return new ChoiceState(name, {
-        question: question,
-        choices: self.im.config.localities.map(function (locality) {
-          return new Choice(locality, locality);
-        }),
-        next: 'Landmark_Entry'
+      return Q().then(function () {
+        return new ChoiceState(name, {
+          question: question,
+          choices: [
+            new Choice('blarg', 'Blargh')
+          ],
+          next: 'Landmark_Entry'
+        });
+
       });
     });
 
@@ -160,8 +163,8 @@ go.app = function() {
       return new FreeText(name, {
         question: question,
         check: function(content) {
-          if(isNaN(content) || (parseInt(content, 10) > 31 || parseInt(content, 10) < 1)) {
-              return error;
+          if (isNaN(content) || (parseInt(content, 10) > 31 || parseInt(content, 10) < 1)) {
+            return error;
           }
         },
         next: 'No_SA_ID_Gender_Entry'
