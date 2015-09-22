@@ -31,7 +31,21 @@ go.app = function() {
             return error;
           }
         },
-        next: 'MSISDN_Entry'
+        next: 'Facility_Code_Confirm'
+      });
+    });
+
+    self.states.add('Facility_Code_Confirm', function(name) {
+      var question = $("Please confirm that you are reporting from [" + self.im.user.answers.Facility_Code_Entry + "]");
+      return new ChoiceState(name, {
+        question: question,
+        choices: [
+          new Choice('MSISDN_Entry', "Confirm"),
+          new Choice('Facility_Code_Entry', "Not my facility")
+        ],
+        next: function(choice) {
+          return choice.value;
+        }
       });
     });
 
@@ -80,18 +94,20 @@ go.app = function() {
     self.states.add('Locality_Entry', function(name) {
       var question = $("Please select the locality where the patient is currently staying:");
       return Q()
-        .then(function () {
+        .then(function() {
           // Resolve a code to a district
           var district = _.result(_.find(self.im.config.facilities, 'FacCode', self.im.user.answers.Facility_Code_Entry), 'District');
-          var localities = _.unique(_.pluck(_.filter(self.im.config.facilities, {'District': district}), 'Sub-District (Locality)'));
+          var localities = _.unique(_.pluck(_.filter(self.im.config.facilities, {
+            'District': district
+          }), 'Sub-District (Locality)'));
 
           return localities;
 
         })
-        .then(function (localities) {
+        .then(function(localities) {
           return new ChoiceState(name, {
             question: question,
-            choices: localities.map(function (locality) {
+            choices: localities.map(function(locality) {
               return new Choice(locality, locality);
             }),
             next: 'Landmark_Entry'
@@ -104,7 +120,7 @@ go.app = function() {
       var question = $("What is the closest landmark for the patient?");
       return new ChoiceState(name, {
         question: question,
-        choices: self.im.config.landmarks.map(function (landmark) {
+        choices: self.im.config.landmarks.map(function(landmark) {
           return new Choice(landmark, landmark);
         }),
         next: 'ID_Type_Entry'
