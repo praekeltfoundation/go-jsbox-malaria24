@@ -161,7 +161,7 @@ describe("app", function() {
                 return tester
                     .setup.user.state('Locality_Entry')
                     .input('1')
-                    .check.reply.content(/What is the closest landmark for the patient/)
+                    .check.reply.content(/Please select /)
                     .run();
             });
         });

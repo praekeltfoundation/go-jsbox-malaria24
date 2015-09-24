@@ -100,7 +100,7 @@ go.app = function() {
       return Q()
         .then(function() {
           // Resolve a code to a district
-          var district = _.result(_.find(self.im.config.facilities, 'FacCode', self.im.user.answers.Facility_Code_Entry), 'District');
+          var district = _.result(_.find(self.im.config.facilities, {'FacCode': self.im.user.answers.Facility_Code_Entry}), 'District');
           var localities = _.unique(_.pluck(_.filter(self.im.config.facilities, {
             'District': district
           }), 'Sub-District (Locality)'));
