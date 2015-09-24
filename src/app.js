@@ -37,7 +37,7 @@ go.app = function() {
     self.states.add('Facility_Code_Confirm', function(name) {
       return Q()
         .then(function () {
-          var facName = _.result(_.find(self.im.config.facilities, 'FacCode', self.im.user.answers.Facility_Code_Entry), 'Facility');
+          var facName = _.result(_.find(self.im.config.facilities, {'FacCode': self.im.user.answers.Facility_Code_Entry}), 'Facility');
           var question = $("Please confirm that you are reporting from '" + facName + "'");
           return new ChoiceState(name, {
             question: question,

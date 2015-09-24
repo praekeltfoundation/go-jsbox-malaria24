@@ -61,7 +61,7 @@ describe("app", function() {
               return tester
                   .setup.user.state('Facility_Code_Entry')
                   .input('111111')
-                  .check.reply.content(/Please confirm that you are reporting from/)
+                  .check.reply.content(/Please confirm that you are reporting from 'A Facility'/)
                   .run();
           });
 
