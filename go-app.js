@@ -79,7 +79,7 @@ go.app = function() {
       return new FreeText(name, {
         question: question,
         check: function(content) {
-          var facility = _.result(_.find(self.im.config.facilities, 'FacCode', "154342"), 'Facility');
+          var facility = _.result(_.find(self.im.config.facilities, {'FacCode': content}), 'Facility');
           if (!facility) {
             return error;
           }

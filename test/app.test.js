@@ -17,12 +17,12 @@ describe("app", function() {
             tester
                 .setup.config.app({
                     name: 'test_app',
-                    facility_codes: JSON.parse(
+                    facilities: JSON.parse(
                         fs.readFileSync(
-                            "src/lookups/facility_codes.json", "utf8")),
-                    localities: JSON.parse(
+                            "src/lookups/facilities.json", "utf8")),
+                    landmarks: JSON.parse(
                         fs.readFileSync(
-                            "src/lookups/localities.json", "utf8"))
+                            "src/lookups/landmarks.json", "utf8"))
 
                 })
                 .setup(function(api) {
@@ -57,13 +57,13 @@ describe("app", function() {
                   .run();
           });
 
-          // it('should continue with valid input', function () {
-          //     return tester
-          //         .setup.user.state('Facility_Code_Entry')
-          //         .input('154342')
-          //         .check.reply.content(/Please enter the cell phone number/)
-          //         .run();
-          // });
+          it('should continue with valid input', function () {
+              return tester
+                  .setup.user.state('Facility_Code_Entry')
+                  .input('111111')
+                  .check.reply.content(/Please confirm that you are reporting from/)
+                  .run();
+          });
 
         });
 
