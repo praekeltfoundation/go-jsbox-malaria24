@@ -17,12 +17,12 @@ describe("app", function() {
             tester
                 .setup.config.app({
                     name: 'test_app',
-                    facility_codes: JSON.parse(
+                    facilities: JSON.parse(
                         fs.readFileSync(
-                            "src/lookups/facility_codes.json", "utf8")),
-                    localities: JSON.parse(
+                            "src/lookups/facilities.json", "utf8")),
+                    landmarks: JSON.parse(
                         fs.readFileSync(
-                            "src/lookups/localities.json", "utf8"))
+                            "src/lookups/landmarks.json", "utf8"))
 
                 })
                 .setup(function(api) {
@@ -60,8 +60,8 @@ describe("app", function() {
           it('should continue with valid input', function () {
               return tester
                   .setup.user.state('Facility_Code_Entry')
-                  .input('154342')
-                  .check.reply.content(/Please enter the cell phone number/)
+                  .input('111111')
+                  .check.reply.content(/Please confirm that you are reporting from 'A Facility'/)
                   .run();
           });
 
@@ -80,14 +80,6 @@ describe("app", function() {
                 return tester
                     .setup.user.state('MSISDN_Entry')
                     .input('none')
-                    .check.reply.content(/Please enter the first name of the patient/)
-                    .run();
-            });
-
-            it('should accept None', function () {
-                return tester
-                    .setup.user.state('MSISDN_Entry')
-                    .input('None')
                     .check.reply.content(/Please enter the first name of the patient/)
                     .run();
             });
@@ -169,7 +161,7 @@ describe("app", function() {
                 return tester
                     .setup.user.state('Locality_Entry')
                     .input('1')
-                    .check.reply.content(/What is the closest landmark for the patient/)
+                    .check.reply.content(/Please select /)
                     .run();
             });
         });
@@ -186,7 +178,7 @@ describe("app", function() {
             it('should accept something valid', function () {
                 return tester
                     .setup.user.state('Landmark_Entry')
-                    .input('aaaa')
+                    .input('1')
                     .check.reply.content(/What kind of identification does the patient have?/)
                     .run();
             });

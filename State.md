@@ -13,7 +13,13 @@ Facility_Code_Entry : Message: Welcome! To report a malaria case, please enter y
 Facility_Code_Entry : Type: text
 Facility_Code_Entry : *Error; Sorry, that code is not recognised
 Facility_Code_Entry --> [*]
-Facility_Code_Entry --> MSISDN_Entry : validate facility code
+Facility_Code_Entry --> Facility_Code_Confirm : validate facility code
+
+Facility_Code_Confirm : Please confirm you are reporting from [facility name]
+Facility_Code_Confirm : 1. Confirm
+Facility_Code_Confirm : 2. Not my facility
+Facility_Code_Confirm --> MSISDN_Entry : 1
+Facility_Code_Confirm --> Facility_Code_Entry : 2
 
 MSISDN_Entry : *VALIDATION - valid cellphone number
 MSISDN_Entry : Message: Please enter the cell phone number of patient or next of kin.

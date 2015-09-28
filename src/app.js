@@ -1,6 +1,7 @@
 go.app = function() {
   var vumigo = require('vumigo_v02');
   var Q = require('q');
+  var _ = require('lodash');
   var Ona = require('go-jsbox-ona').Ona;
   var App = vumigo.App;
   var Choice = vumigo.states.Choice;
@@ -19,22 +20,41 @@ go.app = function() {
 
     self.states.add('Facility_Code_Entry', function(name) {
       var question = $("Welcome! To report a malaria case, please enter your " +
-                       "facility code. For example, 543456");
+        "facility code. For example, 543456");
       var error = $("The facility code is invalid. Please enter again.");
       return new FreeText(name, {
         question: question,
         check: function(content) {
-          var facility_codes = self.im.config.facility_codes;
-          if (facility_codes.indexOf(parseInt(content, 10)) < 0) {
+          var facility = _.result(_.find(self.im.config.facilities, {'FacCode': content}), 'Facility');
+          if (!facility) {
             return error;
           }
         },
-        next: 'MSISDN_Entry'
+        next: 'Facility_Code_Confirm'
       });
     });
 
+    self.states.add('Facility_Code_Confirm', function(name) {
+      return Q()
+        .then(function () {
+          var facName = _.result(_.find(self.im.config.facilities, {'FacCode': self.im.user.answers.Facility_Code_Entry}), 'Facility');
+          var question = $("Please confirm that you are reporting from '" + facName + "'");
+          return new ChoiceState(name, {
+            question: question,
+            choices: [
+              new Choice('MSISDN_Entry', "Confirm"),
+              new Choice('Facility_Code_Entry', "Not my facility")
+            ],
+            next: function(choice) {
+              return choice.value;
+            }
+          });
+        });
+
+    });
+
     self.states.add('MSISDN_Entry', function(name) {
-      var question = $("Please enter the cell phone number of patient or next of kin. 'none' for no number.");
+      var question = $("Please enter the South African cell phone number of patient or next of kin. E.g. 0794784022. 'none' for no number.");
       var error = $('Sorry, that number is not valid');
       return new FreeText(name, {
         question: question,
@@ -77,19 +97,36 @@ go.app = function() {
 
     self.states.add('Locality_Entry', function(name) {
       var question = $("Please select the locality where the patient is currently staying:");
-      return new ChoiceState(name, {
-        question: question,
-        choices: self.im.config.localities.map(function (locality) {
-          return new Choice(locality, locality);
-        }),
-        next: 'Landmark_Entry'
-      });
+      return Q()
+        .then(function() {
+          // Resolve a code to a district
+          var district = _.result(_.find(self.im.config.facilities, {'FacCode': self.im.user.answers.Facility_Code_Entry}), 'District');
+          var localities = _.unique(_.pluck(_.filter(self.im.config.facilities, {
+            'District': district
+          }), 'Sub-District (Locality)'));
+
+          return localities;
+
+        })
+        .then(function(localities) {
+          return new ChoiceState(name, {
+            question: question,
+            choices: localities.map(function(locality) {
+              return new Choice(locality, locality);
+            }),
+            next: 'Landmark_Entry'
+          });
+        });
+
     });
 
     self.states.add('Landmark_Entry', function(name) {
       var question = $("What is the closest landmark for the patient?");
-      return new FreeText(name, {
+      return new ChoiceState(name, {
         question: question,
+        choices: self.im.config.landmarks.map(function(landmark) {
+          return new Choice(landmark, landmark);
+        }),
         next: 'ID_Type_Entry'
       });
     });
@@ -159,8 +196,8 @@ go.app = function() {
       return new FreeText(name, {
         question: question,
         check: function(content) {
-          if(isNaN(content) || (parseInt(content, 10) > 31 || parseInt(content, 10) < 1)) {
-              return error;
+          if (isNaN(content) || (parseInt(content, 10) > 31 || parseInt(content, 10) < 1)) {
+            return error;
           }
         },
         next: 'No_SA_ID_Gender_Entry'
