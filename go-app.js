@@ -173,6 +173,14 @@ go.app = function() {
 
     });
 
+    self.states.add('Locality_Entry_Other', function(name) {
+      var question = $("Please write the locality where the patient is currently staying:");
+      return new FreeText(name, {
+        question: question,
+        next: 'Landmark_Entry'
+      });
+    });
+
     self.states.add('Landmark_Entry', function(name) {
       var question = $("What is the closest landmark for the patient?");
       return new ChoiceState(name, {

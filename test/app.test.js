@@ -166,6 +166,18 @@ describe("app", function() {
             });
         });
 
+        describe('Locality_Entry_Other', function () {
+
+            it('should accept something valid', function () {
+                return tester
+                    .setup.user.state('Locality_Entry_Other')
+                    .input('sdfsdfdf')
+                    .check.reply.content(/What is the closest landmark /)
+                    .run();
+            });
+        });
+
+
         describe('Landmark_Entry', function () {
             it('should not accept blanks', function () {
                 return tester
