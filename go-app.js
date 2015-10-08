@@ -346,6 +346,7 @@ go.app = function() {
         sa_id_number: data.SA_ID_Entry,
         gender: data.gender,
         landmark: data.Landmark_Entry,
+        locality_other: data.Locality_Entry_Other,
 
       };
 
