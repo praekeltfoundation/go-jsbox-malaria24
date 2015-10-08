@@ -173,6 +173,14 @@ go.app = function() {
 
     });
 
+    self.states.add('Locality_Entry_Other', function(name) {
+      var question = $("Please write the locality where the patient is currently staying:");
+      return new FreeText(name, {
+        question: question,
+        next: 'Landmark_Entry'
+      });
+    });
+
     self.states.add('Landmark_Entry', function(name) {
       var question = $("What is the closest landmark for the patient?");
       return new ChoiceState(name, {
@@ -338,6 +346,7 @@ go.app = function() {
         sa_id_number: data.SA_ID_Entry,
         gender: data.gender,
         landmark: data.Landmark_Entry,
+        locality_other: data.Locality_Entry_Other,
 
       };
 
