@@ -8,6 +8,7 @@ go.app = function() {
   var ChoiceState = vumigo.states.ChoiceState;
   var FreeText = vumigo.states.FreeText;
   var EndState = vumigo.states.EndState;
+  var JsonApi = vumigo.http.api.JsonApi;
 
   var GoApp = App.extend(function(self) {
     App.call(self, 'Facility_Code_Entry');
@@ -18,27 +19,39 @@ go.app = function() {
 
     });
 
-    self.states.add('Facility_Code_Entry', function(name) {
-      var question = $("Welcome! To report a malaria case, please enter your " +
+    self.states.add('Facility_Code_Entry', function(name, opts) {
+      var question = $(
+        "Welcome! To report a malaria case, please enter your " +
         "facility code. For example, 543456");
-      var error = $("The facility code is invalid. Please enter again.");
       return new FreeText(name, {
-        question: question,
-        check: function(content) {
-          var facility = _.result(_.find(self.im.config.facilities, {'FacCode': content}), 'Facility');
-          if (!facility) {
-            return error;
-          }
-        },
-        next: 'Facility_Code_Confirm'
+        question: opts.error || question,
+        next: function(content) {
+          var http = new JsonApi(self.im);
+          var url = self.im.config.api_endpoint + 'facility/' + content + '.json';
+          return http
+            .get(url)
+            .then(function (response) {
+              return {
+                  name: 'Facility_Code_Confirm',
+                  creator_opts: response.data
+              };
+            })
+            .catch(function (request, reason) {
+              return {
+                name: 'Facility_Code_Entry',
+                creator_opts: {
+                  'error': $("The facility code is invalid. Please enter again.")
+                }
+              };
+            });
+        }
       });
     });
 
-    self.states.add('Facility_Code_Confirm', function(name) {
+    self.states.add('Facility_Code_Confirm', function(name, opts) {
       return Q()
         .then(function () {
-          var facName = _.result(_.find(self.im.config.facilities, {'FacCode': self.im.user.answers.Facility_Code_Entry}), 'Facility');
-          var question = $("Please confirm that you are reporting from '" + facName + "'");
+          var question = $("Please confirm that you are reporting from '" + opts.facility_name + "'");
           return new ChoiceState(name, {
             question: question,
             choices: [
@@ -285,7 +298,6 @@ go.app = function() {
         sa_id_number: data.SA_ID_Entry,
         gender: data.gender,
         landmark: data.Landmark_Entry,
-
       };
 
       return submission;

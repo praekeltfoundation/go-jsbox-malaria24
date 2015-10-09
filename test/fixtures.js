@@ -1,16 +1,13 @@
 module.exports = function() {
     return [{
         "request": {
-            "method": "POST",
-            "url": "http://example.com",
-            "data": {
-                "bar": "baz"
-            }
+            "method": "GET",
+            "url": "http://www.example.org/api/v1/facility/111111.json"
         },
         "response": {
             "code": 200,
             "data": {
-                "ham": "spam"
+                "facility_name": "A Facility"
             }
         }
     }];

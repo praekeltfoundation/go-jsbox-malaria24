@@ -17,6 +17,7 @@ describe("app", function() {
             tester
                 .setup.config.app({
                     name: 'test_app',
+                    api_endpoint: 'http://www.example.org/api/v1/',
                     facilities: JSON.parse(
                         fs.readFileSync(
                             "src/lookups/facilities.json", "utf8")),
@@ -51,7 +52,11 @@ describe("app", function() {
 
           it('should validate the input', function () {
               return tester
-                  .setup.user.state('Facility_Code_Entry')
+                  .setup.user.state('Facility_Code_Entry', {
+                      creator_opts: {
+                          error: 'The facility code is invalid'
+                      }
+                  })
                   .input('123')
                   .check.reply.content(/The facility code is invalid/)
                   .run();
