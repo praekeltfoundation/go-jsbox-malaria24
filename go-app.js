@@ -54,7 +54,6 @@ go.utils = {
 go.app = function() {
   var vumigo = require('vumigo_v02');
   var Q = require('q');
-  var _ = require('lodash');
   var Ona = require('go-jsbox-ona').Ona;
   var App = vumigo.App;
   var Choice = vumigo.states.Choice;
@@ -163,16 +162,12 @@ go.app = function() {
 
     self.states.add('Locality_Entry', function(name) {
       var question = $("Please select the locality where the patient is currently staying:");
-      return Q()
-        .then(function() {
-          // Resolve a code to a district
-          var district = _.result(_.find(self.im.config.facilities, {'FacCode': self.im.user.answers.Facility_Code_Entry}), 'District');
-          var localities = _.unique(_.pluck(_.filter(self.im.config.facilities, {
-            'District': district
-          }), 'Sub-District (Locality)'));
-
-          return localities;
-
+      var http = new JsonApi(self.im);
+      var url = self.im.config.api_endpoint + 'localities/' + self.im.user.answers.Facility_Code_Entry + '.json';
+      return http
+        .get(url)
+        .then(function (response) {
+          return response.data;
         })
         .then(function(localities) {
           return new ChoiceState(name, {
@@ -183,7 +178,6 @@ go.app = function() {
             next: 'Landmark_Entry'
           });
         });
-
     });
 
     self.states.add('Landmark_Entry', function(name) {
