@@ -17,6 +17,7 @@ describe("app", function() {
             tester
                 .setup.config.app({
                     name: 'test_app',
+                    api_endpoint: 'http://www.example.org/api/v1/',
                     facilities: JSON.parse(
                         fs.readFileSync(
                             "src/lookups/facilities.json", "utf8")),
@@ -51,7 +52,11 @@ describe("app", function() {
 
           it('should validate the input', function () {
               return tester
-                  .setup.user.state('Facility_Code_Entry')
+                  .setup.user.state('Facility_Code_Entry', {
+                      creator_opts: {
+                          error: 'The facility code is invalid'
+                      }
+                  })
                   .input('123')
                   .check.reply.content(/The facility code is invalid/)
                   .run();
@@ -141,6 +146,9 @@ describe("app", function() {
             it('should accept one of the valid inputs', function () {
                 return tester
                     .setup.user.state('Patient_Abroad_Entry')
+                    .setup.user.answers({
+                        'Facility_Code_Entry': '111111'
+                    })
                     .input('1')
                     .check.reply.content(/Please select the locality/)
                     .run();
@@ -152,6 +160,9 @@ describe("app", function() {
             it('should not accept everything', function () {
                 return tester
                     .setup.user.state('Locality_Entry')
+                    .setup.user.answers({
+                        'Facility_Code_Entry': '111111'
+                    })
                     .input('fooo')
                     .check.reply.content(/Please select the locality/)
                     .run();
@@ -160,8 +171,11 @@ describe("app", function() {
             it('should accept something valid', function () {
                 return tester
                     .setup.user.state('Locality_Entry')
+                    .setup.user.answers({
+                        'Facility_Code_Entry': '111111'
+                    })
                     .input('1')
-                    .check.reply.content(/Please select /)
+                    .check.reply.content(/What is the closest landmark/)
                     .run();
             });
         });
