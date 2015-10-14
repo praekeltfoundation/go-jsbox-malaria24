@@ -155,9 +155,13 @@ go.app = function() {
       return new ChoiceState(name, {
         question: $("Has the patient travelled outside of the country in the past 3 weeks:"),
         choices: [
-          new Choice('1', $("Yes")),
-          new Choice('2', $("No")),
-          new Choice('3', $("Unknown"))
+          new Choice('No', $("No")),
+          new Choice('Ethiopia', $("Ethiopia")),
+          new Choice('Somalia', $("Somalia")),
+          new Choice('Mozambique', $("Mozambique")),
+          new Choice('Zambia', $("Zambia")),
+          new Choice('Zimbabwe', $("Zimbabwe")),
+          new Choice('Other', $("Other")),
         ],
         next: 'Locality_Entry'
       });
@@ -310,8 +314,8 @@ go.app = function() {
       return new ChoiceState(name, {
         question: $("Please select the patient's gender:"),
         choices: [
-          new Choice('1', $("Male")),
-          new Choice('2', $("Female"))
+          new Choice('male', $("Male")),
+          new Choice('female', $("Female"))
         ],
 
         next: 'Submit_Case'
@@ -340,7 +344,7 @@ go.app = function() {
           var data = self.im.user.answers;
           data.create_date_time = new Date();
           data.reported_by = self.im.user.addr;
-          data.gender = (self.im.user.answers.No_SA_ID_Gender_Entry == 1) ? "male" : "female";
+          data.gender = self.im.user.answers.No_SA_ID_Gender_Entry;
           said = data.SA_ID_Entry;
           if (data.SA_ID_Entry) {
             data.No_SA_ID_Year_Entry = said.substring(0, 2);
