@@ -120,14 +120,30 @@ go.app = function() {
           return response.data;
         })
         .then(function(localities) {
+          var choices = localities.map(function(locality) {
+            return new Choice(locality, locality);
+          }).concat([
+            new Choice('_other', 'Other'),
+          ]);
           return new ChoiceState(name, {
             question: question,
-            choices: localities.map(function(locality) {
-              return new Choice(locality, locality);
-            }),
-            next: 'Landmark_Entry'
+            choices: choices,
+            next: function (choice) {
+              if (choice.value == '_other') {
+                return 'Locality_Entry_Other';
+              }
+              return 'Landmark_Entry';
+            }
           });
         });
+    });
+
+    self.states.add('Locality_Entry_Other', function (name) {
+      var question = $('Please write the locality where the patient is currently staying:');
+      return new FreeText(name, {
+        question: question,
+        next: 'Landmark_Entry'
+      });
     });
 
     self.states.add('Landmark_Entry', function(name) {
@@ -303,6 +319,7 @@ go.app = function() {
         id_type: data.ID_Type_Entry,
         last_name: data.Last_Name_Entry,
         locality: data.Locality_Entry,
+        locality_other: data.Locality_Entry_Other,
         msisdn: data.MSISDN_Entry,
         date_of_birth: String(data.No_SA_ID_Year_Entry) + String(data.No_SA_ID_Month_Entry) + String(data.No_SA_ID_Day_Entry),
         create_date_time: data.create_date_time,
