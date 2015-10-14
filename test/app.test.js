@@ -227,6 +227,21 @@ describe("app", function() {
                     .check.reply.content(/Please enter the year the patient was born/)
                     .run();
             });
+
+            it('should accept errors from previous states via creator opts', function () {
+                return tester
+                    .setup.user.state('ID_Type_Entry', {
+                        creator_opts: {
+                            error: 'This is the error'
+                        }
+                    })
+                    .input('foo')
+                    .check.interaction({
+                        state: 'ID_Type_Entry',
+                        reply: /This is the error/
+                    })
+                    .run();
+            });
         });
 
         describe('SA_ID_Entry', function () {
@@ -234,7 +249,10 @@ describe("app", function() {
                 return tester
                     .setup.user.state('SA_ID_Entry')
                     .input('foo')
-                    .check.reply.content(/Sorry, that SA ID is not valid/)
+                    .check.interaction({
+                        state: 'ID_Type_Entry',
+                        reply: /The format of the ID number was incorrect/
+                    })
                     .run();
             });
 
@@ -245,6 +263,7 @@ describe("app", function() {
                     .check.reply.content(/Thank you! Your report has been submitted./)
                     .run();
             });
+
         });
 
         describe('No_SA_ID_Year_Entry', function () {

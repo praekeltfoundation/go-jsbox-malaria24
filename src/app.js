@@ -141,10 +141,10 @@ go.app = function() {
       });
     });
 
-    self.states.add('ID_Type_Entry', function(name) {
+    self.states.add('ID_Type_Entry', function(name, opts) {
       var question = $("What kind of identification does the patient have?");
       return new ChoiceState(name, {
-        question: question,
+        question: opts.error || question,
         choices: [
           new Choice('SA_ID_Entry', $("South African ID")),
           new Choice('No_SA_ID_Year_Entry', $("None"))
@@ -159,15 +159,20 @@ go.app = function() {
 
     self.states.add('SA_ID_Entry', function(name) {
       var question = $("Please enter the patient's ID number");
-      var error = $('Sorry, that SA ID is not valid');
       return new FreeText(name, {
         question: question,
-        check: function(content) {
+        next: function(content) {
           if (!go.utils.validate_id_sa(content)) {
-            return error;
+            return {
+              name: 'ID_Type_Entry',
+              creator_opts: {
+                error: $('The format of the ID number was incorrect. ' +
+                         'What kind of identification does the patient have?')
+              }
+            };
           }
-        },
-        next: 'Submit_Case'
+          return 'Submit_Case';
+        }
       });
 
     });
