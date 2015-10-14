@@ -192,7 +192,7 @@ describe("app", function() {
                     .run();
             });
 
-            it('should ask for manual input when told to do so', function () {
+            it('should ask for other input when told to do so', function () {
                 return tester
                     .setup.user.state('Locality_Entry')
                     .setup.user.answers({
@@ -200,17 +200,17 @@ describe("app", function() {
                     })
                     .input('4')
                     .check.interaction({
-                        state: 'Locality_Entry_Manual',
+                        state: 'Locality_Entry_Other',
                         reply: /Please write the locality where the patient/
                     })
                     .run();
             });
         });
 
-        describe('Locality_Entry_Manual', function () {
+        describe('Locality_Entry_Other', function () {
             it('should continue to the landmark', function () {
                 return tester
-                    .setup.user.state('Locality_Entry_Manual')
+                    .setup.user.state('Locality_Entry_Other')
                     .input('foo')
                     .check.interaction({
                         state: 'Landmark_Entry',

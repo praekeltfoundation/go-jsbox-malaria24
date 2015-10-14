@@ -183,7 +183,7 @@ go.app = function() {
             choices: choices,
             next: function (choice) {
               if (choice.value == '_other') {
-                return 'Locality_Entry_Manual';
+                return 'Locality_Entry_Other';
               }
               return 'Landmark_Entry';
             }
@@ -191,7 +191,7 @@ go.app = function() {
         });
     });
 
-    self.states.add('Locality_Entry_Manual', function (name) {
+    self.states.add('Locality_Entry_Other', function (name) {
       var question = $('Please write the locality where the patient is currently staying:');
       return new FreeText(name, {
         question: question,
@@ -367,6 +367,7 @@ go.app = function() {
         id_type: data.ID_Type_Entry,
         last_name: data.Last_Name_Entry,
         locality: data.Locality_Entry,
+        locality_other: data.Locality_Entry_Other,
         msisdn: data.MSISDN_Entry,
         date_of_birth: String(data.No_SA_ID_Year_Entry) + String(data.No_SA_ID_Month_Entry) + String(data.No_SA_ID_Day_Entry),
         create_date_time: data.create_date_time,
