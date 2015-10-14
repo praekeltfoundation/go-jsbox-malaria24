@@ -102,9 +102,13 @@ go.app = function() {
       return new ChoiceState(name, {
         question: $("Has the patient travelled outside of the country in the past 3 weeks:"),
         choices: [
-          new Choice('yes', $("Yes")),
-          new Choice('no', $("No")),
-          new Choice('unknown', $("Unknown"))
+          new Choice('No', $("No")),
+          new Choice('Ethiopia', $("Ethiopia")),
+          new Choice('Somalia', $("Somalia")),
+          new Choice('Mozambique', $("Mozambique")),
+          new Choice('Zambia', $("Zambia")),
+          new Choice('Zimbabwe', $("Zimbabwe")),
+          new Choice('Other', $("Other")),
         ],
         next: 'Locality_Entry'
       });
