@@ -173,14 +173,30 @@ go.app = function() {
           return response.data;
         })
         .then(function(localities) {
+          var choices = localities.map(function(locality) {
+            return new Choice(locality, locality);
+          }).concat([
+            new Choice('_other', 'Other'),
+          ]);
           return new ChoiceState(name, {
             question: question,
-            choices: localities.map(function(locality) {
-              return new Choice(locality, locality);
-            }),
-            next: 'Landmark_Entry'
+            choices: choices,
+            next: function (choice) {
+              if (choice.value == '_other') {
+                return 'Locality_Entry_Manual';
+              }
+              return 'Landmark_Entry';
+            }
           });
         });
+    });
+
+    self.states.add('Locality_Entry_Manual', function (name) {
+      var question = $('Please write the locality where the patient is currently staying:');
+      return new FreeText(name, {
+        question: question,
+        next: 'Landmark_Entry'
+      });
     });
 
     self.states.add('Landmark_Entry', function(name) {

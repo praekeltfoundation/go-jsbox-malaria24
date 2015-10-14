@@ -191,6 +191,33 @@ describe("app", function() {
                     .check.reply.content(/What is the closest landmark/)
                     .run();
             });
+
+            it('should ask for manual input when told to do so', function () {
+                return tester
+                    .setup.user.state('Locality_Entry')
+                    .setup.user.answers({
+                        'Facility_Code_Entry': '111111'
+                    })
+                    .input('4')
+                    .check.interaction({
+                        state: 'Locality_Entry_Manual',
+                        reply: /Please write the locality where the patient/
+                    })
+                    .run();
+            });
+        });
+
+        describe('Locality_Entry_Manual', function () {
+            it('should continue to the landmark', function () {
+                return tester
+                    .setup.user.state('Locality_Entry_Manual')
+                    .input('foo')
+                    .check.interaction({
+                        state: 'Landmark_Entry',
+                        reply: /What is the closest landmark for the patient?/
+                    })
+                    .run();
+            });
         });
 
         describe('Landmark_Entry', function () {
