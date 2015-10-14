@@ -72,6 +72,19 @@ describe("app", function() {
 
         });
 
+        describe('Facility_Code_Confirm', function () {
+            it('should got to MSISDN entry', function () {
+                    return tester
+                        .setup.user.state('Facility_Code_Confirm')
+                        .input('1')
+                        .check.interaction({
+                            state: 'MSISDN_Entry',
+                            reply: /Please enter the South African cell phone number/
+                        })
+                        .run();
+            });
+        });
+
         describe('MSISDN_Entry', function() {
             it('should block bad phone numbers', function () {
                 return tester

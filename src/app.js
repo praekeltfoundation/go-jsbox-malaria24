@@ -66,7 +66,9 @@ go.app = function() {
     });
 
     self.states.add('MSISDN_Entry', function(name) {
-      var question = $("Please enter the South African cell phone number of patient or next of kin. E.g. 0794784022. 'none' for no number.");
+      var question = $("Please enter the South African cell phone number of " +
+                       "patient or next of kin. For example 0720845785. Type " +
+                       "none if they don't have a number.");
       var error = $('Sorry, that number is not valid');
       return new FreeText(name, {
         question: question,
@@ -97,7 +99,7 @@ go.app = function() {
 
     self.states.add('Patient_Abroad_Entry', function(name) {
       return new ChoiceState(name, {
-        question: $("Has the patient travelled outside of the country in the past 2 weeks:"),
+        question: $("Has the patient travelled outside of the country in the past 3 weeks:"),
         choices: [
           new Choice('1', $("Yes")),
           new Choice('2', $("No")),
