@@ -58,6 +58,7 @@ go.app = function() {
   var App = vumigo.App;
   var Choice = vumigo.states.Choice;
   var ChoiceState = vumigo.states.ChoiceState;
+  var PaginatedChoiceState = vumigo.states.PaginatedChoiceState;
   var FreeText = vumigo.states.FreeText;
   var EndState = vumigo.states.EndState;
   var JsonApi = vumigo.http.api.JsonApi;
@@ -237,21 +238,31 @@ go.app = function() {
     });
 
     self.states.add('No_SA_ID_Month_Entry', function(name) {
-      var question = $("Please enter the month the patient was born. For example: 12");
-      var error = $('Sorry, that month is invalid.');
-      return new FreeText(name, {
+      var question = $("Please select the patient's month of birth");
+      return new PaginatedChoiceState(name, {
         question: question,
-        check: function(content) {
-          if (isNaN(content) || (parseInt(content, 10) > 12 || parseInt(content, 10) < 1)) {
-            return error;
-          }
-        },
+        options_per_page: 6,
+        choices: [
+          new Choice(1, 'January'),
+          new Choice(2, 'February'),
+          new Choice(3, 'March'),
+          new Choice(4, 'April'),
+          new Choice(5, 'May'),
+          new Choice(6, 'June'),
+          new Choice(7, 'July'),
+          new Choice(8, 'August'),
+          new Choice(9, 'September'),
+          new Choice(10, 'October'),
+          new Choice(11, 'November'),
+          new Choice(12, 'December'),
+        ],
+        error: $('Sorry, that month is invalid.'),
         next: 'No_SA_ID_Day_Entry'
       });
     });
 
     self.states.add('No_SA_ID_Day_Entry', function(name) {
-      var question = $("Please enter the day the patient was born. For example: 12");
+      var question = $("Please enter the day the patient was born. For example: 22");
       var error = $('Sorry, that day is invalid.');
       return new FreeText(name, {
         question: question,
