@@ -260,7 +260,7 @@ describe("app", function() {
                 return tester
                     .setup.user.state('No_SA_ID_Year_Entry')
                     .input('2000')
-                    .check.reply.content(/Please enter the month the patient was born/)
+                    .check.reply.content(/Please select the patient's month of birth/)
                     .run();
             });
         });
@@ -277,7 +277,7 @@ describe("app", function() {
             it('should accept a valid month', function () {
                 return tester
                     .setup.user.state('No_SA_ID_Month_Entry')
-                    .input('12')
+                    .input('5')
                     .check.reply.content(/Please enter the day the patient was born./)
                     .run();
             });
