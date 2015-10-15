@@ -446,7 +446,7 @@ describe("app", function() {
                                 create_date_time: '2015-01-01T00:00:00+00:00',
                                 abroad: 'Patient_Abroad_Entry',
                                 sa_id_number: '8905100273087',
-                                gender: 'gender',
+                                gender: 'female',
                                 landmark: 'Landmark_Entry',
                                 landmark_description: 'Landmark_Entry_Description',
                                 case_number: '20150101-111111-1'

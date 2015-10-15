@@ -41,6 +41,14 @@ go.utils = {
         return ('' + sum).slice(-1) == check;
     },
 
+    parse_gender_from_id: function (id) {
+        if(parseInt(id.charAt(6)) < 5) {
+            return 'female';
+        } else {
+            return 'male';
+        }
+    },
+
     now: function () {
         return moment();
     },
