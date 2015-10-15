@@ -153,14 +153,14 @@ go.app = function() {
 
     self.states.add('Patient_Abroad_Entry', function(name) {
       return new ChoiceState(name, {
-        question: $("Has the patient travelled outside of the country in the past 3 weeks:"),
+        question: $("Has the patient travelled abroad in the past 21 days"),
         choices: [
           new Choice('No', $("No")),
-          new Choice('Ethiopia', $("Ethiopia")),
-          new Choice('Somalia', $("Somalia")),
-          new Choice('Mozambique', $("Mozambique")),
-          new Choice('Zambia', $("Zambia")),
-          new Choice('Zimbabwe', $("Zimbabwe")),
+          new Choice('Ethiopia', $("Yes Ethiopia")),
+          new Choice('Somalia', $("Yes Somalia")),
+          new Choice('Mozambique', $("Yes Mozambique")),
+          new Choice('Zambia', $("Yes Zambia")),
+          new Choice('Zimbabwe', $("Yes Zimbabwe")),
           new Choice('Other', $("Other")),
         ],
         next: 'Locality_Entry'
@@ -360,7 +360,7 @@ go.app = function() {
         })
         .then(function() {
           return new EndState(name, {
-            text: $("Thank you! Your report has been submitted. " + 
+            text: $("Thank you! Your report has been submitted. " +
                     "You will receive an SMS with the patient name and " +
                     "case number in the next hour."),
             next: 'Facility_Code_Entry'

@@ -134,7 +134,7 @@ describe("app", function() {
                 return tester
                     .setup.user.state('Last_Name_Entry')
                     .input('Ngu')
-                    .check.reply.content(/Has the patient travelled outside of the country/)
+                    .check.reply.content(/Has the patient travelled abroad in the past 21 days/)
                     .run();
             });
 
@@ -152,7 +152,7 @@ describe("app", function() {
                 return tester
                     .setup.user.state('Patient_Abroad_Entry')
                     .input('-1')
-                    .check.reply.content(/Has the patient travelled outside of the country/)
+                    .check.reply.content(/Has the patient travelled abroad in the past 21 days/)
                     .run();
             });
 
