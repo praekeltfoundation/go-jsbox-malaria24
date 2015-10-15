@@ -301,7 +301,7 @@ go.app = function() {
           }
 
           var submission = self.create_ona_submission(data);
-
+          console.log('posting data', submission);
           return ona.submit({
             id: self.im.config.ona.id,
             submission: submission,

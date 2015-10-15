@@ -57,6 +57,7 @@ describe("app", function() {
                         .setup(function(api) {
                             fixtures().forEach(api.http.fixtures.add);
                             onafixtures.store.forEach(function (fixture) {
+                                console.log('Loading Ona fixture', fixture);
                                 api.http.fixtures.add(fixture);
                             });
                         });
