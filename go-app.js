@@ -366,7 +366,7 @@ go.app = function() {
           });
           var data = self.im.user.answers;
           data.case_number = case_number;
-          data.create_date_time = go.utils.now().format();
+          data.create_date_time = go.utils.now().utc().format();
           data.reported_by = self.im.user.addr;
           data.gender = self.im.user.answers.No_SA_ID_Gender_Entry;
           said = data.SA_ID_Entry;
@@ -377,7 +377,6 @@ go.app = function() {
           }
 
           var submission = self.create_ona_submission(data);
-          console.log('posting data', submission);
           return ona.submit({
             id: self.im.config.ona.id,
             submission: submission,

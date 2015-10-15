@@ -35,7 +35,7 @@ describe("app", function() {
                 .then(function(im) {
                     now = moment();
                     go.utils.now = function () {
-                        return moment("2015-01-01T00:00:00+02:00");
+                        return moment("2015-01-01T00:00:00+00:00");
                     };
                     app = new go.app.GoApp();
                     tester = new AppTester(app);
@@ -57,7 +57,6 @@ describe("app", function() {
                         .setup(function(api) {
                             fixtures().forEach(api.http.fixtures.add);
                             onafixtures.store.forEach(function (fixture) {
-                                console.log('Loading Ona fixture', fixture);
                                 api.http.fixtures.add(fixture);
                             });
                         });
@@ -444,7 +443,7 @@ describe("app", function() {
                                 locality_other: 'Locality_Entry_Other',
                                 msisdn: 'MSISDN_Entry',
                                 date_of_birth: '890510',
-                                create_date_time: '2015-01-01T00:00:00+02:00',
+                                create_date_time: '2015-01-01T00:00:00+00:00',
                                 abroad: 'Patient_Abroad_Entry',
                                 sa_id_number: '8905100273087',
                                 gender: 'gender',
