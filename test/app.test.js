@@ -265,7 +265,10 @@ describe("app", function() {
                 return tester
                     .setup.user.state('Landmark_Entry')
                     .input('1')
-                    .check.reply.content(/What kind of identification does the patient have?/)
+                    .check.interaction({
+                        state: 'Landmark_Entry_Description',
+                        reply: /Please describe the landmark/
+                    })
                     .run();
             });
         });
