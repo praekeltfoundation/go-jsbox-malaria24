@@ -9,7 +9,7 @@ onafixtures.submit.add({
             "facility_code": "111111",
             "reported_by": "+27123456789",
             "first_name": "First_Name_Entry",
-            "id_type": "ID_Type_Entry",
+            "id_type": "SA_ID_Entry",
             "last_name": "Last_Name_Entry",
             "locality": "Locality_Entry",
             "locality_other": "Locality_Entry_Other",
@@ -18,7 +18,7 @@ onafixtures.submit.add({
             "create_date_time": '2015-01-01T00:00:00+00:00',
             "abroad": "Patient_Abroad_Entry",
             "sa_id_number": "8905100273087",
-            "gender": "gender",
+            "gender": "female",
             "landmark": "Landmark_Entry",
             "landmark_description": "Landmark_Entry_Description",
             "case_number": "20150101-111111-1"

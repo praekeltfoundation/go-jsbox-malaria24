@@ -48,6 +48,14 @@ go.utils = {
         return ('' + sum).slice(-1) == check;
     },
 
+    parse_gender_from_id: function (id) {
+        if(parseInt(id.charAt(6)) < 5) {
+            return 'female';
+        } else {
+            return 'male';
+        }
+    },
+
     now: function () {
         return moment();
     },
@@ -368,7 +376,12 @@ go.app = function() {
           data.case_number = case_number;
           data.create_date_time = go.utils.now().utc().format();
           data.reported_by = self.im.user.addr;
-          data.gender = self.im.user.answers.No_SA_ID_Gender_Entry;
+          if(self.im.user.answers.ID_Type_Entry == 'SA_ID_Entry') {
+            data.gender = go.utils.parse_gender_from_id(
+              self.im.user.answers.SA_ID_Entry);
+          } else {
+            data.gender = self.im.user.answers.No_SA_ID_Gender_Entry;
+          }
           said = data.SA_ID_Entry;
           if (data.SA_ID_Entry) {
             data.No_SA_ID_Year_Entry = said.substring(0, 2);

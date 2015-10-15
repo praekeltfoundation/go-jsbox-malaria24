@@ -17,7 +17,7 @@ describe("app", function() {
         var completed_answers = {
             Facility_Code_Entry: '111111',
             First_Name_Entry: 'First_Name_Entry',
-            ID_Type_Entry: 'ID_Type_Entry',
+            ID_Type_Entry: 'SA_ID_Entry', // so we parse the gender from the ID
             Last_Name_Entry: 'Last_Name_Entry',
             Locality_Entry: 'Locality_Entry',
             Locality_Entry_Other: 'Locality_Entry_Other',
@@ -437,7 +437,7 @@ describe("app", function() {
                                 facility_code: '111111',
                                 reported_by: '+27123456789',
                                 first_name: 'First_Name_Entry',
-                                id_type: 'ID_Type_Entry',
+                                id_type: 'SA_ID_Entry',
                                 last_name: 'Last_Name_Entry',
                                 locality: 'Locality_Entry',
                                 locality_other: 'Locality_Entry_Other',
@@ -446,7 +446,7 @@ describe("app", function() {
                                 create_date_time: '2015-01-01T00:00:00+00:00',
                                 abroad: 'Patient_Abroad_Entry',
                                 sa_id_number: '8905100273087',
-                                gender: 'gender',
+                                gender: 'female',
                                 landmark: 'Landmark_Entry',
                                 landmark_description: 'Landmark_Entry_Description',
                                 case_number: '20150101-111111-1'
