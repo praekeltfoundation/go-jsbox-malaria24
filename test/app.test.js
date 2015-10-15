@@ -166,7 +166,7 @@ describe("app", function() {
                 return tester
                     .setup.user.state('Last_Name_Entry')
                     .input('Ngu')
-                    .check.reply.content(/Has the patient travelled outside of the country/)
+                    .check.reply.content(/Has the patient travelled abroad in the past 21 days/)
                     .run();
             });
 
@@ -184,7 +184,7 @@ describe("app", function() {
                 return tester
                     .setup.user.state('Patient_Abroad_Entry')
                     .input('-1')
-                    .check.reply.content(/Has the patient travelled outside of the country/)
+                    .check.reply.content(/Has the patient travelled abroad in the past 21 days/)
                     .run();
             });
 
@@ -268,6 +268,19 @@ describe("app", function() {
                     .check.interaction({
                         state: 'Landmark_Entry_Description',
                         reply: /Please describe the landmark/
+                    })
+                    .run();
+            });
+        });
+
+        describe("Landmark_Entry_Description", function () {
+            it('should continue to the ID_Type_Entry', function () {
+                return tester
+                    .setup.user.state('Landmark_Entry_Description')
+                    .input('pretty')
+                    .check.interaction({
+                        state: 'ID_Type_Entry',
+                        reply: /What kind of identification does the patient have?/
                     })
                     .run();
             });
