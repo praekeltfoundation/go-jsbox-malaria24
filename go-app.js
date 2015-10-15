@@ -356,7 +356,9 @@ go.app = function() {
         })
         .then(function() {
           return new EndState(name, {
-            text: "Thank you! Your report has been submitted.",
+            text: $("Thank you! Your report has been submitted. " + 
+                    "You will receive an SMS with the patient name and " +
+                    "case number in the next hour."),
             next: 'Facility_Code_Entry'
           });
         });
