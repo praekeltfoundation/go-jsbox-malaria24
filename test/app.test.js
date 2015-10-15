@@ -1,33 +1,65 @@
+var _ = require('lodash');
+var assert = require('assert');
 var vumigo = require('vumigo_v02');
+var moment = require('moment');
+var make_im = vumigo.test_utils.make_im;
 var fixtures = require('./fixtures');
 var AppTester = vumigo.AppTester;
 var fs = require('fs');
+var onafixtures = require('./ona.fixtures');
 
 
 describe("app", function() {
     describe("GoApp", function() {
         var app;
         var tester;
+        var now;
+        var completed_answers = {
+            Facility_Code_Entry: '111111',
+            First_Name_Entry: 'First_Name_Entry',
+            ID_Type_Entry: 'ID_Type_Entry',
+            Last_Name_Entry: 'Last_Name_Entry',
+            Locality_Entry: 'Locality_Entry',
+            Locality_Entry_Other: 'Locality_Entry_Other',
+            MSISDN_Entry: 'MSISDN_Entry',
+            date_of_birth: '19800102',
+            Patient_Abroad_Entry: 'Patient_Abroad_Entry',
+            SA_ID_Entry: '8905100273087',
+            No_SA_ID_Gender_Entry: 'gender',
+            Landmark_Entry: 'Landmark_Entry',
+            Landmark_Entry_Description: 'Landmark_Entry_Description'
+        };
 
         beforeEach(function() {
-            app = new go.app.GoApp();
+            return make_im()
+                .then(function(im) {
+                    now = moment();
+                    go.utils.now = function () {
+                        return moment("2015-01-01T00:00:00+02:00");
+                    };
+                    app = new go.app.GoApp();
+                    tester = new AppTester(app);
 
-            tester = new AppTester(app);
-
-            tester
-                .setup.config.app({
-                    name: 'test_app',
-                    api_endpoint: 'http://www.example.org/api/v1/',
-                    facilities: JSON.parse(
-                        fs.readFileSync(
-                            "src/lookups/facilities.json", "utf8")),
-                    landmarks: JSON.parse(
-                        fs.readFileSync(
-                            "src/lookups/landmarks.json", "utf8"))
-
-                })
-                .setup(function(api) {
-                    fixtures().forEach(api.http.fixtures.add);
+                    tester
+                        .setup.config.app({
+                            name: 'test_app',
+                            ona: {
+                                id: '1',
+                                username: 'root',
+                                password: 'root',
+                                url: 'http://ona.io/api/v1/'
+                            },
+                            api_endpoint: 'http://www.example.org/api/v1/',
+                            landmarks: JSON.parse(
+                                fs.readFileSync(
+                                    "src/lookups/landmarks.json", "utf8"))
+                        })
+                        .setup(function(api) {
+                            fixtures().forEach(api.http.fixtures.add);
+                            onafixtures.store.forEach(function (fixture) {
+                                api.http.fixtures.add(fixture);
+                            });
+                        });
                 });
         });
 
@@ -283,9 +315,12 @@ describe("app", function() {
                     .run();
             });
 
-            it('should not accept invalid SA ID numbers', function () {
+            it('should accept valid SA ID numbers', function () {
                 return tester
                     .setup.user.state('SA_ID_Entry')
+                    .setup.user.answers({
+                        'Facility_Code_Entry': '111111'
+                    })
                     .input('8905100273087')
                     .check.reply.content(/Thank you! Your report has been submitted./)
                     .run();
@@ -359,8 +394,49 @@ describe("app", function() {
             it('should accept valid options', function () {
                 return tester
                     .setup.user.state('No_SA_ID_Gender_Entry')
+                    .setup.user.answers(completed_answers)
                     .input('1')
                     .check.reply.content(/Thank you! Your report has been submitted/)
+                    .run();
+            });
+        });
+
+        describe('Submit_Case', function () {
+            it('should make a valid Ona API call', function () {
+                return tester
+                    .setup.user.state('Submit_Case')
+                    .setup.user.answers(completed_answers)
+                    .input('1')
+                    .check.interaction({
+                        state: 'Facility_Code_Entry',
+                        reply: /Welcome! To report a malaria case, please enter your facility code./
+                    })
+                    .check(function (api) {
+                        var http_sent = _.where(api.http.requests, {
+                            url: 'http://ona.io/api/v1/submission'
+                        })[0];
+                        assert.deepEqual(http_sent.data, {
+                            id: '1',
+                            submission: {
+                                facility_code: '111111',
+                                reported_by: '+27123456789',
+                                first_name: 'First_Name_Entry',
+                                id_type: 'ID_Type_Entry',
+                                last_name: 'Last_Name_Entry',
+                                locality: 'Locality_Entry',
+                                locality_other: 'Locality_Entry_Other',
+                                msisdn: 'MSISDN_Entry',
+                                date_of_birth: '890510',
+                                create_date_time: '2015-01-01T00:00:00+02:00',
+                                abroad: 'Patient_Abroad_Entry',
+                                sa_id_number: '8905100273087',
+                                gender: 'gender',
+                                landmark: 'Landmark_Entry',
+                                landmark_description: 'Landmark_Entry_Description',
+                                case_number: '20150101-111111-1'
+                            }
+                        });
+                    })
                     .run();
             });
         });
