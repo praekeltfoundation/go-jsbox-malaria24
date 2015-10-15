@@ -233,7 +233,20 @@ describe("app", function() {
                 return tester
                     .setup.user.state('Landmark_Entry')
                     .input('1')
-                    .check.reply.content(/What kind of identification does the patient have?/)
+                    .check.reply.content(/Please describe the landmark/)
+                    .run();
+            });
+        });
+
+        describe("Landmark_Entry_Description", function () {
+            it('should continue to the ID_Type_Entry', function () {
+                return tester
+                    .setup.user.state('Landmark_Entry_Description')
+                    .input('pretty')
+                    .check.interaction({
+                        state: 'ID_Type_Entry',
+                        reply: /What kind of identification does the patient have?/
+                    })
                     .run();
             });
         });

@@ -210,6 +210,14 @@ go.app = function() {
         choices: self.im.config.landmarks.map(function(landmark) {
           return new Choice(landmark, landmark);
         }),
+        next: 'Landmark_Entry_Description'
+      });
+    });
+
+    self.states.add('Landmark_Entry_Description', function(name) {
+      var question = $("Please describe the landmark.");
+      return new FreeText(name, {
+        question: question,
         next: 'ID_Type_Entry'
       });
     });
@@ -386,6 +394,7 @@ go.app = function() {
         sa_id_number: data.SA_ID_Entry,
         gender: data.gender,
         landmark: data.Landmark_Entry,
+        landmark_description: data.Landmark_Entry_Description
       };
 
       return submission;
