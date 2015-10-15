@@ -1,5 +1,7 @@
 /*jshint -W083 */
 
+var moment = require('moment');
+
 // Shared utils lib
 go.utils = {
 
@@ -37,6 +39,27 @@ go.utils = {
         }
         sum = 10 - ('' + sum).charAt(1);
         return ('' + sum).slice(-1) == check;
+    },
+
+    now: function () {
+        return moment();
+    },
+
+    generate_case_number: function (im, facility_code) {
+        return im.api_request('kv.incr', {
+            key: 'facility_code:' + facility_code,
+            amount: 1,
+        })
+        .then(function(result){
+            return result.value;
+        })
+        .then(function(sequence_number) {
+            return [
+                go.utils.now().format('YYYYMMDD'),
+                facility_code,
+                sequence_number,
+            ].join('-');
+        });
     },
 
     // Handy to leave at the bottom to ensure trailing commas in objects

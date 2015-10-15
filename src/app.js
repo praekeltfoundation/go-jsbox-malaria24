@@ -271,8 +271,8 @@ go.app = function() {
     });
 
     self.states.add('Submit_Case', function(name) {
-      return Q()
-        .then(function() {
+      return go.utils.generate_case_number(self.im, self.im.user.answers.Facility_Code_Entry)
+        .then(function(case_number) {
           // Send response to Ona
           var ona_conf = self.im.config.ona;
           if (typeof ona_conf == 'undefined') {
@@ -289,7 +289,8 @@ go.app = function() {
             url: ona_conf.url
           });
           var data = self.im.user.answers;
-          data.create_date_time = new Date();
+          data.case_number = case_number;
+          data.create_date_time = go.utils.now().utc().format();
           data.reported_by = self.im.user.addr;
           data.gender = self.im.user.answers.No_SA_ID_Gender_Entry;
           said = data.SA_ID_Entry;
@@ -300,7 +301,6 @@ go.app = function() {
           }
 
           var submission = self.create_ona_submission(data);
-
           return ona.submit({
             id: self.im.config.ona.id,
             submission: submission,
@@ -341,7 +341,8 @@ go.app = function() {
         sa_id_number: data.SA_ID_Entry,
         gender: data.gender,
         landmark: data.Landmark_Entry,
-        landmark_description: data.Landmark_Entry_Description
+        landmark_description: data.Landmark_Entry_Description,
+        case_number: data.case_number
       };
 
       return submission;
