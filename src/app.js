@@ -298,12 +298,6 @@ go.app = function() {
           } else {
             data.gender = self.im.user.answers.No_SA_ID_Gender_Entry;
           }
-          said = data.SA_ID_Entry;
-          if (data.SA_ID_Entry) {
-            data.No_SA_ID_Year_Entry = said.substring(0, 2);
-            data.No_SA_ID_Month_Entry = said.substring(2, 4);
-            data.No_SA_ID_Day_Entry = said.substring(4, 6);
-          }
 
           var submission = self.create_ona_submission(data);
           return ona.submit({
@@ -340,7 +334,7 @@ go.app = function() {
         locality: data.Locality_Entry,
         locality_other: data.Locality_Entry_Other,
         msisdn: data.MSISDN_Entry,
-        date_of_birth: String(data.No_SA_ID_Year_Entry) + String(data.No_SA_ID_Month_Entry) + String(data.No_SA_ID_Day_Entry),
+        date_of_birth: go.utils.get_date_of_birth(data),
         create_date_time: data.create_date_time,
         abroad: data.Patient_Abroad_Entry,
         sa_id_number: data.SA_ID_Entry,

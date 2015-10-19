@@ -70,6 +70,28 @@ go.utils = {
         });
     },
 
+    get_date_of_birth: function (data) {
+        var year, month, day;
+        var current_year = parseInt(moment().format('YY'), 10);
+        if (data.SA_ID_Entry) {
+            var said = data.SA_ID_Entry;
+            two_digit_year = said.substring(0, 2);
+            if(parseInt(two_digit_year, 10) < current_year) {
+                year = parseInt('20' + two_digit_year, 10);
+            } else {
+                year = parseInt('19' + two_digit_year, 10);
+            }
+            month = parseInt(said.substring(2, 4), 10);
+            day = parseInt(said.substring(4, 6), 10);
+        } else {
+            year = parseInt(data.No_SA_ID_Year_Entry, 10);
+            month = parseInt(data.No_SA_ID_Month_Entry, 10);
+            day = parseInt(data.No_SA_ID_Day_Entry, 10);
+        }
+        // NOTE: Javascript months are zero based
+        return moment([year, month - 1, day]).format('YYYY-MM-DD');
+    },
+
     // Handy to leave at the bottom to ensure trailing commas in objects
     // don't become syntax errors.
     "commas": "commas"

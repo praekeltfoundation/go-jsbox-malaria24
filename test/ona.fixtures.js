@@ -14,7 +14,7 @@ onafixtures.submit.add({
             "locality": "Locality_Entry",
             "locality_other": "Locality_Entry_Other",
             "msisdn": "MSISDN_Entry",
-            "date_of_birth": "890510",
+            "date_of_birth": "1989-05-10",
             "create_date_time": '2015-01-01T00:00:00+00:00',
             "abroad": "Patient_Abroad_Entry",
             "sa_id_number": "8905100273087",
