@@ -9,7 +9,7 @@ onafixtures.submit.add({
             "facility_code": "111111",
             "reported_by": "+27123456789",
             "first_name": "First_Name_Entry",
-            "id_type": "SA_ID_Entry",
+            "id_type": "said",
             "last_name": "Last_Name_Entry",
             "locality": "Locality_Entry",
             "locality_other": "Locality_Entry_Other",

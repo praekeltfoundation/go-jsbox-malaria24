@@ -419,7 +419,7 @@ go.app = function() {
         facility_code: data.Facility_Code_Entry,
         reported_by: data.reported_by,
         first_name: data.First_Name_Entry,
-        id_type: data.ID_Type_Entry,
+        id_type: (data.ID_Type_Entry == 'SA_ID_Entry') ? 'said': 'none',
         last_name: data.Last_Name_Entry,
         locality: data.Locality_Entry,
         locality_other: data.Locality_Entry_Other,
