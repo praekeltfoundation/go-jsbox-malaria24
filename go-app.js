@@ -134,34 +134,22 @@ go.app = function() {
         next: function(content) {
           var http = new JsonApi(self.im);
           var url = self.im.config.api_endpoint + 'facility/' + content + '.json';
-          var deferred = Q.defer();
-
-          // NOTE:  Jumping through hoops here because I need to return a
-          //        normal value from a Promise's error handler, I'm manually
-          //        creatinga deferred to return that I can then manually
-          //        resolve.
-          http
+          return http
             .get(url)
             .then(function (response) {
-              deferred.resolve({
+              return {
                   name: 'Facility_Code_Confirm',
                   creator_opts: response.data
-              });
+              };
             }, function (error) {
-              deferred.resolve({
+              return {
                 name: 'Facility_Code_Entry',
                 creator_opts: {
                   error: $("Sorry, that code is not recognised. " +
-                           "To report a malaria case, please enter your " +
-                           "faclity code. For example 543456.")
+                             "To report a malaria case, please enter your " +
+                             "faclity code. For example 543456.")
                 }
-              });
-            });
-
-          return deferred.promise
-            .then(function (result) {
-              console.log('result', result);
-              return result;
+              };
             });
         }
       });
