@@ -145,7 +145,7 @@ go.app = function() {
             })
             .catch(function (error) {
               return {
-                  name: 'Facility_Code_Rentry',
+                  name: 'Facility_Code_Reentry',
                   creator_opts: {
                     error: $("Sorry, that code is not recognised. " +
                              "To report a malaria case, please enter your " +
@@ -157,7 +157,7 @@ go.app = function() {
       });
     });
 
-    self.states.add('Facility_Code_Rentry', function (name, opts) {
+    self.states.add('Facility_Code_Reentry', function (name, opts) {
       return self.states.create('Facility_Code_Entry', opts);
     });
 
