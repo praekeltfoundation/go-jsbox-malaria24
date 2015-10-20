@@ -28,21 +28,34 @@ go.app = function() {
         next: function(content) {
           var http = new JsonApi(self.im);
           var url = self.im.config.api_endpoint + 'facility/' + content + '.json';
-          return http
+          var deferred = Q.defer();
+
+          // NOTE:  Jumping through hoops here because I need to return a
+          //        normal value from a Promise's error handler, I'm manually
+          //        creatinga deferred to return that I can then manually
+          //        resolve.
+          http
             .get(url)
             .then(function (response) {
-              return {
+              deferred.resolve({
                   name: 'Facility_Code_Confirm',
                   creator_opts: response.data
-              };
-            })
-            .catch(function (request, reason) {
-              return {
+              });
+            }, function (error) {
+              deferred.resolve({
                 name: 'Facility_Code_Entry',
                 creator_opts: {
-                  'error': $("The facility code is invalid. Please enter again.")
+                  error: $("Sorry, that code is not recognised. " +
+                           "To report a malaria case, please enter your " +
+                           "faclity code. For example 543456.")
                 }
-              };
+              });
+            });
+
+          return deferred.promise
+            .then(function (result) {
+              console.log('result', result);
+              return result;
             });
         }
       });
