@@ -23,8 +23,10 @@ go.app = function() {
       var question = $(
         "Welcome! To report a malaria case, please enter your " +
         "facility code. For example, 543456");
+      var response = opts.error || question;
+      console.log('response', response);
       return new FreeText(name, {
-        question: opts.error || question,
+        question: response,
         next: function(content) {
           var http = new JsonApi(self.im);
           var url = self.im.config.api_endpoint + 'facility/' + content + '.json';
@@ -35,18 +37,23 @@ go.app = function() {
                   name: 'Facility_Code_Confirm',
                   creator_opts: response.data
               };
-            }, function (error) {
+            })
+            .catch(function (error) {
               return {
-                name: 'Facility_Code_Entry',
-                creator_opts: {
-                  error: $("Sorry, that code is not recognised. " +
-                             "To report a malaria case, please enter your " +
-                             "faclity code. For example 543456.")
-                }
-              };
+                  name: 'Facility_Code_Rentry',
+                  creator_opts: {
+                    error: ("Sorry, that code is not recognised. " +
+                            "To report a malaria case, please enter your " +
+                            "faclity code. For example 543456.")
+                  }
+                };
             });
         }
       });
+    });
+
+    self.states.add('Facility_Code_Rentry', function (name, opts) {
+      return self.states.create('Facility_Code_Entry', opts);
     });
 
     self.states.add('Facility_Code_Confirm', function(name, opts) {
