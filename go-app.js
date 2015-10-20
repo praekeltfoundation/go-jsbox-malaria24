@@ -130,7 +130,6 @@ go.app = function() {
         "Welcome! To report a malaria case, please enter your " +
         "facility code. For example, 543456");
       var response = opts.error || question;
-      console.log('response', response);
       return new FreeText(name, {
         question: response,
         next: function(content) {
@@ -148,9 +147,9 @@ go.app = function() {
               return {
                   name: 'Facility_Code_Rentry',
                   creator_opts: {
-                    error: ("Sorry, that code is not recognised. " +
-                            "To report a malaria case, please enter your " +
-                            "faclity code. For example 543456.")
+                    error: $("Sorry, that code is not recognised. " +
+                             "To report a malaria case, please enter your " +
+                             "faclity code. For example 543456.")
                   }
                 };
             });
