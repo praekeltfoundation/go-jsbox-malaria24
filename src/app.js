@@ -23,8 +23,9 @@ go.app = function() {
       var question = $(
         "Welcome! To report a malaria case, please enter your " +
         "facility code. For example, 543456");
+      var response = opts.error || question;
       return new FreeText(name, {
-        question: opts.error || question,
+        question: response,
         next: function(content) {
           var http = new JsonApi(self.im);
           var url = self.im.config.api_endpoint + 'facility/' + content + '.json';
@@ -36,16 +37,22 @@ go.app = function() {
                   creator_opts: response.data
               };
             })
-            .catch(function (request, reason) {
+            .catch(function (error) {
               return {
-                name: 'Facility_Code_Entry',
-                creator_opts: {
-                  'error': $("The facility code is invalid. Please enter again.")
-                }
-              };
+                  name: 'Facility_Code_Reentry',
+                  creator_opts: {
+                    error: $("Sorry, that code is not recognised. " +
+                             "To report a malaria case, please enter your " +
+                             "faclity code. For example 543456.")
+                  }
+                };
             });
         }
       });
+    });
+
+    self.states.add('Facility_Code_Reentry', function (name, opts) {
+      return self.states.create('Facility_Code_Entry', opts);
     });
 
     self.states.add('Facility_Code_Confirm', function(name, opts) {

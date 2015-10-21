@@ -84,13 +84,12 @@ describe("app", function() {
 
           it('should validate the input', function () {
               return tester
-                  .setup.user.state('Facility_Code_Entry', {
-                      creator_opts: {
-                          error: 'The facility code is invalid'
-                      }
+                  .setup.user.state('Facility_Code_Entry')
+                  .input('123') // invalid, not in fixtures
+                  .check.interaction({
+                      state: 'Facility_Code_Entry',
+                      reply: /Sorry, that code is not recognised\./
                   })
-                  .input('123')
-                  .check.reply.content(/The facility code is invalid/)
                   .run();
           });
 
