@@ -147,7 +147,7 @@ describe("app", function() {
                 return tester
                     .setup.user.state('First_Name_Entry')
                     .input('Mbe')
-                    .check.reply.content(/Please enter the last name of the patient./)
+                    .check.reply.content(/Please enter the surname of the patient./)
                     .run();
             });
 
@@ -173,7 +173,7 @@ describe("app", function() {
                 return tester
                     .setup.user.state('Last_Name_Entry')
                     .input(null)
-                    .check.reply.content(/Please enter the last name of the patient/)
+                    .check.reply.content(/Please enter the surname of the patient/)
                     .run();
             });
         });
@@ -356,7 +356,7 @@ describe("app", function() {
                 return tester
                     .setup.user.state('No_SA_ID_Year_Entry')
                     .input('2000')
-                    .check.reply.content(/Please select the patient's month of birth/)
+                    .check.reply.content(/Please enter the month the patient was born/)
                     .run();
             });
         });

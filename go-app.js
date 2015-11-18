@@ -196,7 +196,7 @@ go.app = function() {
     });
 
     self.states.add('First_Name_Entry', function(name) {
-      var question = $("Please enter the first name of the patient. For example: Mbe");
+      var question = $("Please enter the first name of the patient.");
       return new FreeText(name, {
         question: question,
         next: 'Last_Name_Entry'
@@ -204,7 +204,7 @@ go.app = function() {
     });
 
     self.states.add('Last_Name_Entry', function(name) {
-      var question = $("Please enter the last name of the patient. For example: Ngu");
+      var question = $("Please enter the surname of the patient.");
       return new FreeText(name, {
         question: question,
         next: 'Patient_Abroad_Entry'
@@ -217,8 +217,8 @@ go.app = function() {
         choices: [
           new Choice('No', $("No")),
           new Choice('Ethiopia', $("Yes Ethiopia")),
-          new Choice('Somalia', $("Yes Somalia")),
           new Choice('Mozambique', $("Yes Mozambique")),
+          new Choice('Somalia', $("Yes Somalia")),
           new Choice('Zambia', $("Yes Zambia")),
           new Choice('Zimbabwe', $("Yes Zimbabwe")),
           new Choice('Other', $("Other")),
@@ -333,7 +333,7 @@ go.app = function() {
     });
 
     self.states.add('No_SA_ID_Month_Entry', function(name) {
-      var question = $("Please select the patient's month of birth");
+      var question = $("Please enter the month the patient was born. For example: 4");
       return new PaginatedChoiceState(name, {
         question: question,
         options_per_page: 6,
