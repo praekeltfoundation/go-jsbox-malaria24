@@ -277,7 +277,7 @@ go.app = function() {
 
     });
 
-    self.states.add('Submit_Case', function(name) {
+    self.states.add('Submit_Case', function (name, opts) {
       return go.utils.generate_case_number(self.im, self.im.user.answers.Facility_Code_Entry)
         .then(function(case_number) {
           // Send response to Ona
@@ -319,15 +319,19 @@ go.app = function() {
             JSON.stringify(err.response)
           ].join(' '));
         })
-        .then(function() {
-          return new EndState(name, {
-            text: $("Thank you! Your report has been submitted. " +
-                    "You will receive an SMS with the patient name and " +
-                    "case number in the next hour."),
-            next: 'Facility_Code_Entry'
-          });
+        .then(function () {
+          return self.states.create('End', opts);
         });
+    });
 
+
+    self.states.add('End', function(name) {
+        return new EndState(name, {
+          text: $("Thank you! Your report has been submitted. " +
+                  "You will receive an SMS with the patient name and " +
+                  "case number in the next hour."),
+          next: 'Facility_Code_Entry'
+        });
     });
     // END NEW STEPS
 
