@@ -423,8 +423,8 @@ describe("app", function() {
                     .setup.user.answers(completed_answers)
                     .input('1')
                     .check.interaction({
-                        state: 'Facility_Code_Entry',
-                        reply: /Welcome! To report a malaria case, please enter your facility code./
+                        state: 'End',
+                        reply: /Thank you! Your report has been submitted\./
                     })
                     .check(function (api) {
                         var http_sent = _.where(api.http.requests, {
