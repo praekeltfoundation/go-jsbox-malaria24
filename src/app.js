@@ -23,9 +23,14 @@ go.app = function() {
       var question = $(
         "Welcome! To report a malaria case, please enter your " +
         "facility code. For example, 543456");
-      var response = opts.error || question;
+      if (opts.error === "unrecognized_code") {
+        question = $(
+          "Sorry, that code is not recognised. " +
+          "To report a malaria case, please enter your " +
+          "faclity code. For example 543456.");
+      }
       return new FreeText(name, {
-        question: response,
+        question: question,
         next: function(content) {
           var http = new JsonApi(self.im);
           var url = self.im.config.api_endpoint + 'facility/' + content + '.json';
@@ -41,9 +46,7 @@ go.app = function() {
               return {
                   name: 'Facility_Code_Reentry',
                   creator_opts: {
-                    error: $("Sorry, that code is not recognised. " +
-                             "To report a malaria case, please enter your " +
-                             "faclity code. For example 543456.")
+                    error: "unrecognized_code"
                   }
                 };
             });
