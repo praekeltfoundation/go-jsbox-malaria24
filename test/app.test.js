@@ -82,6 +82,25 @@ describe("app", function() {
                   .run();
           });
 
+          it('should show the welcome screen for badly formatted error values', function () {
+              return tester
+                  .setup.user.state({
+                      name:"Facility_Code_Entry",
+                      metadata:{},
+                      creator_opts:{
+                          error: {"args":["Sorry, that code is not recognised. To report a malaria case, please enter your faclity code. For example 543456."],"ctx":{},"method":"gettext"}
+                      }
+                  })
+                  .input()
+                  .check.interaction({
+                      state: 'Facility_Code_Entry',
+                      reply: [
+                          'Welcome! To report a malaria case, please enter your facility code. For example, 543456'
+                      ].join('\n')
+                  })
+                  .run();
+          });
+
           it('should validate the input', function () {
               return tester
                   .setup.user.state('Facility_Code_Entry')
