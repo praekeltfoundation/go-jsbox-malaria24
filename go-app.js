@@ -278,7 +278,9 @@ go.app = function() {
     });
 
     self.states.add('Landmark_Entry_Description', function(name) {
-      var question = $("Please describe the landmark.");
+      var question = $(
+          "Please describe the landmark and what it is next to. For example:" +
+          " Sitheku High School next to Tugela River.");
       return new FreeText(name, {
         question: question,
         next: 'ID_Type_Entry'
