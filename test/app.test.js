@@ -285,7 +285,7 @@ describe("app", function() {
                     .input('1')
                     .check.interaction({
                         state: 'Landmark_Entry_Description',
-                        reply: /Please describe the landmark/
+                        reply: /Please describe the landmark and what it is next to. For example: Sitheku High School next to Tugela River./
                     })
                     .run();
             });
