@@ -30,6 +30,25 @@ describe("app", function() {
             Landmark_Entry_Description: 'Landmark_Entry_Description'
         };
 
+        var completed_answers_non_sa_id = {
+            Facility_Code_Entry: '111111',
+            First_Name_Entry: 'First_Name_Entry',
+            ID_Type_Entry: null, // no SA ID
+            No_SA_ID_Year_Entry: '1980',
+            No_SA_ID_Month_Entry: '02',
+            No_SA_ID_Day_Entry: '02',
+            Last_Name_Entry: 'Last_Name_Entry',
+            Locality_Entry: 'Locality_Entry',
+            Locality_Entry_Other: 'Locality_Entry_Other',
+            MSISDN_Entry: 'MSISDN_Entry',
+            date_of_birth: '1980-02-02',
+            Patient_Abroad_Entry: 'Patient_Abroad_Entry',
+            SA_ID_Entry: '1980',
+            No_SA_ID_Gender_Entry: 'female',
+            Landmark_Entry: 'Landmark_Entry',
+            Landmark_Entry_Description: 'Landmark_Entry_Description'
+        };
+
         beforeEach(function() {
             return make_im()
                 .then(function(im) {
@@ -473,6 +492,45 @@ describe("app", function() {
                     })
                     .run();
             });
+
+            it('should make a valid Ona API call with null ID', function () {
+                return tester
+                    .setup.user.state('Submit_Case')
+                    .setup.user.answers(completed_answers_non_sa_id)
+                    .input('1')
+                    .check.interaction({
+                        state: 'End',
+                        reply: /Thank you! Your report has been submitted\./
+                    })
+                    .check(function (api) {
+                        var http_sent = _.where(api.http.requests, {
+                            url: 'http://ona.io/api/v1/submission'
+                        })[0];
+                        assert.deepEqual(http_sent.data, {
+                            id: '1',
+                            submission: {
+                                facility_code: '111111',
+                                reported_by: '+27123456789',
+                                first_name: 'First_Name_Entry',
+                                id_type: 'none',
+                                last_name: 'Last_Name_Entry',
+                                locality: 'Locality_Entry',
+                                locality_other: 'Locality_Entry_Other',
+                                msisdn: 'MSISDN_Entry',
+                                date_of_birth: '1980-02-02',
+                                create_date_time: '2015-01-01T00:00:00+00:00',
+                                abroad: 'Patient_Abroad_Entry',
+                                sa_id_number: null,
+                                gender: 'female',
+                                landmark: 'Landmark_Entry',
+                                landmark_description: 'Landmark_Entry_Description',
+                                case_number: '20150101-111111-1'
+                            }
+                          });
+                      })
+                      .run();
+            });
         });
+
     });
 });

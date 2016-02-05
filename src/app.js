@@ -309,9 +309,11 @@ go.app = function() {
               self.im.user.answers.SA_ID_Entry);
           } else {
             data.gender = self.im.user.answers.No_SA_ID_Gender_Entry;
+            data.SA_ID_Entry = null;
           }
 
           var submission = self.create_ona_submission(data);
+
           return ona.submit({
             id: self.im.config.ona.id,
             submission: submission,
