@@ -33,7 +33,7 @@ describe("app", function() {
         var completed_answers_non_sa_id = {
             Facility_Code_Entry: '111111',
             First_Name_Entry: 'First_Name_Entry',
-            ID_Type_Entry: null, // so we parse the gender from the ID
+            ID_Type_Entry: null, // no SA ID
             No_SA_ID_Year_Entry: '1980',
             No_SA_ID_Month_Entry: '02',
             No_SA_ID_Day_Entry: '02',
