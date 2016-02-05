@@ -499,12 +499,12 @@ describe("app", function() {
                     .setup.user.answers(completed_answers_non_sa_id)
                     .input('1')
                     .check.interaction({
-                      state: 'End',
-                      reply: /Thank you! Your report has been submitted\./
+                        state: 'End',
+                        reply: /Thank you! Your report has been submitted\./
                     })
                     .check(function (api) {
                         var http_sent = _.where(api.http.requests, {
-                          url: 'http://ona.io/api/v1/submission'
+                            url: 'http://ona.io/api/v1/submission'
                         })[0];
                         assert.deepEqual(http_sent.data, {
                             id: '1',
