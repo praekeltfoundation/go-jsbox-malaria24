@@ -29,5 +29,3 @@ matrix:
       deploy:
         provider: script
         script: dcd --version "$(git rev-parse --short HEAD)" --version-latest "$IMAGE_NAME"
-        on:
-          branch: develop
