@@ -9,8 +9,7 @@ node_js:
 matrix:
   include:
     # Create docker image on merge to develop
-    - node_js: "0.11"
-      sudo: required
+    - sudo: required
       dist: trusty
       services: [docker]
       env:
