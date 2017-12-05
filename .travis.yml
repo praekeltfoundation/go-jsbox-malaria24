@@ -31,5 +31,4 @@ matrix:
         provider: script
         script: dcd --version "$(git rev-parse --short HEAD)" --version-latest "$IMAGE_NAME"
         on:
-          branch: feature/MAL-46-initial-setup-qa-junebug-and-jsbox-build
-          all_branches: true
+          branch: develop
