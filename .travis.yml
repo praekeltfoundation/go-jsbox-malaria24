@@ -9,7 +9,7 @@ node_js:
 matrix:
   include:
     # Create docker image on merge to develop
-    - python: "2.7.9"
+    - python: "3.4"
       sudo: required
       dist: trusty
       services: [docker]
