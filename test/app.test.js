@@ -466,7 +466,7 @@ describe("app", function() {
                     })
                     .check(function (api) {
                         var http_sent = _.where(api.http.requests, {
-                            url: 'http://ona.io/api/v1/submission'
+                            url: 'http://ona.io/api/v1/submissions'
                         })[0];
                         assert.deepEqual(http_sent.data, {
                             id: '1',
@@ -504,7 +504,7 @@ describe("app", function() {
                     })
                     .check(function (api) {
                         var http_sent = _.where(api.http.requests, {
-                            url: 'http://ona.io/api/v1/submission'
+                            url: 'http://ona.io/api/v1/submissions'
                         })[0];
                         assert.deepEqual(http_sent.data, {
                             id: '1',
