@@ -38,7 +38,18 @@ go.utils = {
             sum += +c;
         }
         sum = 10 - ('' + sum).charAt(1);
-        return ('' + sum).slice(-1) == check;
+        if( ('' + sum).slice(-1) == check){
+            //the id_no is valid. NOw check that valid will accept the date
+            var month,day,year;
+            year = parseInt( id.substr(0,2),10);
+            month =parseInt( id.substr(2,4),10); 
+            day = parseInt(id.substr(4,6),10); 
+            var date=moment([year, month - 1, day]).format('YY-MM-DD');
+            
+            return date.toString()=='Invalid date' ;
+
+        }
+       return false;
     },
 
     parse_gender_from_id: function (id) {
