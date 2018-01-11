@@ -374,7 +374,7 @@ describe("app", function() {
                     .setup.user.answers({
                         'Facility_Code_Entry': '111111'
                     })
-                    .input('8905100273087')
+                    .input('9602294800085')
                     .check.reply.content(/Thank you! Your report has been submitted./)
                     .run();
             });
