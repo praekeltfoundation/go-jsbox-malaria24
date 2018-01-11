@@ -367,6 +367,17 @@ describe("app", function() {
                     })
                     .run();
             });
+              it('should not accept SA ID numbers with invalid dates', function () {
+                return tester
+                    .setup.user.state('SA_ID_Entry')
+                    .input('9502294800087')
+                    .check.interaction({
+                        state: 'ID_Type_Entry',
+                        reply: /The format of the ID number was incorrect/
+                    })
+                    .run();
+            });
+
 
             it('should accept valid SA ID numbers', function () {
                 return tester
