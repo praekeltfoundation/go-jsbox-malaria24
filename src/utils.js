@@ -43,8 +43,8 @@ go.utils = {
             var year = parseInt( id.substr(0,2));
             var month = parseInt( id.substr(2,2)); 
             var day = parseInt(id.substr(4,2)); 
-            var date = moment([year, month - 1, day]).format('YY-MM-DD');
-            return date.toString() !== 'Invalid date' ;
+            var date= moment([year, month - 1, day]).format('YY-MM-DD');
+            return date.toString() !=='Invalid date' ;
 
         }
        return false;

@@ -9,6 +9,7 @@ go.app = function() {
   var FreeText = vumigo.states.FreeText;
   var EndState = vumigo.states.EndState;
   var JsonApi = vumigo.http.api.JsonApi;
+  var moment = require('moment');
 
   var GoApp = App.extend(function(self) {
     App.call(self, 'Facility_Code_Entry');
@@ -264,11 +265,26 @@ go.app = function() {
           if (isNaN(content) || (parseInt(content, 10) > 31 || parseInt(content, 10) < 1)) {
             return error;
           }
+          else {
+            var year =parseInt(self.im.user.answers.No_SA_ID_Year_Entry,10);
+            var month = parseInt(self.im.user.answers.No_SA_ID_Month_Entry,content,10);
+            var day = parseInt(content,10);
+            if ( (moment([year, month - 1, day]).format('YY-MM-DD')!== 'Invalid date' )){
+            return {
+              name: 'ID_Type_Entry',
+              creator_opts: {
+                error: $('The date of birth entered was incorrect. ' +
+                         'What kind of identification does the patient have?')
+              }
+            };
+          }
+          }
+
         },
         next: 'No_SA_ID_Gender_Entry'
       });
-
     });
+
     self.states.add('No_SA_ID_Gender_Entry', function(name) {
       return new ChoiceState(name, {
         question: $("Please select the patient's gender:"),
