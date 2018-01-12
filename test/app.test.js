@@ -22,7 +22,7 @@ describe("app", function() {
             Locality_Entry: 'Locality_Entry',
             Locality_Entry_Other: 'Locality_Entry_Other',
             MSISDN_Entry: 'MSISDN_Entry',
-            date_of_birth: '1980-02-21',
+            date_of_birth: '1980-01-02',
             Patient_Abroad_Entry: 'Patient_Abroad_Entry',
             SA_ID_Entry: '8905100273087',
             No_SA_ID_Gender_Entry: 'gender',
@@ -41,7 +41,7 @@ describe("app", function() {
             Locality_Entry: 'Locality_Entry',
             Locality_Entry_Other: 'Locality_Entry_Other',
             MSISDN_Entry: 'MSISDN_Entry',
-            date_of_birth: '1980-02-21',
+            date_of_birth: '1980-01-02',
             Patient_Abroad_Entry: 'Patient_Abroad_Entry',
             SA_ID_Entry: '1980',
             No_SA_ID_Gender_Entry: 'female',
@@ -385,7 +385,9 @@ describe("app", function() {
                     .setup.user.answers({
                         'Facility_Code_Entry': '111111'
                     })
-                    .input('9602294800085')
+l96
+l96
+                    .input('8905100273087')
                     .check.reply.content(/Thank you! Your report has been submitted./)
                     .run();
             });
@@ -466,7 +468,7 @@ describe("app", function() {
         });
 
         describe('Submit_Case', function () {
-            it('should make a valid Ona API call1', function () {
+            it('should make a valid Ona API call', function () {
                 return tester
                     .setup.user.state('Submit_Case')
                     .setup.user.answers(completed_answers)
@@ -528,7 +530,7 @@ describe("app", function() {
                                 locality: 'Locality_Entry',
                                 locality_other: 'Locality_Entry_Other',
                                 msisdn: 'MSISDN_Entry',
-                                date_of_birth: '1980-02-02',
+                                date_of_birth: '1980-01-02',
                                 create_date_time: '2015-01-01T00:00:00+00:00',
                                 abroad: 'Patient_Abroad_Entry',
                                 sa_id_number: null,
