@@ -378,7 +378,7 @@ describe("app", function() {
                     })
                     .run();
             });
-              
+
             it('should accept valid SA ID numbers', function () {
                 return tester
                     .setup.user.state('SA_ID_Entry')
