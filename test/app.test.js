@@ -367,6 +367,7 @@ describe("app", function() {
                     })
                     .run();
             });
+
               it('should not accept SA ID numbers with invalid dates', function () {
                 return tester
                     .setup.user.state('SA_ID_Entry')
@@ -377,16 +378,13 @@ describe("app", function() {
                     })
                     .run();
             });
-
-
+              
             it('should accept valid SA ID numbers', function () {
                 return tester
                     .setup.user.state('SA_ID_Entry')
                     .setup.user.answers({
                         'Facility_Code_Entry': '111111'
                     })
-l96
-l96
                     .input('8905100273087')
                     .check.reply.content(/Thank you! Your report has been submitted./)
                     .run();
@@ -530,7 +528,7 @@ l96
                                 locality: 'Locality_Entry',
                                 locality_other: 'Locality_Entry_Other',
                                 msisdn: 'MSISDN_Entry',
-                                date_of_birth: '1980-01-02',
+                                date_of_birth: '1980-02-02',
                                 create_date_time: '2015-01-01T00:00:00+00:00',
                                 abroad: 'Patient_Abroad_Entry',
                                 sa_id_number: null,
