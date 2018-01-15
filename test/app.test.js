@@ -577,7 +577,6 @@ describe("app", function() {
                       .run();
             });
 
-
      });
     });
 });
