@@ -48,10 +48,10 @@ go.utils = {
         if(('' + sum).slice(-1) == check){
             //the id_no is valid. Then check that valid will accept the date
             var year = parseInt(id.substr(0,2));
-            var month = parseInt(id.substr(2,2)); 
-            var day = parseInt(id.substr(4,2)); 
-            var date= moment([year, month - 1, day]).format('YY-MM-DD');
-            return date.toString() !=='Invalid date' ;
+            var month = parseInt(id.substr(2,2));
+            var day = parseInt(id.substr(4,2));
+            var date = moment([year, month - 1, day]).format('YY-MM-DD');
+            return date.toString() !== 'Invalid date' ;
 
         }
        return false;
@@ -386,20 +386,20 @@ go.app = function() {
             };
           }
           else {
-            var year =parseInt(self.im.user.answers.No_SA_ID_Year_Entry,10);
+            var year = parseInt(self.im.user.answers.No_SA_ID_Year_Entry,10);
             var month = parseInt(self.im.user.answers.No_SA_ID_Month_Entry,content,10);
             var day = parseInt(content,10);
-            if ((moment([year, month - 1, day]).format('YY-MM-DD')=== 'Invalid date' )){
+            if ((moment([year, month - 1, day]).format('YY-MM-DD') === 'Invalid date' )){
             return {
               name: 'No_SA_ID_Year_Entry',
               creator_opts: {
                 error: $('The date of birth entered was incorrect. ' +
                          'Please enter the year the patient was born. For example: 1982')
-              }
-            };
+                }
+              };
+            }
           }
-          }
-             return 'No_SA_ID_Gender_Entry';
+          return 'No_SA_ID_Gender_Entry';
         },
       });
     });
