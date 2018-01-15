@@ -271,10 +271,10 @@ go.app = function() {
             };
           }
           else {
-            var year =parseInt(self.im.user.answers.No_SA_ID_Year_Entry,10);
+            var year = parseInt(self.im.user.answers.No_SA_ID_Year_Entry,10);
             var month = parseInt(self.im.user.answers.No_SA_ID_Month_Entry,content,10);
             var day = parseInt(content,10);
-            if ((moment([year, month - 1, day]).format('YY-MM-DD')=== 'Invalid date' )){
+            if ((moment([year, month - 1, day]).format('YY-MM-DD') === 'Invalid date' )){
             return {
               name: 'No_SA_ID_Year_Entry',
               creator_opts: {
