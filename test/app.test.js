@@ -433,15 +433,50 @@ describe("app", function() {
                 return tester
                     .setup.user.state('No_SA_ID_Day_Entry')
                     .input('32')
-                    .check.reply.content(/Sorry, that day is invalid./)
+                    .check.interaction({
+                        state: 'No_SA_ID_Day_Entry',
+                        reply: /Please enter the day the patient was born. For example: 22/
+                    })
                     .run();
             });
 
             it('should accept a valid day', function () {
                 return tester
                     .setup.user.state('No_SA_ID_Day_Entry')
+                    .setup.user.answers({
+                    No_SA_ID_Year_Entry: "2016",
+                    No_SA_ID_Month_Entry: "02"
+                  })
                     .input('12')
                     .check.reply.content(/Please select the patient's gender/)
+                    .run();
+            });
+             it('should accept a valid date of birth', function () {
+                return tester
+                    .setup.user.state('No_SA_ID_Day_Entry')
+                    .setup.user.answers({
+                    No_SA_ID_Year_Entry: "2016",
+                    No_SA_ID_Month_Entry: "02"
+                  })
+                    .input('29')
+                    .check.interaction({
+                        state: 'No_SA_ID_Gender_Entry',
+                        reply: /Please select the patient's gender/
+                    })
+                    .run();
+            });
+            it('should not accept an invalid date of birth', function () {
+                return tester
+                    .setup.user.state('No_SA_ID_Day_Entry')
+                    .setup.user.answers({
+                    No_SA_ID_Year_Entry: "2017",
+                    No_SA_ID_Month_Entry: "04"
+                  })
+                    .input('31')
+                    .check.interaction({
+                        state: 'No_SA_ID_Year_Entry',
+                        reply: /Please enter the year the patient was born. For example: 1982/
+                    })
                     .run();
             });
         });
@@ -541,7 +576,7 @@ describe("app", function() {
                       })
                       .run();
             });
-        });
 
+     });
     });
 });

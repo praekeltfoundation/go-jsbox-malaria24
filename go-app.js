@@ -48,8 +48,8 @@ go.utils = {
         if(('' + sum).slice(-1) == check){
             //the id_no is valid. Then check that valid will accept the date
             var year = parseInt(id.substr(0,2));
-            var month = parseInt(id.substr(2,2)); 
-            var day = parseInt(id.substr(4,2)); 
+            var month = parseInt(id.substr(2,2));
+            var day = parseInt(id.substr(4,2));
             var date = moment([year, month - 1, day]).format('YY-MM-DD');
             return date.toString() !== 'Invalid date' ;
 
@@ -124,6 +124,7 @@ go.app = function() {
   var FreeText = vumigo.states.FreeText;
   var EndState = vumigo.states.EndState;
   var JsonApi = vumigo.http.api.JsonApi;
+  var moment = require('moment');
 
   var GoApp = App.extend(function(self) {
     App.call(self, 'Facility_Code_Entry');
@@ -372,18 +373,37 @@ go.app = function() {
 
     self.states.add('No_SA_ID_Day_Entry', function(name) {
       var question = $("Please enter the day the patient was born. For example: 22");
-      var error = $('Sorry, that day is invalid.');
       return new FreeText(name, {
         question: question,
-        check: function(content) {
+        next: function(content) {
           if (isNaN(content) || (parseInt(content, 10) > 31 || parseInt(content, 10) < 1)) {
-            return error;
+            return {
+              name: 'No_SA_ID_Day_Entry',
+              creator_opts: {
+                error: $('Sorry, that day is invalid.'+
+                  'Please enter the day the patient was born. For example: 22')
+              }
+            };
           }
+          else {
+            var year = parseInt(self.im.user.answers.No_SA_ID_Year_Entry,10);
+            var month = parseInt(self.im.user.answers.No_SA_ID_Month_Entry,content,10);
+            var day = parseInt(content,10);
+            if ((moment([year, month - 1, day]).format('YY-MM-DD') === 'Invalid date' )){
+            return {
+              name: 'No_SA_ID_Year_Entry',
+              creator_opts: {
+                error: $('The date of birth entered was incorrect. ' +
+                         'Please enter the year the patient was born. For example: 1982')
+                }
+              };
+            }
+          }
+          return 'No_SA_ID_Gender_Entry';
         },
-        next: 'No_SA_ID_Gender_Entry'
       });
-
     });
+
     self.states.add('No_SA_ID_Gender_Entry', function(name) {
       return new ChoiceState(name, {
         question: $("Please select the patient's gender:"),

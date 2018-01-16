@@ -41,8 +41,8 @@ go.utils = {
         if(('' + sum).slice(-1) == check){
             //the id_no is valid. Then check that valid will accept the date
             var year = parseInt(id.substr(0,2));
-            var month = parseInt(id.substr(2,2)); 
-            var day = parseInt(id.substr(4,2)); 
+            var month = parseInt(id.substr(2,2));
+            var day = parseInt(id.substr(4,2));
             var date = moment([year, month - 1, day]).format('YY-MM-DD');
             return date.toString() !== 'Invalid date' ;
 
