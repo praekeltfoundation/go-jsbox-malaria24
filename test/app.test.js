@@ -475,7 +475,7 @@ describe("app", function() {
                     .input('31')
                     .check.interaction({
                         state: 'No_SA_ID_Year_Entry',
-                        reply: /Please enter the year the patient was born. For example: 1982/
+                        reply: /The date of birth entered was incorrect. /
                     })
                     .run();
             });

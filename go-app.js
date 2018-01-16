@@ -333,11 +333,11 @@ go.app = function() {
 
     });
 
-    self.states.add('No_SA_ID_Year_Entry', function(name) {
+    self.states.add('No_SA_ID_Year_Entry', function(name, opts) {
       var question = $("Please enter the year the patient was born. For example: 1982");
       var error = $('Sorry, that year is invalid');
       return new FreeText(name, {
-        question: question,
+        question: opts.error || question,
         check: function(content) {
           if (content.length != 4 || isNaN(content)) {
             return error;
@@ -380,7 +380,7 @@ go.app = function() {
             return {
               name: 'No_SA_ID_Day_Entry',
               creator_opts: {
-                question: $('Sorry, that day is invalid.'+
+                error: $('Sorry, that day is invalid.'+
                   'Please enter the day the patient was born. For example: 22')
               }
             };
