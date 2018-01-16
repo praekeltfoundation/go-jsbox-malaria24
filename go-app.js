@@ -380,7 +380,7 @@ go.app = function() {
             return {
               name: 'No_SA_ID_Day_Entry',
               creator_opts: {
-                error: $('Sorry, that day is invalid.'+
+                question: $('Sorry, that day is invalid.'+
                   'Please enter the day the patient was born. For example: 22')
               }
             };
