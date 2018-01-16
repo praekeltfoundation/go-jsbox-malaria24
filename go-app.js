@@ -337,7 +337,7 @@ go.app = function() {
       var question = $("Please enter the year the patient was born. For example: 1982");
       var error = $('Sorry, that year is invalid');
       return new FreeText(name, {
-        question: opts.error || question,
+        question: opts.question || question,
         check: function(content) {
           if (content.length != 4 || isNaN(content)) {
             return error;
@@ -393,7 +393,7 @@ go.app = function() {
             return {
               name: 'No_SA_ID_Year_Entry',
               creator_opts: {
-                error: $('The date of birth entered was incorrect. ' +
+                question: $('The date of birth entered was incorrect. ' +
                          'Please enter the year the patient was born. For example: 1982')
                 }
               };
