@@ -220,9 +220,12 @@ go.app = function() {
 
     self.states.add('No_SA_ID_Year_Entry', function(name, opts) {
       var question = $("Please enter the year the patient was born. For example: 1982");
+      if ('question' in opts) {
+          question = opts.question.args[0];
+      }
       var error = $('Sorry, that year is invalid');
       return new FreeText(name, {
-        question: opts.question || question,
+        question: question,
         check: function(content) {
           if (content.length != 4 || isNaN(content)) {
             return error;
