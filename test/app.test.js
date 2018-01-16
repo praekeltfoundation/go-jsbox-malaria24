@@ -483,7 +483,7 @@ describe("app", function() {
                 return tester
                     .setup.user.state({
                         name: 'No_SA_ID_Year_Entry',
-                        creator_opts: {"question": "The date of birth entered was incorrect. Please enter the year the patient was born. For example: 1982"}
+                        creator_opts: {"question":{"args":["The date of birth entered was incorrect. Please enter the year the patient was born. For example: 1982"]}}
                     })
                     .input.session_event('close')
                     .input.session_event('resume')
