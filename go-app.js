@@ -337,7 +337,11 @@ go.app = function() {
       var question = $("Please enter the year the patient was born. For example: 1982");
       if ('question' in opts) {
           question = opts.question.args[0];
+          console.log('we are in the if statement, yes we are');
       }
+      console.log('we made it out. The question is: ');
+      console.log(typeof question);
+      console.log(question);
       var error = $('Sorry, that year is invalid');
       return new FreeText(name, {
         question: question,
