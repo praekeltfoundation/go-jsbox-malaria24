@@ -343,7 +343,6 @@ describe("app", function() {
             it('should accept errors from previous states via creator opts', function () {
                 return tester
                     .setup.user.state('ID_Type_Entry', {
-                        error: 'This is the error',
                         creator_opts: {
                             "question":{"args":["The format of the ID number was incorrect."]}}
                     })
