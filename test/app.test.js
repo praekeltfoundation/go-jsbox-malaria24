@@ -354,6 +354,20 @@ describe("app", function() {
                     })
                     .run();
             });
+            it('should resume correctly after error state', function () {
+                return tester
+                    .setup.user.state({
+                        name: 'ID_Type_Entry',
+                        creator_opts: {"question":{"args":["The format of the ID number was incorrect. What kind of identification does the patient have?"]}}
+                    })
+                    .input.session_event('close')
+                    .input.session_event('resume')
+                    .check.interaction({
+                        state: 'ID_Type_Entry',
+                        reply: /The format of the ID number was incorrect/
+                    })
+                    .run();
+            });
         });
 
         describe('SA_ID_Entry', function () {
