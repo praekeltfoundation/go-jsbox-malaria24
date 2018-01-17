@@ -343,14 +343,14 @@ describe("app", function() {
             it('should accept errors from previous states via creator opts', function () {
                 return tester
                     .setup.user.state('ID_Type_Entry', {
+                        error: 'This is the error',
                         creator_opts: {
-                            error: 'This is the error'
-                        }
+                            "question":{"args":["The format of the ID number was incorrect."]}}
                     })
                     .input('foo')
                     .check.interaction({
                         state: 'ID_Type_Entry',
-                        reply: /This is the error/
+                        reply: /The format of the ID number was incorrect/
                     })
                     .run();
             });
