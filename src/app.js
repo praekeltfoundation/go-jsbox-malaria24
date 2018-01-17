@@ -184,8 +184,11 @@ go.app = function() {
 
     self.states.add('ID_Type_Entry', function(name, opts) {
       var question = $("What kind of identification does the patient have?");
+      if ('question' in opts){
+        question = opts.question.args[0];
+      }
       return new ChoiceState(name, {
-        question: opts.error || question,
+        question: question,
         choices: [
           new Choice('SA_ID_Entry', $("South African ID")),
           new Choice('No_SA_ID_Year_Entry', $("None"))
@@ -207,7 +210,7 @@ go.app = function() {
             return {
               name: 'ID_Type_Entry',
               creator_opts: {
-                error: $('The format of the ID number was incorrect. ' +
+                question: $('The format of the ID number was incorrect. ' +
                          'What kind of identification does the patient have?')
               }
             };
@@ -222,11 +225,7 @@ go.app = function() {
       var question = $("Please enter the year the patient was born. For example: 1982");
       if ('question' in opts) {
           question = opts.question.args[0];
-          console.log('we are in the if statement, yes we are');
       }
-      console.log('we made it out. The question is: ');
-      console.log(typeof question);
-      console.log(question);
       var error = $('Sorry, that year is invalid');
       return new FreeText(name, {
         question: question,

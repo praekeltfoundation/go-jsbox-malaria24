@@ -344,13 +344,26 @@ describe("app", function() {
                 return tester
                     .setup.user.state('ID_Type_Entry', {
                         creator_opts: {
-                            error: 'This is the error'
-                        }
+                            "question":{"args":["The format of the ID number was incorrect."]}}
                     })
                     .input('foo')
                     .check.interaction({
                         state: 'ID_Type_Entry',
-                        reply: /This is the error/
+                        reply: /The format of the ID number was incorrect/
+                    })
+                    .run();
+            });
+            it('should resume correctly after error state', function () {
+                return tester
+                    .setup.user.state({
+                        name: 'ID_Type_Entry',
+                        creator_opts: {"question":{"args":["The format of the ID number was incorrect. What kind of identification does the patient have?"]}}
+                    })
+                    .input.session_event('close')
+                    .input.session_event('resume')
+                    .check.interaction({
+                        state: 'ID_Type_Entry',
+                        reply: /The format of the ID number was incorrect/
                     })
                     .run();
             });
