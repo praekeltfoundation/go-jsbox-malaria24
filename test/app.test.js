@@ -460,7 +460,7 @@ describe("app", function() {
                     No_SA_ID_Year_Entry: "2016",
                     No_SA_ID_Month_Entry: "02"
                   })
-                    .input('12')
+                    .input('2')
                     .check.reply.content(/Please select the patient's gender/)
                     .run();
             });
