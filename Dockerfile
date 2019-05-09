@@ -4,13 +4,11 @@ MAINTAINER Praekelt Foundation <dev@praekeltfoundation.org>
 # Install nodejs dependencies
 COPY package.json /app/package.json
 WORKDIR /app
-RUN apt-get-install.sh curl
-
-RUN curl -sL https://deb.nodesource.com/setup_10.x -o nodesource_setup.sh && \
+RUN apt-get-install.sh curl && \
+      curl -sL https://deb.nodesource.com/setup_10.x -o nodesource_setup.sh && \
 	    bash nodesource_setup.sh && \
-	    apt-get-install.sh nodejs
-
-RUN npm install --production && \
+	    apt-get-install.sh nodejs && \
+	    npm install --production && \
 	    apt-get-purge.sh npm
 
 # Workaround for sandboxed application losing context - manually install the
