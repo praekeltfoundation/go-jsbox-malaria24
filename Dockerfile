@@ -1,13 +1,10 @@
-FROM praekeltfoundation/vxsandbox
+FROM praekeltfoundation/vxsandbox:node_4.x
 MAINTAINER Praekelt Foundation <dev@praekeltfoundation.org>
 
 # Install nodejs dependencies
 COPY package.json /app/package.json
 WORKDIR /app
-RUN apt-get-install.sh curl && \
-      curl -sL https://deb.nodesource.com/setup_10.x -o nodesource_setup.sh && \
-	    bash nodesource_setup.sh && \
-	    apt-get-install.sh nodejs && \
+RUN apt-get-install.sh npm && \
 	    npm install --production && \
 	    apt-get-purge.sh npm
 
