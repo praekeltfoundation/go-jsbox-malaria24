@@ -29,7 +29,7 @@
   },
   "devDependencies": {
     "istanbul": "~0.3.19",
-    "mocha": "~1.18",
+    "mocha": "~1.21",
     "jshint": "~2.4.4",
     "grunt-contrib-concat": "~0.3.0",
     "grunt-contrib-watch": "~0.6.0",
