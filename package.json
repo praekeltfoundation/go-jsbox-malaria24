@@ -23,7 +23,7 @@
   "dependencies": {
     "vumigo_v02": "~0.2",
     "q": "~0.9",
-    "lodash": "~2.4.1",
+    "lodash": "~4.17.11",
     "moment": "~2.11.2",
     "go-jsbox-ona": "~0.1.1"
   },

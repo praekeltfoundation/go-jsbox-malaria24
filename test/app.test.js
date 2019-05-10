@@ -538,7 +538,7 @@ describe("app", function() {
                         reply: /Thank you! Your report has been submitted\./
                     })
                     .check(function (api) {
-                        var http_sent = _.where(api.http.requests, {
+                        var http_sent = _.filter(api.http.requests, {
                             url: 'http://ona.io/api/v1/submissions'
                         })[0];
                         assert.deepEqual(http_sent.data, {
@@ -576,7 +576,7 @@ describe("app", function() {
                         reply: /Thank you! Your report has been submitted\./
                     })
                     .check(function (api) {
-                        var http_sent = _.where(api.http.requests, {
+                        var http_sent = _.filter(api.http.requests, {
                             url: 'http://ona.io/api/v1/submissions'
                         })[0];
                         assert.deepEqual(http_sent.data, {
