@@ -18,7 +18,7 @@ matrix:
         - IMAGE_NAME=praekeltfoundation/go-jsbox-malaria24:develop
         - REGISTRY_USER=praekeltorgdeploy
         # REGISTRY_PASS
-        - secure: "bL5h7qWeh6zw/Gkp7IZBdcHVV0wjUPMWS/L2F4gZ0oN/V4sCKTP1vvVui8zICYoR8Ok2A5t58389s/MgQgG/lfQA0qGlLlJ6yKgypq6N2uqwbbW/Oq9sVrWvz0AVjKOqxClft/wn3shJ5lUUxeJHNdPUaCjDr+gc624V0bnKpQQhG8sAQjX30pjiW61368HbPw8pAgyGw+3nuMBffP0Eib6rtFmmUb1WQ8qdXgjiaGT9whUpohqEFY2gmRfIJzW+YTgKP+w+nlaq05zoqwujsn/FptLm/TCvlNK0iv5TOgPNOXC4QDtWaEEzb1q0uq3Rf4dywAhqJorIT7wK/coFblnQ5LSnwBSovzGdQTF52R2IDuKAjccUYZnptbGvRLLTrTGFdmA1xnS1BXc+AXJE6JTOQCpwEgixTpXYvumOIF6NBPJ+gTgomV4l743mexrKYbfmbdOc7i/ZtALQQbj6tFT2O1q/mciddzwnJA/2d  dDBg9vp6+Algu0wvIcShhV1Hzf43Gx6wQCmPK5pmG4wdAEjSkNowidSC44f/dZnUajbwK5yPrju62Z2OgFh1Vvx8xzeDVO6ZobfSsH8b2ciiyz73j5QWpZZDqnZa40a890ziMiox4m4kkkcP1FXTF7v4xLbq6oWwDQJJOCoQc4wxX7Y/r26/gbr/yv3pTjtBnw="
+        - secure: "mM0uBezPjY+R1L0rliGrDeOgxu54qJKDMcNbxriJgmaQFik/XEcJvAeKNCfRyBVaXRZvugMBXw2SVrHg8WNZ5KXAM9nxcx1yF3YDmzeDPalYhwfQfMxhiI1UPqXGjcov7xIWvfBMJqPxT+r9Axv5DeLgAedS0QtS3R6ZfxNF8VRK7XIvzLBjJqMv9OEbpdeNIS2xO5Gt5F4z4+HhUAblsBMRdsErAyZ19qZ1PIH3p7QzVsJzn6wzVGtTkvCUIHQCm1yL01rpBX/dJ+hBiDttyrxb5HjDMOQmstQl1mQwBMMMLg85DJPvSYe9D83vw81KIa5K7kbJ7sxEqGoqee2X9R3Sj8H6SZnHlSALRALk0tK43t6NPY+wCOfdd1xnDquStwWGUkLL4daW1L3id50Uiq8oMGkNIUfekSx92UMM2so8B/v/QB3Mm67HCG+TkPE0QOWerOacYrsv6HJN2O+kK7Sc623PmdHpO8L9jzMCerzr+QjcHjMuvIW8PlzJCrZonqyu70SW21vhOZuHL7PdjtcuyAAGGUrPH9mieUs7/u5vh8mAO5hnhwAru1FGnr152mnird31Eaw6YNdzRvsPj1SQ4VR+skks1pl0I4A1eZsmQUm93pBhuOt8ip9k3am0hRGbxxcWWws9kG+PmpwQpkRl8GM/A+jj5EqmS+N545I="
       before_script:
         - docker pull "$IMAGE_NAME" || true
       script:
